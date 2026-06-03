@@ -1,10 +1,10 @@
-r"""
+"""
 parse_xml.py - Parse XML files from HisData/ and output his_data.js
 Output: docs/his_data.js  (var RAW_DATA = {...})
 """
 import os, re, json, time
 
-REPO_ROOT = r"C:\Users\52483\Desktop\xml"
+REPO_ROOT = os.path.dirname(os.path.abspath(__file__))   # 脚本所在目录（仓库根目录）
 DATA_SRC = os.path.join(REPO_ROOT, "HisData")
 OUTPUT_DIR = os.path.join(REPO_ROOT, "docs")
 OUTPUT_FILE = os.path.join(OUTPUT_DIR, "his_data.js")
@@ -50,7 +50,7 @@ def main():
 
     print("Found %d timestamp folders" % len(folders))
 
-    raw_data = {}   # { folder_name: { fixture_id: { oc:{}, ng:{}, ou:{} } } }
+    raw_data = {}
     id_set = set()
 
     for folder in folders:
