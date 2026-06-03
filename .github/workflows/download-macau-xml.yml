@@ -11,7 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
-      contents: write
+      contents: write          # 用于推送代码到仓库（归档XML、静态文件、分析结果）
+      pages: write             # 新增：用于部署到 GitHub Pages
+      id-token: write          # 新增：部署时需要
 
     steps:
       - name: 检出仓库
@@ -34,10 +36,8 @@ jobs:
       - name: 清理 HisData 旧文件夹
         run: |
           cd HisData
-          # 统计子目录数量（排除当前目录）
           folder_count=$(find . -maxdepth 1 -type d ! -name "." | wc -l)
           if [ $folder_count -ge 9 ]; then
-            # 获取最旧的文件夹（按名称排序第一个，时间戳格式保证了字典序即时间顺序）
             oldest=$(ls -1 | head -n 1)
             echo "删除旧文件夹: $oldest"
             rm -rf "$oldest"
@@ -106,7 +106,7 @@ jobs:
       - name: Generate index.html
         run: python build_html.py
 
-      - name: 提交静态文件
+      - name: 提交静态文件到仓库（可选，保留历史记录）
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -129,3 +129,12 @@ jobs:
           message: "Auto update analysis result [skip ci]"
           add: "data/"
           github_token: ${{ secrets.PAT_TOKEN }}
+
+      # ========== 新增：部署到 GitHub Pages（替换默认的 pages-build-deployment） ==========
+      - name: 上传 Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/          # 静态网站文件所在的目录（你的 index.html / his_data.js 等）
+
+      - name: 部署到 GitHub Pages
+        uses: actions/deploy-pages@v4
