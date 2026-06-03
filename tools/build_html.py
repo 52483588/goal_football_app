@@ -4,7 +4,7 @@ Output: docs/index.html
 """
 import os
 
-REPO_ROOT = r"C:\Users\52483\Desktop\xml"
+REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(REPO_ROOT, "docs")
 OUTPUT_FILE = os.path.join(OUTPUT_DIR, "index.html")
 
@@ -136,8 +136,6 @@ function normalizeOdds(oddsArr) {
 }
 
 function calcTotalGoals(hp, ap) {
-  // hp/ap: [P(0),P(1),P(2),P(3),P(4),P(5+)] x6, normalized sum=1
-  // TG7+ = 1 - sum(TG0~TG6) guarantees normalization
   var tg = new Array(8).fill(0);
   var h = hp, a = ap;
   tg[0] = (h[0]||0) * (a[0]||0);
@@ -488,7 +486,7 @@ function doSearch() {
         htmlOut += '<td class="ou-val' + chU + '">' + cellU + '</td>';
 
         // 盘口 cell
-        htmlOut += '<td class="ou-val' + chH + '">' + hcStr + '</td>';
+        htmlOut += '<td class="ou-val' + chH + '">' + hcStr + '<td>';
       }
     }
 
