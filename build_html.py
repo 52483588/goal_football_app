@@ -1,0 +1,516 @@
+"""
+build_html.py - Generate index.html template (data loaded from his_data.js via <script>)
+Output: docs/index.html
+"""
+import os
+
+REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
+OUTPUT_DIR = os.path.join(REPO_ROOT, "docs")
+OUTPUT_FILE = os.path.join(OUTPUT_DIR, "index.html")
+
+html_template = r"""<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>历史盘口数据查询工具</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Microsoft YaHei','微软雅黑',Arial,sans-serif; background: #f0f2f5; color: #333; min-height: 100vh; }
+
+  .header { background: linear-gradient(135deg,#1a3c6e,#2563a8); color: white; padding: 16px 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+  .header h1 { font-size: 20px; font-weight: 600; }
+  .header p { font-size: 12px; opacity: 0.8; margin-top: 4px; }
+
+  .search-area { background: white; padding: 16px 24px; border-bottom: 1px solid #e0e0e0; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .search-area label { font-weight: 600; white-space: nowrap; color: #555; }
+  .search-area input { border: 2px solid #ccc; border-radius: 6px; padding: 8px 14px; font-size: 15px; width: 220px; outline: none; transition: border-color 0.2s; }
+  .search-area input:focus { border-color: #2563a8; }
+  .search-area button { background: #2563a8; color: white; border: none; border-radius: 6px; padding: 9px 22px; font-size: 15px; cursor: pointer; font-family: inherit; transition: background 0.2s; white-space: nowrap; }
+  .search-area button:hover { background: #1a3c6e; }
+  .search-area button.clear { background: #888; }
+  .search-area button.clear:hover { background: #555; }
+
+  .match-info { background: #e8f4ff; border-left: 4px solid #2563a8; padding: 10px 16px; margin: 12px 24px 0; border-radius: 4px; font-size: 13px; display: none; }
+  .match-info .match-title { font-size: 16px; font-weight: 700; color: #1a3c6e; margin-bottom: 4px; }
+  .match-info .meta { color: #555; }
+
+  .table-container { padding: 12px 24px 24px; overflow-x: auto; }
+
+  .no-result { text-align: center; padding: 60px; color: #aaa; font-size: 16px; display: none; }
+  .hint { text-align: center; padding: 60px; color: #aaa; font-size: 14px; }
+
+  table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.1); font-size: 13px; min-width: 1400px; }
+  th { background: #1a3c6e; color: white; padding: 10px 7px; text-align: center; font-weight: 600; white-space: nowrap; }
+  th.group-ng { background: #1e5c2e; }
+  th.group-tg { background: #5b3a70; }
+  th.group-ou { background: #7a1e1e; }
+  td { padding: 6px 5px; text-align: center; border-bottom: 1px solid #f0f0f0; white-space: nowrap; vertical-align: middle; line-height: 1.35; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f5f9ff; }
+
+  .folder-cell { font-weight: 700; color: #1a3c6e; font-family: monospace; font-size: 11px; }
+  .missing { color: #ccc; font-style: italic; font-size: 10px; }
+
+  .ng-val { color: #1e5c2e; font-weight: 500; }
+  .tg-val { color: #5b3a70; font-weight: 500; }
+  .ou-val { color: #8b0000; font-weight: 500; }
+  .fp-line { color: #1565c0; font-size: 10px; font-weight: 400; margin-top: 2px; display: block; }
+  .ev-line { font-size: 10px; font-weight: 600; margin-top: 2px; display: block; }
+  .ev-pos { color: #d32f2f; }
+  .ev-neg { color: #666; }
+
+  .changed { background: #fff3cd !important; }
+
+  .subheader-row th { background: #2b5797; font-size: 10px; padding: 5px 3px; }
+  .subheader-row th.group-ng { background: #2d7a3f; }
+  .subheader-row th.group-tg { background: #754a90; }
+  .subheader-row th.group-ou { background: #a02020; }
+  .subheader-row th.hv1 { background: #8b1a1a; }
+  .subheader-row th.hv2 { background: #6b1414; }
+
+  .autocomplete-list { position: absolute; background: white; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 1000; max-height: 250px; overflow-y: auto; min-width: 300px; }
+  .autocomplete-list div { padding: 8px 12px; cursor: pointer; font-size: 13px; border-bottom: 1px solid #f0f0f0; }
+  .autocomplete-list div:hover { background: #e8f4ff; }
+  .autocomplete-list div em { font-style: normal; color: #2563a8; font-weight: 600; }
+  .autocomplete-wrapper { position: relative; }
+
+  .legend { display: flex; gap: 16px; padding: 0 24px 8px; font-size: 12px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 5px; }
+  .legend-color { width: 14px; height: 14px; border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>历史盘口数据查询工具</h1>
+  <p>读取所有时间戳文件夹 · 按时序对比 odds_config / numberofgoals / overunder · 自动计算EV与公平概率</p>
+</div>
+
+<div class="search-area">
+  <label>赛事 ID：</label>
+  <div class="autocomplete-wrapper">
+    <input type="text" id="searchInput" placeholder="输入赛事ID，如 505741" autocomplete="off" />
+    <div class="autocomplete-list" id="autocomplete" style="display:none"></div>
+  </div>
+  <button onclick="doSearch()">查询</button>
+  <button class="clear" onclick="doClear()">清除</button>
+  <span id="statusTip" style="color:#888; font-size:13px;"></span>
+</div>
+
+<div class="match-info" id="matchInfo">
+  <div class="match-title" id="matchTitle"></div>
+  <div class="meta" id="matchMeta"></div>
+</div>
+
+<div class="legend" id="legend" style="display:none">
+  <span style="color:#555; font-weight:600;">列色标：</span>
+  <span class="legend-item"><span class="legend-color" style="background:#1e5c2e"></span>进球分布赔率</span>
+  <span class="legend-item"><span class="legend-color" style="background:#5b3a70"></span>总进球概率</span>
+  <span class="legend-item"><span class="legend-color" style="background:#7a1e1e"></span>大小球赔率+公平P(蓝)+EV(红正)</span>
+  <span class="legend-item"><span class="legend-color" style="background:#fff3cd;border:1px solid #e0c060"></span>数值变化</span>
+</div>
+
+<div class="no-result" id="noResult">未找到 ID 对应的记录</div>
+<div class="hint" id="hint">请在上方输入赛事 ID 进行查询</div>
+
+<div class="table-container" id="tableContainer"></div>
+
+<script src="his_data.js"></script>
+<script>
+// ========== 核心计算函数 ==========
+
+function normalizeOdds(oddsArr) {
+  var probs = [], sumInv = 0, invs = [];
+  for (var i = 0; i < 6; i++) {
+    var v = parseFloat(oddsArr[i]) || 9999;
+    var inv = 1 / v;
+    invs.push(inv);
+    sumInv += inv;
+  }
+  if (sumInv === 0) return [0.167,0.167,0.167,0.167,0.167,0.165];
+  for (var i = 0; i < 6; i++) probs.push(invs[i] / sumInv);
+  var s = probs.reduce(function(a,b){return a+b;},0);
+  for (var i=0;i<6;i++) probs[i] /= s;
+  return probs;
+}
+
+function calcTotalGoals(hp, ap) {
+  var tg = new Array(8).fill(0);
+  var h = hp, a = ap;
+  tg[0] = (h[0]||0) * (a[0]||0);
+  tg[1] = (h[0]||0)*(a[1]||0) + (h[1]||0)*(a[0]||0);
+  tg[2] = (h[0]||0)*(a[2]||0) + (h[1]||0)*(a[1]||0) + (h[2]||0)*(a[0]||0);
+  tg[3] = (h[0]||0)*(a[3]||0) + (h[1]||0)*(a[2]||0) + (h[2]||0)*(a[1]||0) + (h[3]||0)*(a[0]||0);
+  tg[4] = (h[0]||0)*(a[4]||0) + (h[1]||0)*(a[3]||0) + (h[2]||0)*(a[2]||0) + (h[3]||0)*(a[1]||0) + (h[4]||0)*(a[0]||0);
+  tg[5] = (h[0]||0)*(a[5]||0) + (h[1]||0)*(a[4]||0) + (h[2]||0)*(a[3]||0) + (h[3]||0)*(a[2]||0) + (h[4]||0)*(a[1]||0) + (h[5]||0)*(a[0]||0);
+  tg[6] = (h[1]||0)*(a[5]||0) + (h[2]||0)*(a[4]||0) + (h[3]||0)*(a[3]||0) + (h[4]||0)*(a[2]||0) + (h[5]||0)*(a[1]||0);
+  var sum06 = 0;
+  for (var i = 0; i <= 6; i++) sum06 += tg[i];
+  tg[7] = Math.max(0, 1 - sum06);
+  return tg;
+}
+
+function calcAsianEV(handicap, overOdds, underOdds, totalProb) {
+  var intPart = Math.floor(handicap);
+  var frac = Math.round((handicap - intPart) * 100) / 100;
+  var pOver = 0, pPush = 0, pUnder = 0;
+
+  if (Math.abs(frac - 0.5) < 0.01) {
+    for (var g = 0; g < 7; g++) { if (g > handicap) pOver += totalProb[g]; }
+    pOver += totalProb[7];
+    pUnder = 1 - pOver;
+  } else if (Math.abs(frac) < 0.01 || Math.abs(frac - 0.0) < 0.01) {
+    for (var g = 0; g < 7; g++) {
+      if (g > handicap) pOver += totalProb[g];
+      else if (Math.abs(g - handicap) < 0.01) pPush += totalProb[g];
+    }
+    pOver += totalProb[7];
+    pUnder = 1 - pOver - pPush;
+  } else if (Math.abs(frac - 0.25) < 0.01 || Math.abs(frac - 0.75) < 0.01) {
+    var lo, hi;
+    if (frac < 0.5) { lo = intPart; hi = intPart + 0.5; }
+    else { lo = intPart + 0.5; hi = intPart + 1.0; }
+    var rL = calcAsianEV(lo, overOdds, underOdds, totalProb);
+    var rH = calcAsianEV(hi, overOdds, underOdds, totalProb);
+    return {
+      evOver: (rL.evOver + rH.evOver) / 2,
+      evUnder: (rL.evUnder + rH.evUnder) / 2,
+      fairOver: ((rL.evOver + rH.evOver)/2 + 1) / overOdds,
+      fairUnder: ((rL.evUnder + rH.evUnder)/2 + 1) / underOdds
+    };
+  } else {
+    for (var g = 0; g < 7; g++) { if (g > handicap) pOver += totalProb[g]; }
+    pOver += totalProb[7];
+    pUnder = 1 - pOver;
+  }
+
+  var evOver = pOver * (overOdds - 1) - pUnder * 1 + pPush * 0;
+  var evUnder = pUnder * (underOdds - 1) - pOver * 1 + pPush * 0;
+  return {
+    evOver: evOver,
+    evUnder: evUnder,
+    fairOver: (evOver + 1) / overOdds,
+    fairUnder: (evUnder + 1) / underOdds
+  };
+}
+
+// ========== 数据初始化（来自 his_data.js） ==========
+var DATA = RAW_DATA;
+var FOLDER_LIST = FOLDERS;
+
+// Build ID index for autocomplete
+var idIndex = {};
+if (typeof ID_INDEX !== 'undefined') {
+  for (var idxId in ID_INDEX) {
+    var ii = ID_INDEX[idxId];
+    idIndex[idxId] = { gt: (ii.oc||{}).gt||'', st: (ii.oc||{}).st||'', sh: (ii.oc||{}).sh||'', sa: (ii.oc||{}).sa||'' };
+  }
+} else {
+  // fallback: scan folders
+  for (var fi = 0; fi < FOLDER_LIST.length; fi++) {
+    var fd0 = DATA[FOLDER_LIST[fi]] || {};
+    for (var id0 in fd0) {
+      if (!idIndex[id0]) {
+        var oc0 = (fd0[id0] && fd0[id0].oc) || {};
+        idIndex[id0] = { gt: oc0.gt||'', st: oc0.st||'', sh: oc0.sh||'', sa: oc0.sa||'' };
+      }
+    }
+  }
+}
+
+// ========== Autocomplete ==========
+var searchInput = document.getElementById('searchInput');
+var autocompleteEl = document.getElementById('autocomplete');
+
+searchInput.addEventListener('input', function() {
+  var q = this.value.trim();
+  if (!q) { autocompleteEl.style.display='none'; return; }
+  var matches = [];
+  for (var id in idIndex) {
+    if (id.indexOf(q) === 0) matches.push(id);
+    if (matches.length >= 15) break;
+  }
+  if (!matches.length) { autocompleteEl.style.display='none'; return; }
+  var html = '';
+  for (var mi = 0; mi < matches.length; mi++) {
+    var idA = matches[mi];
+    var info = idIndex[idA];
+    var hi = q ? idA.replace(q, '<em>'+q+'</em>') : idA;
+    html += '<div onclick="selectId(\''+idA+'\')">'+hi+' <span style="color:#888;font-size:11px">'+(info.st||'')+' '+(info.sh||'')+' vs '+(info.sa||'')+'</span></div>';
+  }
+  autocompleteEl.innerHTML = html;
+  autocompleteEl.style.display='block';
+});
+
+searchInput.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') { autocompleteEl.style.display='none'; doSearch(); }
+  if (e.key === 'Escape') { autocompleteEl.style.display='none'; }
+});
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.autocomplete-wrapper')) autocompleteEl.style.display='none';
+});
+
+function selectId(id) {
+  searchInput.value = id;
+  autocompleteEl.style.display='none';
+  doSearch();
+}
+
+function doClear() {
+  searchInput.value = '';
+  document.getElementById('tableContainer').innerHTML='';
+  document.getElementById('matchInfo').style.display='none';
+  document.getElementById('noResult').style.display='none';
+  document.getElementById('hint').style.display='block';
+  document.getElementById('legend').style.display='none';
+  document.getElementById('statusTip').textContent='';
+}
+
+function doSearch() {
+  var id = searchInput.value.trim();
+  if (!id) return;
+
+  document.getElementById('hint').style.display='none';
+  document.getElementById('noResult').style.display='none';
+  document.getElementById('tableContainer').innerHTML='';
+  document.getElementById('matchInfo').style.display='none';
+  document.getElementById('legend').style.display='none';
+
+  // Collect rows per folder
+  var rows = [];
+  for (var ri = 0; ri < FOLDER_LIST.length; ri++) {
+    var folder = FOLDER_LIST[ri];
+    var fd = DATA[folder] || {};
+    rows.push({ folder: folder, rec: (fd && fd[id]) ? fd[id] : null });
+  }
+
+  var hasAny = false;
+  for (var ri2 = 0; ri2 < rows.length; ri2++) {
+    if (rows[ri2].rec !== null) { hasAny = true; break; }
+  }
+  if (!hasAny) {
+    document.getElementById('noResult').style.display='block';
+    document.getElementById('statusTip').textContent='';
+    return;
+  }
+
+  // Show match info header
+  for (var ri3 = 0; ri3 < rows.length; ri3++) {
+    var rInfo = rows[ri3];
+    if (rInfo.rec && rInfo.rec.oc && rInfo.rec.oc.gt) {
+      var ocv = rInfo.rec.oc;
+      document.getElementById('matchTitle').textContent = (ocv.sh||'') + ' vs ' + (ocv.sa||'');
+      document.getElementById('matchMeta').textContent = '联赛：' + (ocv.st||'-') + ' | 赛事时间：' + (ocv.gt||'-');
+      document.getElementById('matchInfo').style.display='block';
+      break;
+    }
+  }
+
+  var count = 0;
+  for (var ri4 = 0; ri4 < rows.length; ri4++) {
+    if (rows[ri4].rec !== null) count++;
+  }
+  document.getElementById('statusTip').textContent = '共找到 ' + count + ' 个时间段的数据';
+  document.getElementById('legend').style.display='flex';
+
+  // Build table
+  var container = document.getElementById('tableContainer');
+  var table = document.createElement('table');
+
+  var ngCols = ['h1','h2','h3','h4','h5','h6','a1','a2','a3','a4','a5','a6'];
+  var tgLabels = ['TG0','TG1','TG2','TG3','TG4','TG5','TG6','TG7+'];
+  var TOTAL_COLS = 30;
+
+  var theadHTML =
+    '<thead>' +
+    '  <tr>' +
+    '    <th rowspan="2">时间戳</th>' +
+    '    <th colspan="12">进球分布赔率</th>' +
+    '    <th colspan="8">总进球概率</th>' +
+    '    <th colspan="9">大小球赔率 + 公平概率 + EV</th>' +
+    '  </tr>' +
+    '  <tr class="subheader-row">' +
+    '    <th>H1</th><th>H2</th><th>H3</th><th>H4</th><th>H5</th><th>H6</th>' +
+    '    <th>A1</th><th>A2</th><th>A3</th><th>A4</th><th>A5</th><th>A6</th>';
+  for (var ti = 0; ti < tgLabels.length; ti++) {
+    theadHTML += '<th>' + tgLabels[ti] + '</th>';
+  }
+  theadHTML +=
+    '    <th>大球OO</th><th>小球UO</th><th>盘口LI</th>' +
+    '    <th class="hv1">HV1大</th><th class="hv1">HV1小</th><th class="hv1">HV1盘</th>' +
+    '    <th class="hv2">HV2大</th><th class="hv2">HV2小</th><th class="hv2">HV2盘</th>' +
+    '  </tr></thead>';
+
+  table.innerHTML = theadHTML + '<tbody id="tbody"></tbody>';
+  container.appendChild(table);
+  var tbody = table.querySelector('#tbody');
+
+  var prevNg = null;
+  var prevTg = null;
+  var prevOuLines = null;
+
+  for (var ri = 0; ri < rows.length; ri++) {
+    var rowItem = rows[ri];
+    var folder = rowItem.folder;
+    var rec = rowItem.rec;
+
+    var tr = document.createElement('tr');
+
+    if (!rec) {
+      tr.innerHTML = '<td class="folder-cell">' + folder + '</td><td colspan="' + (TOTAL_COLS-1) + '" class="missing">— 该时间段无此赛事 —</td>';
+      tbody.appendChild(tr);
+      continue;
+    }
+
+    var oc = rec.oc || {};
+    var ng = rec.ng || {};
+    var ou = rec.ou || {};
+
+    var curNg = ngCols.map(function(k){return ng[k]||'';});
+    var htmlOut = '<td class="folder-cell">' + folder + '</td>';
+
+    // ===== 进球分布 12列 =====
+    for (var ni = 0; ni < ngCols.length; ni++) {
+      var nval = ng[ngCols[ni]] || '<span class="missing">-</span>';
+      var nchg = (prevNg && ng[ngCols[ni]] && prevNg[ni] !== ng[ngCols[ni]]) ? ' changed' : '';
+      htmlOut += '<td class="ng-val' + nchg + '">' + nval + '</td>';
+    }
+
+    // ===== 总进球概率 8列 =====
+    var hasNgData = true;
+    for (var chk = 0; chk < ngCols.length; chk++) {
+      if (!ng[ngCols[chk]] || parseFloat(ng[ngCols[chk]]) <= 0) { hasNgData = false; break; }
+    }
+    var tgProbs = null;
+    if (hasNgData) {
+      var homeOdds = [ng['h1'],ng['h2'],ng['h3'],ng['h4'],ng['h5'],ng['h6']];
+      var awayOdds = [ng['a1'],ng['a2'],ng['a3'],ng['a4'],ng['a5'],ng['a6']];
+      var hp = normalizeOdds(homeOdds);
+      var ap = normalizeOdds(awayOdds);
+      tgProbs = calcTotalGoals(hp, ap);
+    }
+    var curTg = tgProbs ? tgProbs : new Array(8).fill('');
+
+    for (var tgi = 0; tgi < 8; tgi++) {
+      var tval = tgProbs ? (tgProbs[tgi]*100).toFixed(1)+'%' : '<span class="missing">-</span>';
+      var tchg = (prevTg && tgProbs && prevTg[tgi] !== '' && Math.abs(prevTg[tgi]-tgProbs[tgi]) > 0.005) ? ' changed' : '';
+      htmlOut += '<td class="tg-val' + tchg + '">' + tval + '</td>';
+    }
+
+    // ===== 大小球：解析 HI_VAR → 分组 =====
+    var hivStr = ou.hi_var || '';
+    var hivGroups = [];
+    if (hivStr) {
+      var hivLines = hivStr.split('#');
+      var grpMap = {}, grpOrder = [];
+      for (var hli = 0; hli < hivLines.length; hli++) {
+        var hl = hivLines[hli].trim();
+        if (!hl) continue;
+        var parts = hl.split(',');
+        if (parts.length < 5) continue;
+        var hvLi = parseFloat(parts[1]) / 4;
+        var hcapKey = hvLi.toFixed(2);
+        if (!grpMap[hcapKey]) { grpMap[hcapKey] = {over:'',under:''}; grpOrder.push(hcapKey); }
+        var dir4 = parts[4].trim().toUpperCase();
+        var odds4 = (parseFloat(parts[0]) / 1000).toFixed(2);
+        if (dir4 === 'H') grpMap[hcapKey].over = odds4;
+        else if (dir4 === 'L') grpMap[hcapKey].under = odds4;
+      }
+      for (var gi2 = 0; gi2 < grpOrder.length; gi2++) {
+        var hk = grpOrder[gi2];
+        hivGroups.push({over: grpMap[hk].over, under: grpMap[hk].under, hcap: hk});
+      }
+    }
+
+    var allLines = [
+      { over: ou['oo']||'', under: ou['uo']||'', hcap: ou['li'] ? (parseFloat(ou['li'])/4).toString() : '' },
+      hivGroups[0] || {over:'',under:'',hcap:''},
+      hivGroups[1] || {over:'',under:'',hcap:''}
+    ];
+    var prevLines = prevOuLines || null;
+
+    for (var lix = 0; lix < 3; lix++) {
+      var line = allLines[lix];
+      var pLine = prevLines ? (prevLines[lix]||null) : null;
+
+      var ovStr = line.over || '';
+      var unStr = line.under || '';
+      var hcStr = line.hcap || '';
+
+      var ovNum = parseFloat(ovStr)||0;
+      var unNum = parseFloat(unStr)||0;
+      var hcNum = parseFloat(hcStr)||0;
+
+      var chO = (pLine && ovStr && pLine.over !== ovStr) ? ' changed' : '';
+      var chU = (pLine && unStr && pLine.under !== unStr) ? ' changed' : '';
+      var chH = (pLine && hcStr && pLine.hcap !== hcStr) ? ' changed' : '';
+      var isEmpty = (!ovStr && !unStr && !hcStr);
+
+      if (isEmpty) {
+        htmlOut += '<td class="ou-val"><span class="missing">-</span></td>';
+        htmlOut += '<td class="ou-val"><span class="missing">-</span></td>';
+        htmlOut += '<td class="ou-val"><span class="missing">-</span></td>';
+      } else {
+        // 大球 cell (3行: 赔率 / 公平概率 / EV)
+        var cellO = ovStr;
+        if (tgProbs && ovNum > 0 && unNum > 0 && hcNum > 0) {
+          try {
+            var resO = calcAsianEV(hcNum, ovNum, unNum, tgProbs);
+            var fpO = resO.fairOver;
+            var evO = resO.evOver;
+            if (fpO > 0) cellO += '<span class="fp-line">公平P:' + (fpO*100).toFixed(1) + '%</span>';
+            if (!isNaN(evO)) {
+              var evClsO = evO > 0 ? 'ev-line ev-pos' : 'ev-line ev-neg';
+              cellO += '<span class="' + evClsO + '">EV ' + (evO >= 0 ? '+' : '') + evO.toFixed(2) + '</span>';
+            }
+          } catch(e) {}
+        }
+        htmlOut += '<td class="ou-val' + chO + '">' + cellO + '</td>';
+
+        // 小球 cell (3行: 赔率 / 公平概率 / EV)
+        var cellU = unStr;
+        if (tgProbs && ovNum > 0 && unNum > 0 && hcNum > 0) {
+          try {
+            var resU = calcAsianEV(hcNum, ovNum, unNum, tgProbs);
+            var fpU = resU.fairUnder;
+            var evU = resU.evUnder;
+            if (fpU > 0) cellU += '<span class="fp-line">公平P:' + (fpU*100).toFixed(1) + '%</span>';
+            if (!isNaN(evU)) {
+              var evClsU = evU > 0 ? 'ev-line ev-pos' : 'ev-line ev-neg';
+              cellU += '<span class="' + evClsU + '">EV ' + (evU >= 0 ? '+' : '') + evU.toFixed(2) + '</span>';
+            }
+          } catch(e) {}
+        }
+        htmlOut += '<td class="ou-val' + chU + '">' + cellU + '</td>';
+
+        // 盘口 cell
+        htmlOut += '<td class="ou-val' + chH + '">' + hcStr + '<td>';
+      }
+    }
+
+    tr.innerHTML = htmlOut;
+    tbody.appendChild(tr);
+
+    prevNg = curNg;
+    prevTg = curTg;
+    prevOuLines = allLines.slice(0);
+  }
+}
+</script>
+</body>
+</html>"""
+
+def main():
+    import time
+    t0 = time.time()
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
+        f.write(html_template)
+    size_kb = os.path.getsize(OUTPUT_FILE) / 1024
+    elapsed = time.time() - t0
+    print("[OK] index.html: %.0f KB (%.1fs)" % (size_kb, elapsed))
+
+if __name__ == '__main__':
+    main()
