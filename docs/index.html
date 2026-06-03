@@ -34,7 +34,12 @@
   th { background: #1a3c6e; color: white; padding: 10px 7px; text-align: center; font-weight: 600; white-space: nowrap; }
   th.group-ng { background: #1e5c2e; }
   th.group-tg { background: #5b3a70; }
-  th.group-ou { background: #7a1e1e; }
+  /* 大小球分组样式 */
+  th.group-ou-base { background: #b52b2b; }   /* 基础盘口 */
+  th.group-ou-hv1 { background: #8b1a1a; }   /* HV1 */
+  th.group-ou-hv2 { background: #6b1414; }   /* HV2 */
+  /* 添加右侧分隔线，区分三组 */
+  td.ou-divider, th.ou-divider { border-right: 2px solid rgba(255,255,255,0.3); }
   td { padding: 6px 5px; text-align: center; border-bottom: 1px solid #f0f0f0; white-space: nowrap; vertical-align: middle; line-height: 1.35; }
   tr:last-child td { border-bottom: none; }
   tr:hover td { background: #f5f9ff; }
@@ -55,9 +60,9 @@
   .subheader-row th { background: #2b5797; font-size: 10px; padding: 5px 3px; }
   .subheader-row th.group-ng { background: #2d7a3f; }
   .subheader-row th.group-tg { background: #754a90; }
-  .subheader-row th.group-ou { background: #a02020; }
-  .subheader-row th.hv1 { background: #8b1a1a; }
-  .subheader-row th.hv2 { background: #6b1414; }
+  .subheader-row th.group-ou-base { background: #c73e3e; }
+  .subheader-row th.group-ou-hv1 { background: #a02828; }
+  .subheader-row th.group-ou-hv2 { background: #801818; }
 
   .autocomplete-list { position: absolute; background: white; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 1000; max-height: 250px; overflow-y: auto; min-width: 300px; }
   .autocomplete-list div { padding: 8px 12px; cursor: pointer; font-size: 13px; border-bottom: 1px solid #f0f0f0; }
@@ -317,9 +322,9 @@ function doSearch() {
     '<thead>' +
     '  <tr>' +
     '    <th rowspan="2">时间戳</th>' +
-    '    <th colspan="12">进球分布赔率</th>' +
-    '    <th colspan="8">总进球概率</th>' +
-    '    <th colspan="9">大小球赔率 + 公平概率 + EV</th>' +
+    '    <th colspan="12" class="group-ng">进球分布赔率</th>' +
+    '    <th colspan="8" class="group-tg">总进球概率</th>' +
+    '    <th colspan="9" class="group-ou-base">大小球赔率 + 公平概率 + EV</th>' +
     '  </tr>' +
     '  <tr class="subheader-row">' +
     '    <th>H1</th><th>H2</th><th>H3</th><th>H4</th><th>H5</th><th>H6</th>' +
@@ -327,10 +332,17 @@ function doSearch() {
   for (var ti = 0; ti < tgLabels.length; ti++) {
     theadHTML += '<th>' + tgLabels[ti] + '</th>';
   }
+  // 大小球子标题，三组分别添加 class 和分隔线（最后一列不带分隔线）
   theadHTML +=
-    '    <th>大球OO</th><th>小球UO</th><th>盘口LI</th>' +
-    '    <th class="hv1">HV1大</th><th class="hv1">HV1小</th><th class="hv1">HV1盘</th>' +
-    '    <th class="hv2">HV2大</th><th class="hv2">HV2小</th><th class="hv2">HV2盘</th>' +
+    '    <th class="group-ou-base">大球OO</th>' +
+    '    <th class="group-ou-base">小球UO</th>' +
+    '    <th class="group-ou-base ou-divider">盘口LI</th>' +
+    '    <th class="group-ou-hv1">HV1大</th>' +
+    '    <th class="group-ou-hv1">HV1小</th>' +
+    '    <th class="group-ou-hv1 ou-divider">HV1盘</th>' +
+    '    <th class="group-ou-hv2">HV2大</th>' +
+    '    <th class="group-ou-hv2">HV2小</th>' +
+    '    <th class="group-ou-hv2">HV2盘</th>' +
     '  </tr></thead>';
 
   table.innerHTML = theadHTML + '<tbody id="tbody"></tbody>';
@@ -438,12 +450,16 @@ function doSearch() {
       var chH = (pLine && hcStr && pLine.hcap !== hcStr) ? ' changed' : '';
       var isEmpty = (!ovStr && !unStr && !hcStr);
 
+      // 为每组最后一列添加分隔线 class（HV1盘和HV2盘之后不加，HV2盘是最后一列无需分隔）
+      var divClassO = (lix === 0) ? ' ou-divider' : '';  // 基础组最后一列加分隔线
+      var divClassU = (lix === 1) ? ' ou-divider' : '';  // HV1组最后一列加分隔线
+
       if (isEmpty) {
         htmlOut += '<td class="ou-val"><span class="missing">-</span></td>';
         htmlOut += '<td class="ou-val"><span class="missing">-</span></td>';
-        htmlOut += '<td class="ou-val"><span class="missing">-</span></td>';
+        htmlOut += '<td class="ou-val' + divClassO + '"><span class="missing">-</span></td>';
       } else {
-        // 大球 cell (3行: 赔率 / 公平概率 / EV)
+        // 大球 cell (赔率/公平P/EV)
         var cellO = ovStr;
         if (tgProbs && ovNum > 0 && unNum > 0 && hcNum > 0) {
           try {
@@ -459,7 +475,7 @@ function doSearch() {
         }
         htmlOut += '<td class="ou-val' + chO + '">' + cellO + '</td>';
 
-        // 小球 cell (3行: 赔率 / 公平概率 / EV)
+        // 小球 cell
         var cellU = unStr;
         if (tgProbs && ovNum > 0 && unNum > 0 && hcNum > 0) {
           try {
@@ -475,8 +491,8 @@ function doSearch() {
         }
         htmlOut += '<td class="ou-val' + chU + '">' + cellU + '</td>';
 
-        // 盘口 cell
-        htmlOut += '<td class="ou-val' + chH + '">' + hcStr + '<td>';
+        // 盘口 cell（添加分隔线）
+        htmlOut += '<td class="ou-val' + chH + divClassO + '">' + hcStr + '</td>';
       }
     }
 
