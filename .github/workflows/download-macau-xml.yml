@@ -30,6 +30,19 @@ jobs:
       - name: 创建 HisData 目录
         run: mkdir -p HisData
 
+      # 清理 HisData 旧文件夹（最多保留8个）
+      - name: 清理 HisData 旧文件夹
+        run: |
+          cd HisData
+          # 统计子目录数量（排除当前目录）
+          folder_count=$(find . -maxdepth 1 -type d ! -name "." | wc -l)
+          if [ $folder_count -ge 9 ]; then
+            # 获取最旧的文件夹（按名称排序第一个，时间戳格式保证了字典序即时间顺序）
+            oldest=$(ls -1 | head -n 1)
+            echo "删除旧文件夹: $oldest"
+            rm -rf "$oldest"
+          fi
+      
       # 删除根目录下所有现有的 XML 文件（确保干净环境）
       - name: 删除根目录旧XML文件
         run: find . -maxdepth 1 -name "*.xml" -type f -delete
