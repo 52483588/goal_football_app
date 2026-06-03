@@ -24,7 +24,9 @@ html_template = r"""<!DOCTYPE html>
 
   .search-area { background: white; padding: 16px 24px; border-bottom: 1px solid #e0e0e0; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
   .search-area label { font-weight: 600; white-space: nowrap; color: #555; }
-  .search-area input { border: 2px solid #ccc; border-radius: 6px; padding: 8px 14px; font-size: 15px; width: 220px; outline: none; transition: border-color 0.2s; }
+  .search-area select { border: 2px solid #ccc; border-radius: 6px; padding: 8px 10px; font-size: 14px; outline: none; transition: border-color 0.2s; background: white; min-width: 200px; cursor: pointer; }
+  .search-area select:focus { border-color: #2563a8; }
+  .search-area input { border: 2px solid #ccc; border-radius: 6px; padding: 8px 14px; font-size: 15px; width: 260px; outline: none; transition: border-color 0.2s; }
   .search-area input:focus { border-color: #2563a8; }
   .search-area button { background: #2563a8; color: white; border: none; border-radius: 6px; padding: 9px 22px; font-size: 15px; cursor: pointer; font-family: inherit; transition: background 0.2s; white-space: nowrap; }
   .search-area button:hover { background: #1a3c6e; }
@@ -93,9 +95,13 @@ html_template = r"""<!DOCTYPE html>
 </div>
 
 <div class="search-area">
-  <label>赛事 ID：</label>
+  <label>联赛：</label>
+  <select id="leagueSelect" onchange="onLeagueChange()">
+    <option value="">-- 请选择联赛 --</option>
+  </select>
+  <label>比赛：</label>
   <div class="autocomplete-wrapper">
-    <input type="text" id="searchInput" placeholder="输入赛事ID，如 505741" autocomplete="off" />
+    <input type="text" id="searchInput" placeholder="先选择联赛，再输入/选择赛事ID或球队名" autocomplete="off" disabled />
     <div class="autocomplete-list" id="autocomplete" style="display:none"></div>
   </div>
   <button onclick="doSearch()">查询</button>
@@ -204,48 +210,112 @@ function calcAsianEV(handicap, overOdds, underOdds, totalProb) {
 var DATA = RAW_DATA;
 var FOLDER_LIST = FOLDERS;
 
-// Build ID index for autocomplete
-var idIndex = {};
-if (typeof ID_INDEX !== 'undefined') {
-  for (var idxId in ID_INDEX) {
-    var ii = ID_INDEX[idxId];
-    idIndex[idxId] = { gt: (ii.oc||{}).gt||'', st: (ii.oc||{}).st||'', sh: (ii.oc||{}).sh||'', sa: (ii.oc||{}).sa||'' };
-  }
-} else {
-  // fallback: scan folders
+// ===== 构建联赛列表 + 联赛→ID映射 =====
+var allLeagues = {};   // { "联赛名": { id: { gt, st, sh, sa }, ... } }
+var leagueNames = [];  // 去重排序后的联赛名数组
+(function buildLeagueIndex() {
+  var leagueSet = {};
   for (var fi = 0; fi < FOLDER_LIST.length; fi++) {
-    var fd0 = DATA[FOLDER_LIST[fi]] || {};
-    for (var id0 in fd0) {
-      if (!idIndex[id0]) {
-        var oc0 = (fd0[id0] && fd0[id0].oc) || {};
-        idIndex[id0] = { gt: oc0.gt||'', st: oc0.st||'', sh: oc0.sh||'', sa: oc0.sa||'' };
+    var fd = DATA[FOLDER_LIST[fi]] || {};
+    for (var id in fd) {
+      var oc = (fd[id] && fd[id].oc) || {};
+      if (!oc.st) continue;
+      var ln = oc.st;  // 联赛名
+      if (!leagueSet[ln]) {
+        leagueSet[ln] = true;
+        leagueNames.push(ln);
+        allLeagues[ln] = {};
+      }
+      if (!allLeagues[ln][id]) {
+        allLeagues[ln][id] = { gt: oc.gt||'', st: oc.st||'', sh: oc.sh||'', sa: oc.sa||'' };
       }
     }
   }
+  // 联赛名排序（中文拼音近似：按Unicode码）
+  leagueNames.sort();
+})();
+
+// 填充联赛下拉框
+(function populateLeagues() {
+  var sel = document.getElementById('leagueSelect');
+  for (var li = 0; li < leagueNames.length; li++) {
+    var opt = document.createElement('option');
+    opt.value = leagueNames[li];
+    opt.textContent = leagueNames[li] + ' (' + Object.keys(allLeagues[leagueNames[li]]).length + '场)';
+    sel.appendChild(opt);
+  }
+})();
+
+// 当前选中的联赛下的 ID 索引（用于自动补全）
+var currentIdIndex = {};
+
+function onLeagueChange() {
+  var selVal = document.getElementById('leagueSelect').value;
+  var inputEl = document.getElementById('searchInput');
+  var acEl = document.getElementById('autocomplete');
+
+  // 清空搜索框和结果（注意：不要调用 doClear，它会重置联赛选择）
+  inputEl.value = '';
+  acEl.style.display = 'none';
+  document.getElementById('tableContainer').innerHTML='';
+  document.getElementById('matchInfo').style.display='none';
+  document.getElementById('noResult').style.display='none';
+  document.getElementById('hint').style.display='block';
+  document.getElementById('legend').style.display='none';
+
+  if (!selVal) {
+    currentIdIndex = {};
+    inputEl.disabled = true;
+    inputEl.placeholder = '先选择联赛，再输入/选择赛事ID或球队名';
+    document.getElementById('statusTip').textContent = '';
+    return;
+  }
+
+  inputEl.disabled = false;
+  inputEl.placeholder = '输入ID或球队名搜索...';
+  currentIdIndex = allLeagues[selVal] || {};
+
+  // 显示该联赛的比赛数量
+  document.getElementById('statusTip').textContent =
+    '当前联赛共 ' + Object.keys(currentIdIndex).length + ' 场比赛';
 }
 
-// ========== Autocomplete ==========
+// ========== Autocomplete（基于当前选中联赛）==========
 var searchInput = document.getElementById('searchInput');
 var autocompleteEl = document.getElementById('autocomplete');
 
 searchInput.addEventListener('input', function() {
-  var q = this.value.trim();
-  if (!q) { autocompleteEl.style.display='none'; return; }
+  var q = this.value.trim().toLowerCase();
+  var leagueSel = document.getElementById('leagueSelect').value;
+
+  // 如果没选联赛，不显示补全
+  if (!leagueSel || !q) { autocompleteEl.style.display='none'; return; }
+
   var matches = [];
-  for (var id in idIndex) {
-    if (id.indexOf(q) === 0) matches.push(id);
-    if (matches.length >= 15) break;
+  for (var id in currentIdIndex) {
+    // 支持按 ID 或 球队名搜索
+    var info = currentIdIndex[id];
+    var matchText = (id + ' ' + (info.sh||'') + ' ' + (info.sa||'') + ' ' + (info.gt||'')).toLowerCase();
+    if (matchText.indexOf(q) !== -1) matches.push(id);
+    if (matches.length >= 20) break;
   }
   if (!matches.length) { autocompleteEl.style.display='none'; return; }
+
   var html = '';
   for (var mi = 0; mi < matches.length; mi++) {
     var idA = matches[mi];
-    var info = idIndex[idA];
-    var hi = q ? idA.replace(q, '<em>'+q+'</em>') : idA;
-    html += '<div onclick="selectId(\''+idA+'\')">'+hi+' <span style="color:#888;font-size:11px">'+(info.st||'')+' '+(info.sh||'')+' vs '+(info.sa||'')+'</span></div>';
+    var info = currentIdIndex[idA];
+    var displayTxt = idA;
+    // 高亮匹配部分（简单处理：显示ID + 比赛信息）
+    var hlInfo = info.sh ? (info.sh+' vs '+info.sa) : '';
+    var timeStr = info.gt ? info.gt.substring(4,6)+'/'+info.gt.substring(6,8) : '';
+    html += '<div onclick="selectId(\''+idA+'\')">' +
+      '<b>' + idA + '</b> <span style="color:#888;font-size:11px">' +
+      hlInfo + (timeStr ? ' ['+timeStr+']' : '') + '</span></div>';
   }
+
   autocompleteEl.innerHTML = html;
-  autocompleteEl.style.display='block';
+  autocompleteEl.style.display = 'block';
 });
 
 searchInput.addEventListener('keydown', function(e) {
@@ -270,7 +340,18 @@ function doClear() {
   document.getElementById('noResult').style.display='none';
   document.getElementById('hint').style.display='block';
   document.getElementById('legend').style.display='none';
-  document.getElementById('statusTip').textContent='';
+  var leagueSel = document.getElementById('leagueSelect');
+  if (leagueSel) {
+    var prevVal = leagueSel.value;
+    leagueSel.value = '';
+    // 只在之前有选中联赛时才清空提示
+    if (prevVal) {
+      currentIdIndex = {};
+      searchInput.disabled = true;
+      searchInput.placeholder = '先选择联赛，再输入/选择赛事ID或球队名';
+      document.getElementById('statusTip').textContent='';
+    }
+  }
 }
 
 function doSearch() {
