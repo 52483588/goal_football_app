@@ -598,7 +598,7 @@ function buildOuTable(rows) {
         htmlOut += '<td class="ou-val"><span class="missing">-</span></td><td class="ou-val"><span class="missing">-</span></td><td class="ou-val'+divClass+'"><span class="missing">-</span></td>';
       } else {
         var cellO = ovStr, cellU = unStr;
-        if (tgProbs && ovNum>0 && unNum>0 && hcNum>0) {
+        if (tgProbs && ovNum>0 && unNum>0 && !isNaN(hcNum)) {
           try {
             var res = calcAsianEV(hcNum, ovNum, unNum, tgProbs);
             if (res.fairOver>0) cellO += '<span class="fp-line">公平P:'+(res.fairOver*100).toFixed(1)+'%</span>';
@@ -724,7 +724,7 @@ function buildWinTable(rows) {
         htmlOut += '<td class="win-val"><span class="missing">-</span></td><td class="win-val"><span class="missing">-</span></td><td class="win-val'+divClass+'"><span class="missing">-</span></td>';
       } else {
         var cellO = ovStr, cellU = unStr;
-        if (gdProbs && ovNum>0 && unNum>0 && Math.abs(hcNum)>0) {
+        if (gdProbs && ovNum>0 && unNum>0 && !isNaN(hcNum)) {
           try {
             var res = calcAsianEVForGD(hcNum, ovNum, unNum, gdProbs);
             if (res.fairHome>0) cellO += '<span class="fp-line">公平P:'+(res.fairHome*100).toFixed(1)+'%</span>';
