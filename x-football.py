@@ -5,8 +5,7 @@
 足球比分模拟器 - 精简版 (优化版)
 基于闯关概率模型 (Streamlit 多页面版)
 功能：主/客队独立进球模拟 → 比分分布统计 → 可视化分析
-自动从GitHub加载预设XML数据，赔率自动转概率
-轮次模拟页面：基于动态概率的回合制模拟（规则已升级：每轮比较par值决定进攻顺序）
+自动加载XML数据：GitHub Actions环境从GitHub下载，本地环境优先读取本地文件
 """
 
 import streamlit as st
@@ -16,12 +15,9 @@ import time
 import xml.etree.ElementTree as ET
 import requests
 from typing import Dict, List, Optional, Tuple
-import random
-import math
 import datetime
 from datetime import timezone, timedelta
-import gc
-import io
+import os
 from streamlit_integration import render_over_under_analysis
 
 # 导入 plotly
@@ -370,148 +366,85 @@ def run_simulation(home_p, away_p, n_sims):
         'elapsed': elapsed
     }
 
-# ================= 轮次模拟模型 =================
-def calculate_probabilities(odds_list):
-    inv_sum = sum(1.0 / o for o in odds_list)
-    factor = 1.0 / inv_sum
-    probs = [factor / o for o in odds_list]
-    no_goal_probs = []
-    cum = 0.0
-    for p in probs:
-        if cum == 0:
-            no_goal = p
+# ================= 数据加载（智能切换本地/GitHub） =================
+def load_local_xml_files() -> Optional[FootballDataLoader]:
+    """尝试从当前目录读取本地 XML 文件（numberofgoals.xml, odds_config.xml, windrawwin.xml 等）"""
+    required_files = [
+        "numberofgoals.xml",
+        "odds_config.xml",
+        "correctscore.xml",
+        "halffull.xml",
+        "overunder.xml",
+        "windrawwin.xml",
+        "windrawwinfirsthalf.xml",
+        "winodds.xml"
+    ]
+    xml_contents = {}
+    for fname in required_files:
+        if os.path.exists(fname):
+            try:
+                with open(fname, "r", encoding="utf-8") as f:
+                    xml_contents[fname] = f.read()
+            except Exception as e:
+                st.error(f"读取本地文件 {fname} 失败: {e}")
+                return None
         else:
-            no_goal = p / (1 - cum)
-        no_goal_probs.append(no_goal)
-        cum += p
-    par_list = []
-    for ng in no_goal_probs:
-        ng_safe = max(ng, 1e-10)
-        if ng >= 1.0:
-            par = 0.0
+            # 本地缺少任何必要文件，则放弃本地加载
+            return None
+    loader = FootballDataLoader()
+    loader.load_from_dict(xml_contents)
+    return loader
+
+@st.cache_resource
+def load_data():
+    """优先从本地加载 XML，若失败则从 GitHub 下载（GitHub Actions 中会设置环境变量强制使用 GitHub）"""
+    # 检测是否在 GitHub Actions 环境中
+    if os.getenv('GITHUB_ACTIONS') == 'true':
+        st.info("🔄 检测到 GitHub Actions 环境，从 GitHub 下载数据...")
+        return load_xml_from_github()
+    else:
+        # 本地环境：尝试读取本地文件
+        loader = load_local_xml_files()
+        if loader is not None:
+            st.success("✅ 使用本地 XML 文件")
+            return loader
         else:
-            par = -math.log(ng_safe)
-        par_list.append(par)
-    return probs, no_goal_probs, par_list
+            st.info("📡 未找到本地 XML 文件，尝试从 GitHub 下载...")
+            return load_xml_from_github()
 
-def simulate_one_match(home_no_goal_probs, home_par, away_no_goal_probs, away_par):
-    home_goals = 0
-    away_goals = 0
-    round_history = []
-    rounds = 0
-    rand = random.random
-
-    while True:
-        rounds += 1
-        p_home = home_par[home_goals]
-        p_away = away_par[away_goals]
-        if p_home > p_away:
-            attacker = "home"
-        elif p_away > p_home:
-            attacker = "away"
-        else:
-            attacker = "home"
-
-        if attacker == "home":
-            r = rand()
-            if r < home_no_goal_probs[home_goals]:
-                r2 = rand()
-                if r2 < away_no_goal_probs[away_goals]:
-                    round_history.append({
-                        "轮次": rounds,
-                        "进攻方": "主队 -> 客队",
-                        "主队随机数": round(r, 6),
-                        "主队是否进球": "否",
-                        "客队随机数": round(r2, 6),
-                        "客队是否进球": "否",
-                        "当前比分": f"{home_goals}-{away_goals}"
-                    })
-                    break
-                else:
-                    away_goals += 1
-                    round_history.append({
-                        "轮次": rounds,
-                        "进攻方": "主队 -> 客队",
-                        "主队随机数": round(r, 6),
-                        "主队是否进球": "否",
-                        "客队随机数": round(r2, 6),
-                        "客队是否进球": "是",
-                        "当前比分": f"{home_goals}-{away_goals}"
-                    })
+def load_xml_from_github():
+    """从 GitHub raw URL 下载 XML 文件（原函数）"""
+    base_url = "https://raw.githubusercontent.com/52483588/xml/refs/heads/main/"
+    files = [
+        "numberofgoals.xml",
+        "odds_config.xml",
+        "correctscore.xml",
+        "halffull.xml",
+        "overunder.xml",
+        "windrawwin.xml",
+        "windrawwinfirsthalf.xml",
+        "winodds.xml"
+    ]
+    xml_files_content = {}
+    for filename in files:
+        url = base_url + filename
+        try:
+            resp = requests.get(url, timeout=10)
+            if resp.status_code == 200:
+                xml_files_content[filename] = resp.text
             else:
-                home_goals += 1
-                round_history.append({
-                    "轮次": rounds,
-                    "进攻方": "主队",
-                    "主队随机数": round(r, 6),
-                    "主队是否进球": "是",
-                    "客队随机数": "",
-                    "客队是否进球": "",
-                    "当前比分": f"{home_goals}-{away_goals}"
-                })
-        else:
-            r = rand()
-            if r < away_no_goal_probs[away_goals]:
-                r2 = rand()
-                if r2 < home_no_goal_probs[home_goals]:
-                    round_history.append({
-                        "轮次": rounds,
-                        "进攻方": "客队 -> 主队",
-                        "主队随机数": round(r2, 6),
-                        "主队是否进球": "否",
-                        "客队随机数": round(r, 6),
-                        "客队是否进球": "否",
-                        "当前比分": f"{home_goals}-{away_goals}"
-                    })
-                    break
-                else:
-                    home_goals += 1
-                    round_history.append({
-                        "轮次": rounds,
-                        "进攻方": "客队 -> 主队",
-                        "主队随机数": round(r2, 6),
-                        "主队是否进球": "是",
-                        "客队随机数": round(r, 6),
-                        "客队是否进球": "否",
-                        "当前比分": f"{home_goals}-{away_goals}"
-                    })
-            else:
-                away_goals += 1
-                round_history.append({
-                    "轮次": rounds,
-                    "进攻方": "客队",
-                    "主队随机数": "",
-                    "主队是否进球": "",
-                    "客队随机数": round(r, 6),
-                    "客队是否进球": "是",
-                    "当前比分": f"{home_goals}-{away_goals}"
-                })
-
-        if home_goals >= MAX_GOALS or away_goals >= MAX_GOALS:
-            break
-
-    return {
-        "final_score": f"{home_goals}-{away_goals}",
-        "home_goals": home_goals,
-        "away_goals": away_goals,
-        "rounds": rounds,
-        "history": pd.DataFrame(round_history)
-    }
-
-def simulate_matches(home_no_goal_probs, home_par, away_no_goal_probs, away_par, n, progress_bar=None):
-    results = []
-    for i in range(n):
-        res = simulate_one_match(home_no_goal_probs, home_par, away_no_goal_probs, away_par)
-        results.append({
-            "final_score": res["final_score"],
-            "home_goals": res["home_goals"],
-            "away_goals": res["away_goals"],
-            "rounds": res["rounds"]
-        })
-        if progress_bar is not None:
-            progress_bar.progress((i + 1) / n, text=f"模拟进度: {i+1}/{n}")
-    return pd.DataFrame(results)
-
+                st.error(f"❌ {filename} 加载失败 (HTTP {resp.status_code})")
+                return None
+        except Exception as e:
+            st.error(f"❌ {filename} 请求异常: {e}")
+            return None
+    if len(xml_files_content) >= 8:
+        loader = FootballDataLoader()
+        loader.load_from_dict(xml_files_content)
+        return loader
+    else:
+        st.error("部分文件加载失败，请检查网络后刷新页面重试。")
+        return None
 
 # ================= 页面配置 =================
 st.set_page_config(
@@ -547,43 +480,9 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# ================= 自动加载XML数据 (无TTL缓存) =================
-@st.cache_resource
-def load_xml_from_github():
-    base_url = "https://raw.githubusercontent.com/52483588/xml/refs/heads/main/"
-    files = [
-        "numberofgoals.xml",
-        "odds_config.xml",
-        "correctscore.xml",
-        "halffull.xml",
-        "overunder.xml",
-        "windrawwin.xml",
-        "windrawwinfirsthalf.xml",
-        "winodds.xml"
-    ]
-    xml_files_content = {}
-    for filename in files:
-        url = base_url + filename
-        try:
-            resp = requests.get(url, timeout=10)
-            if resp.status_code == 200:
-                xml_files_content[filename] = resp.text
-            else:
-                st.error(f"❌ {filename} 加载失败 (HTTP {resp.status_code})")
-                return None
-        except Exception as e:
-            st.error(f"❌ {filename} 请求异常: {e}")
-            return None
-    if len(xml_files_content) >= 8:
-        loader = FootballDataLoader()
-        loader.load_from_dict(xml_files_content)
-        return loader
-    else:
-        st.error("部分文件加载失败，请检查网络后刷新页面重试。")
-        return None
-
-with st.spinner("正在从 GitHub 加载比赛数据，请稍候..."):
-    loader = load_xml_from_github()
+# ================= 自动加载XML数据（智能切换） =================
+with st.spinner("正在加载比赛数据，请稍候..."):
+    loader = load_data()
 if loader is None:
     st.stop()
 
@@ -725,7 +624,7 @@ with st.container():
     st.markdown('<div class="sticky-header">', unsafe_allow_html=True)
     page = st.radio(
         "选择页面",
-        ["首页", "赔率一览", "总进球", "比分", "轮次模拟", "分析记录库", "投注价值分析"],
+        ["首页", "赔率一览", "总进球", "比分", "分析记录库"],
         horizontal=True,
         label_visibility="collapsed",
         key="page_nav"
@@ -841,7 +740,7 @@ if run_sim:
             "exp_do": data['draw_prob'] * do,
             "exp_ao": data['away_win_prob'] * ao,
         }
-        update_or_add_core_record(match_id, core, total_prob_str)   # 注意参数名改为 total_prob_str
+        update_or_add_core_record(match_id, core, total_prob_str)
         # ---
 
     st.success(f"✅ 模拟完成！耗时 {data['elapsed']:.3f} 秒，核心结果及总进球概率分布已添加到【分析记录库】。")
@@ -1022,6 +921,8 @@ elif page == "总进球":
     total_df['概率数值'] = total_df['概率']
 
     # ===== 深度分析面板 =====
+    # 注意：这里需要引入 streamlit_integration 中的 render_over_under_analysis 函数
+    # 由于用户已在文件开头导入 from streamlit_integration import render_over_under_analysis，此处直接调用
     render_over_under_analysis(
         total_df=total_df,
         over_odds=oo,
@@ -1088,99 +989,6 @@ elif page == "比分":
         df_scores['赔付'] = df_scores['赔付'].apply(lambda x: f"{x:.4f}")
 
     st.dataframe(df_scores, use_container_width=True, hide_index=True)
-
-elif page == "轮次模拟":
-    st.markdown('<p class="main-header">⏱️ 轮次模拟（回合制进攻 · 基于 par 值决定顺序）</p>', unsafe_allow_html=True)
-    match_id = st.session_state.selected_match_id
-    home_odds, away_odds = loader.get_odds_for_match(match_id)
-
-    _, home_no_goal, home_par = calculate_probabilities(home_odds)
-    _, away_no_goal, away_par = calculate_probabilities(away_odds)
-
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown("**🏠 主队进球数赔率与参数**")
-        home_df = pd.DataFrame({
-            '进球数': list(range(6)),
-            '赔率': home_odds,
-            '不再进球概率': home_no_goal,
-            'par值 (-ln)': home_par
-        })
-        home_df['不再进球概率'] = home_df['不再进球概率'].apply(lambda x: f"{x:.4%}")
-        home_df['par值 (-ln)'] = home_df['par值 (-ln)'].apply(lambda x: f"{x:.4f}")
-        st.dataframe(home_df, use_container_width=True, hide_index=True)
-    with col2:
-        st.markdown("**✈️ 客队进球数赔率与参数**")
-        away_df = pd.DataFrame({
-            '进球数': list(range(6)),
-            '赔率': away_odds,
-            '不再进球概率': away_no_goal,
-            'par值 (-ln)': away_par
-        })
-        away_df['不再进球概率'] = away_df['不再进球概率'].apply(lambda x: f"{x:.4%}")
-        away_df['par值 (-ln)'] = away_df['par值 (-ln)'].apply(lambda x: f"{x:.4f}")
-        st.dataframe(away_df, use_container_width=True, hide_index=True)
-
-    st.markdown("---")
-    col_n, col_btn = st.columns([2, 1])
-    with col_n:
-        n_round_sims = st.number_input("模拟次数", min_value=100, max_value=100000, value=10000, step=1000)
-    with col_btn:
-        run_round_sim = st.button("🚀 开始轮次模拟", type="primary", use_container_width=True)
-
-    if run_round_sim:
-        progress_bar = st.progress(0, text="初始化...")
-        with st.spinner(f"⏳ 正在进行 {n_round_sims:,} 次轮次模拟..."):
-            df_results = simulate_matches(home_no_goal, home_par, away_no_goal, away_par, n_round_sims, progress_bar=progress_bar)
-        progress_bar.empty()
-
-        # 注意：此处不再更新分析记录库的轮次>10%字段（已由总进球替代）
-        st.success(f"✅ 模拟完成！共模拟 {n_round_sims:,} 场。")
-
-        st.markdown('<p class="sub-header">📊 比分分布</p>', unsafe_allow_html=True)
-        score_counts = df_results.groupby(["home_goals", "away_goals"]).size().reset_index(name="次数")
-        score_counts["概率"] = score_counts["次数"] / n_round_sims
-        score_counts["百分比"] = score_counts["概率"].apply(lambda x: f"{x:.4%}")
-        score_counts["比分"] = score_counts["home_goals"].astype(str) + "-" + score_counts["away_goals"].astype(str)
-        col_left, col_right = st.columns([1, 2])
-        with col_left:
-            st.dataframe(score_counts[["比分", "次数", "百分比"]], use_container_width=True, hide_index=True)
-        with col_right:
-            if PLOTLY_AVAILABLE:
-                top_scores = score_counts.sort_values("概率", ascending=False).head(15)
-                fig = px.bar(top_scores, x="比分", y="概率", text="百分比", title="比分概率分布（前15）")
-                fig.update_traces(textposition='outside')
-                fig.update_layout(yaxis_tickformat='.0%', height=400)
-                st.plotly_chart(fig, use_container_width=True)
-            else:
-                st.bar_chart(score_counts.set_index("比分")["概率"])
-
-        st.markdown('<p class="sub-header">🔄 轮次数分布</p>', unsafe_allow_html=True)
-        round_counts = df_results.groupby("rounds").size().reset_index(name="次数")
-        round_counts["概率"] = round_counts["次数"] / n_round_sims
-        round_counts["百分比"] = round_counts["概率"].apply(lambda x: f"{x:.4%}")
-        col_left2, col_right2 = st.columns([1, 2])
-        with col_left2:
-            def highlight_round(row):
-                if row["概率"] >= 0.1:
-                    return ["background-color: #d4edda" for _ in row]
-                else:
-                    return ["" for _ in row]
-            styled_df = round_counts.style.apply(highlight_round, axis=1).format({"概率": "{:.4%}"})
-            st.dataframe(styled_df, use_container_width=True, hide_index=True)
-        with col_right2:
-            if PLOTLY_AVAILABLE:
-                fig2 = px.bar(round_counts, x="rounds", y="概率", text="百分比", title="轮次数概率分布")
-                fig2.update_traces(textposition='outside')
-                fig2.update_layout(yaxis_tickformat='.0%', height=400)
-                st.plotly_chart(fig2, use_container_width=True)
-            else:
-                st.bar_chart(round_counts.set_index("rounds")["概率"])
-
-        st.markdown('<p class="sub-header">🎯 单场模拟示例（最新一场）</p>', unsafe_allow_html=True)
-        example = simulate_one_match(home_no_goal, home_par, away_no_goal, away_par)
-        st.dataframe(example["history"], use_container_width=True, hide_index=True)
-        st.info(f"🏆 示例最终比分: 主队 {example['home_goals']} - {example['away_goals']} 客队")
 
 elif page == "分析记录库":
     st.markdown('<p class="main-header">📋 分析记录库</p>', unsafe_allow_html=True)
@@ -1262,12 +1070,12 @@ elif page == "分析记录库":
         if show_only_complete:
             df_sorted = df_sorted[~df_sorted["0球"].isin(["0.0%"]) | (df_sorted["0球"] != "0.0%")]
 
-        # 调整列顺序（先对 DataFrame 重排列，再应用样式）
+        # 调整列顺序
         cols = ["时间", "赛事", "主队", "客队", "胜概率", "平概率", "负概率",
                 "主进球", "客进球", "胜赔付", "平赔付", "负赔付",
                 "0球", "1球", "2球", "3球", "4球", "5球", "6球", "7+球",
                 "记录时间"]
-        df_sorted = df_sorted[cols]  # ✅ 正确：对 DataFrame 重排序
+        df_sorted = df_sorted[cols]
 
         # 高亮函数
         def highlight_goal_probs(dataframe):
@@ -1315,7 +1123,6 @@ elif page == "分析记录库":
             }
         )
 
-        # ==============================================
         # 导出 CSV
         beijing_now = datetime.datetime.now(timezone(timedelta(hours=8)))
         csv = df.to_csv(index=False).encode('utf-8')
