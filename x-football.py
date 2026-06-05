@@ -23,7 +23,7 @@ from datetime import timezone, timedelta
 import gc
 import io
 from streamlit_integration import render_over_under_analysis
-from betting_value_page import render_betting_value_page, run_betting_analysis
+# from betting_value_page import render_betting_value_page, run_betting_analysis
 
 # 导入 plotly
 try:
@@ -1327,8 +1327,8 @@ elif page == "分析记录库":
             mime="text/csv"
         )
         
-elif page == "投注价值分析":
-    render_betting_value_page(loader, st.session_state.selected_match_id)
+# elif page == "投注价值分析":
+#     render_betting_value_page(loader, st.session_state.selected_match_id)
 
 st.markdown("---")
 st.caption("数据基于闯关概率模型模拟生成，实际结果可能因随机性有所波动。")
