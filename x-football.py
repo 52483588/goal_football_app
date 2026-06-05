@@ -1326,9 +1326,6 @@ elif page == "分析记录库":
             file_name=f"analysis_records_{beijing_now.strftime('%Y%m%d_%H%M%S')}.csv",
             mime="text/csv"
         )
-        
-# elif page == "投注价值分析":
-#     render_betting_value_page(loader, st.session_state.selected_match_id)
 
 st.markdown("---")
 st.caption("数据基于闯关概率模型模拟生成，实际结果可能因随机性有所波动。")
