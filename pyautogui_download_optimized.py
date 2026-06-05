@@ -6,7 +6,7 @@ import pyautogui
 # 设置安全机制，鼠标移到左上角可中断脚本
 pyautogui.FAILSAFE = True
 # ================= 配置区域 =================
-save_path = r"C:\Users\52483\Desktop\R.9\xml"
+save_path = r"C:\Users\52483\Desktop\xml"
 file_urls = [
     "https://www.macauslot.com/content/data/soccer/xml/odds/windrawwinfirsthalf.xml",
     "https://www.macauslot.com/content/data/soccer/xml/odds/odds_config.xml",
