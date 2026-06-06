@@ -2,9 +2,6 @@ name: 自动下载Macau slot XML 文件
 
 on:
   workflow_dispatch:
-  # 如果需要定时触发，可在此添加 schedule，例如：
-  # schedule:
-  #   - cron: '0 1,4,6,8,10,12,14,16,19,22 * * *'
 
 jobs:
   download-and-archive:
