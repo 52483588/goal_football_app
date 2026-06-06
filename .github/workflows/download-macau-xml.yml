@@ -29,20 +29,20 @@ jobs:
       - name: 创建 HisData 目录
         run: mkdir -p HisData
 
-      # 清理 HisData 中前一天的文件夹
-      - name: 删除前一天的文件夹
+      # 清理 HisData 中前两天的文件夹（保留今天和昨天）
+      - name: 删除前两天的文件夹
         run: |
           cd HisData
-          # 获取昨天的日期（北京时间，格式 YYYYMMDD）
-          yesterday=$(date -d "yesterday" +%Y%m%d)
-          echo "要删除的日期: $yesterday"
+          # 获取前两天的日期（北京时间，格式 YYYYMMDD）
+          two_days_ago=$(date -d "2 days ago" +%Y%m%d)
+          echo "要删除的日期: $two_days_ago"
           # 遍历所有子目录
           for dir in */; do
             # 去掉末尾的斜杠
             dirname=${dir%/}
             # 提取目录名的前8个字符作为日期（假设格式为 YYYYMMDD_HHMMSS）
             dir_date=${dirname:0:8}
-            if [[ "$dir_date" == "$yesterday" ]]; then
+            if [[ "$dir_date" == "$two_days_ago" ]]; then
               echo "删除文件夹: $dirname"
               rm -rf "$dirname"
             fi
