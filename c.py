@@ -258,6 +258,7 @@ def main():
 
     # 配置列宽
     col_config = {
+        "match_id": st.column_config.TextColumn("ID", width=60),
         "时间": st.column_config.TextColumn("时间", width=120),
         "赛事": st.column_config.TextColumn("赛事", width="auto"),
         "主队": st.column_config.TextColumn("主队", width="auto"),
@@ -272,7 +273,6 @@ def main():
         "负赔付": st.column_config.TextColumn("负赔付", width=60),
         "平均赔付": st.column_config.TextColumn("平均赔付", width=60),
         "记录时间": st.column_config.TextColumn("记录时间", width=120),
-        "match_id": st.column_config.TextColumn("ID", width=60),
     }
     # 为8个概率列添加配置
     for g in range(7):
