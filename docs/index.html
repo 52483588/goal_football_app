@@ -6,13 +6,37 @@
 <title>历史盘口数据查询工具</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Microsoft YaHei','微软雅黑',Arial,sans-serif; background: #f0f2f5; color: #333; min-height: 100vh; }
+  body { 
+    font-family: 'Microsoft YaHei','微软雅黑',Arial,sans-serif; 
+    background: #f0f2f5; 
+    color: #333; 
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
 
-  .header { background: linear-gradient(135deg,#1a3c6e,#2563a8); color: white; padding: 16px 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+  .header { 
+    background: linear-gradient(135deg,#1a3c6e,#2563a8); 
+    color: white; 
+    padding: 16px 24px; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    flex-shrink: 0;
+  }
   .header h1 { font-size: 20px; font-weight: 600; }
   .header p { font-size: 12px; opacity: 0.8; margin-top: 4px; }
 
-  .search-area { background: white; padding: 16px 24px; border-bottom: 1px solid #e0e0e0; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .search-area { 
+    background: white; 
+    padding: 16px 24px; 
+    border-bottom: 1px solid #e0e0e0; 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
+    flex-wrap: wrap;
+    flex-shrink: 0;
+  }
   .search-area label { font-weight: 600; white-space: nowrap; color: #555; }
   .search-area select { border: 2px solid #ccc; border-radius: 6px; padding: 8px 10px; font-size: 14px; outline: none; transition: border-color 0.2s; background: white; min-width: 200px; cursor: pointer; }
   .search-area select:focus { border-color: #2563a8; }
@@ -23,30 +47,145 @@
   .search-area button.clear { background: #888; }
   .search-area button.clear:hover { background: #555; }
   .view-switch { margin-left: auto; display: flex; gap: 8px; }
-  .view-switch button { background: #4a6f8f; }
+  .view-switch button { background: #4a6f8f; color: white; border: none; border-radius: 6px; padding: 9px 18px; cursor: pointer; }
   .view-switch button.active { background: #1a3c6e; box-shadow: inset 0 0 0 2px white; }
 
-  .match-info { background: #e8f4ff; border-left: 4px solid #2563a8; padding: 10px 16px; margin: 12px 24px 0; border-radius: 4px; font-size: 13px; display: none; }
+  /* 主要容器 - 可滚动区域 */
+  .scrollable-container {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .match-info { 
+    background: #e8f4ff; 
+    border-left: 4px solid #2563a8; 
+    padding: 10px 16px; 
+    margin: 12px 24px 0; 
+    border-radius: 4px; 
+    font-size: 13px; 
+    display: none;
+    flex-shrink: 0;
+  }
   .match-info .match-title { font-size: 16px; font-weight: 700; color: #1a3c6e; margin-bottom: 4px; }
   .match-info .meta { color: #555; }
 
-  .table-container { padding: 12px 24px 24px; overflow-x: auto; }
+  .legend { 
+    display: flex; 
+    gap: 16px; 
+    padding: 8px 16px; 
+    font-size: 12px; 
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    background: white;
+    border-bottom: 1px solid #e0e0e0;
+    margin: 12px 24px 0;
+    border-radius: 4px;
+  }
+  .legend-item { display: flex; align-items: center; gap: 5px; }
+  .legend-color { width: 14px; height: 14px; border-radius: 2px; }
 
-  .no-result { text-align: center; padding: 60px; color: #aaa; font-size: 16px; display: none; }
-  .hint { text-align: center; padding: 60px; color: #aaa; font-size: 14px; }
+  /* 视图容器 */
+  .view-ou, .view-win { 
+    display: none;
+    flex: 1;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .view-ou.active, .view-win.active { 
+    display: flex;
+  }
 
-  table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.1); font-size: 13px; min-width: 1400px; }
-  th { background: #1a3c6e; color: white; padding: 10px 7px; text-align: center; font-weight: 600; white-space: nowrap; }
-  th.group-ng { background: #1e5c2e; }
-  th.group-tg { background: #5b3a70; }
-  th.group-ou-base { background: #b52b2b; }
-  th.group-ou-hv1 { background: #8b1a1a; }
-  th.group-ou-hv2 { background: #6b1414; }
-  th.group-win-base { background: #2a6b5e; }
-  th.group-win-hv1 { background: #1f5348; }
-  th.group-win-hv2 { background: #153d34; }
+  .no-result, .hint { 
+    text-align: center; 
+    padding: 60px; 
+    color: #aaa; 
+    font-size: 16px; 
+  }
+
+  /* 表格容器 - 支持滚动时表头固定 */
+  .table-container { 
+    flex: 1;
+    overflow: auto;
+    padding: 0 24px 12px 24px;
+    position: relative;
+  }
+
+  /* 表格样式 - 关键：表头固定 */
+  table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    background: white; 
+    border-radius: 8px; 
+    font-size: 13px; 
+    min-width: 1400px;
+  }
+
+  /* 主表头单元格 - 固定高度 */
+  th {
+    padding: 10px 7px;
+    line-height: 1.2;
+    height: 44px;
+    box-sizing: border-box;
+    text-align: center;
+    font-weight: 600;
+    white-space: nowrap;
+    color: #ffffff !important;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+  }
+
+  /* 固定表头核心样式 - 主表头 */
+  thead tr:first-child th {
+    position: sticky;
+    top: 0;
+    z-index: 11;
+  }
+
+  /* 副表头 - 紧贴主表头 */
+  .subheader-row th {
+    position: sticky;
+    top: 44px;
+    z-index: 10;
+    padding: 5px 3px;
+    height: auto;
+    color: #ffffff !important;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+  }
+
+  /* ========== 主表头颜色分组 ========== */
+  thead tr:first-child th.group-ng { background: #1e5c2e; }
+  thead tr:first-child th.group-tg { background: #5b3a70; }
+  thead tr:first-child th.group-ou-base { background: #b52b2b; }
+  thead tr:first-child th.group-ou-hv1 { background: #8b1a1a; }
+  thead tr:first-child th.group-ou-hv2 { background: #6b1414; }
+  thead tr:first-child th.group-win-base { background: #2a6b5e; }
+  thead tr:first-child th.group-win-hv1 { background: #1f5348; }
+  thead tr:first-child th.group-win-hv2 { background: #153d34; }
+
+  /* 第一列时间戳单独设置背景色（深蓝色，与表格主题一致） */
+  thead tr:first-child th:first-child { background: #1a3c6e; }
+
+  /* ========== 副表头颜色分组 ========== */
+  .subheader-row th.group-ng { background: #2d7a3f; }
+  .subheader-row th.group-tg { background: #754a90; }
+  .subheader-row th.group-ou-base { background: #c73e3e; }
+  .subheader-row th.group-ou-hv1 { background: #a02828; }
+  .subheader-row th.group-ou-hv2 { background: #801818; }
+  .subheader-row th.group-win-base { background: #3d8b7a; }
+  .subheader-row th.group-win-hv1 { background: #2c6b5d; }
+  .subheader-row th.group-win-hv2 { background: #1d5246; }
+
   td.ou-divider, th.ou-divider { border-right: 2px solid rgba(255,255,255,0.3); }
-  td { padding: 6px 5px; text-align: center; border-bottom: 1px solid #f0f0f0; white-space: nowrap; vertical-align: middle; line-height: 1.35; }
+  td { 
+    padding: 6px 5px; 
+    text-align: center; 
+    border-bottom: 1px solid #f0f0f0; 
+    white-space: nowrap; 
+    vertical-align: middle; 
+    line-height: 1.35;
+  }
   tr:last-child td { border-bottom: none; }
   tr:hover td { background: #f5f9ff; }
 
@@ -64,28 +203,28 @@
 
   .changed { background: #fff3cd !important; }
 
-  .subheader-row th { background: #2b5797; font-size: 10px; padding: 5px 3px; }
-  .subheader-row th.group-ng { background: #2d7a3f; }
-  .subheader-row th.group-tg { background: #754a90; }
-  .subheader-row th.group-ou-base { background: #c73e3e; }
-  .subheader-row th.group-ou-hv1 { background: #a02828; }
-  .subheader-row th.group-ou-hv2 { background: #801818; }
-  .subheader-row th.group-win-base { background: #3d8b7a; }
-  .subheader-row th.group-win-hv1 { background: #2c6b5d; }
-  .subheader-row th.group-win-hv2 { background: #1d5246; }
-
-  .autocomplete-list { position: absolute; background: white; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 1000; max-height: 250px; overflow-y: auto; min-width: 300px; }
+  /* 自动补全样式 */
+  .autocomplete-list { 
+    position: absolute; 
+    background: white; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+    z-index: 1000; 
+    max-height: 250px; 
+    overflow-y: auto; 
+    min-width: 300px; 
+  }
   .autocomplete-list div { padding: 8px 12px; cursor: pointer; font-size: 13px; border-bottom: 1px solid #f0f0f0; }
   .autocomplete-list div:hover { background: #e8f4ff; }
   .autocomplete-list div em { font-style: normal; color: #2563a8; font-weight: 600; }
   .autocomplete-wrapper { position: relative; }
 
-  .legend { display: flex; gap: 16px; padding: 0 24px 8px; font-size: 12px; flex-wrap: wrap; }
-  .legend-item { display: flex; align-items: center; gap: 5px; }
-  .legend-color { width: 14px; height: 14px; border-radius: 2px; }
-
-  .view-ou, .view-win { display: none; }
-  .view-ou.active, .view-win.active { display: block; }
+  /* 滚动条美化 */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: #f0f2f5; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb { background: #c0c8d0; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #a0a8b0; }
 </style>
 </head>
 <body>
@@ -114,29 +253,31 @@
   <span id="statusTip" style="color:#888; font-size:13px;"></span>
 </div>
 
-<div class="match-info" id="matchInfo">
-  <div class="match-title" id="matchTitle"></div>
-  <div class="meta" id="matchMeta"></div>
-</div>
+<div class="scrollable-container">
+  <div class="match-info" id="matchInfo">
+    <div class="match-title" id="matchTitle"></div>
+    <div class="meta" id="matchMeta"></div>
+  </div>
 
-<div class="legend" id="legend" style="display:none">
-  <span style="color:#555; font-weight:600;">列色标：</span>
-  <span class="legend-item"><span class="legend-color" style="background:#1e5c2e"></span>进球分布赔率</span>
-  <span class="legend-item"><span class="legend-color" style="background:#5b3a70"></span>总进球/净胜球概率</span>
-  <span class="legend-item"><span class="legend-color" style="background:#7a1e1e"></span>大小球/让球赔率+公平P(蓝)+EV(红正)</span>
-  <span class="legend-item"><span class="legend-color" style="background:#fff3cd;border:1px solid #e0c060"></span>数值变化</span>
-</div>
+  <div class="legend" id="legend" style="display:none">
+    <span style="color:#555; font-weight:600;">列色标：</span>
+    <span class="legend-item"><span class="legend-color" style="background:#1e5c2e"></span>进球分布赔率</span>
+    <span class="legend-item"><span class="legend-color" style="background:#5b3a70"></span>总进球/净胜球概率</span>
+    <span class="legend-item"><span class="legend-color" style="background:#7a1e1e"></span>大小球/让球赔率+公平P(蓝)+EV(红正)</span>
+    <span class="legend-item"><span class="legend-color" style="background:#fff3cd;border:1px solid #e0c060"></span>数值变化</span>
+  </div>
 
-<div class="view-ou active" id="viewOu">
-  <div class="no-result" id="noResultOu">未找到 ID 对应的记录</div>
-  <div class="hint" id="hintOu">请在上方输入赛事 ID 进行查询</div>
-  <div class="table-container" id="tableOu"></div>
-</div>
+  <div class="view-ou active" id="viewOu">
+    <div class="no-result" id="noResultOu">未找到 ID 对应的记录</div>
+    <div class="hint" id="hintOu">请在上方输入赛事 ID 进行查询</div>
+    <div class="table-container" id="tableOu"></div>
+  </div>
 
-<div class="view-win" id="viewWin">
-  <div class="no-result" id="noResultWin">未找到 ID 对应的记录</div>
-  <div class="hint" id="hintWin">请在上方输入赛事 ID 进行查询</div>
-  <div class="table-container" id="tableWin"></div>
+  <div class="view-win" id="viewWin">
+    <div class="no-result" id="noResultWin">未找到 ID 对应的记录</div>
+    <div class="hint" id="hintWin">请在上方输入赛事 ID 进行查询</div>
+    <div class="table-container" id="tableWin"></div>
+  </div>
 </div>
 
 <script src="his_data.js"></script>
@@ -253,26 +394,19 @@ function calcAsianEV(handicap, overOdds, underOdds, totalProb) {
 }
 
 // 让球亚洲盘 EV 计算（基于净胜球概率数组，索引0~8对应 -4-,-3,...,+4+）
-// 规则：设 I = 净胜球 + 盘口（盘口带符号）
-// I >= 0.5  => 主队全赢
-// I == 0.25 => 主队赢半
-// I == 0    => 走盘
-// I == -0.25=> 主队输半
-// I <= -0.5 => 主队全输
 function calcAsianEVForGD(handicap, homeOdds, awayOdds, gdProbs) {
   var gdValues = [-4, -3, -2, -1, 0, 1, 2, 3, 4];
   var pHomeWin = 0, pHomeHalf = 0, pPush = 0, pAwayHalf = 0, pAwayWin = 0;
 
   for (var i = 0; i < gdValues.length; i++) {
     var g = gdValues[i];
-    var I = g + handicap;  // 净胜球 + 盘口
+    var I = g + handicap;
     var prob = gdProbs[i];
     if (I >= 0.5) {
       pHomeWin += prob;
     } else if (I >= 0.25 && I < 0.5) {
-      // 通常精确等于0.25，考虑浮点误差
       if (Math.abs(I - 0.25) < 1e-6) pHomeHalf += prob;
-      else pHomeWin += prob; // 实际上不会出现
+      else pHomeWin += prob;
     } else if (Math.abs(I) < 1e-6) {
       pPush += prob;
     } else if (I <= -0.5) {
@@ -283,7 +417,6 @@ function calcAsianEVForGD(handicap, homeOdds, awayOdds, gdProbs) {
     }
   }
 
-  // 计算期望收益（以1单位投注主队为例）
   var evHome = pHomeWin * (homeOdds - 1) + pHomeHalf * ((homeOdds - 1) / 2) + pPush * 0 + pAwayHalf * (-0.5) + pAwayWin * (-1);
   var evAway = pAwayWin * (awayOdds - 1) + pAwayHalf * ((awayOdds - 1) / 2) + pPush * 0 + pHomeHalf * (-0.5) + pHomeWin * (-1);
 
@@ -426,10 +559,22 @@ function doClear() {
 }
 
 function switchView(view) {
-  document.getElementById('btnOu').classList.toggle('active', view === 'ou');
-  document.getElementById('btnWin').classList.toggle('active', view === 'win');
-  document.getElementById('viewOu').classList.toggle('active', view === 'ou');
-  document.getElementById('viewWin').classList.toggle('active', view === 'win');
+  var btnOu = document.getElementById('btnOu');
+  var btnWin = document.getElementById('btnWin');
+  var viewOu = document.getElementById('viewOu');
+  var viewWin = document.getElementById('viewWin');
+
+  if (view === 'ou') {
+    btnOu.classList.add('active');
+    btnWin.classList.remove('active');
+    viewOu.classList.add('active');
+    viewWin.classList.remove('active');
+  } else {
+    btnWin.classList.add('active');
+    btnOu.classList.remove('active');
+    viewWin.classList.add('active');
+    viewOu.classList.remove('active');
+  }
 }
 
 function doSearch() {
@@ -493,6 +638,7 @@ function doSearch() {
 // 大小球表格
 function buildOuTable(rows) {
   var container = document.getElementById('tableOu');
+  container.innerHTML = '';
   var table = document.createElement('table');
   var ngCols = ['h1','h2','h3','h4','h5','h6','a1','a2','a3','a4','a5','a6'];
   var tgLabels = ['TG0','TG1','TG2','TG3','TG4','TG5','TG6','TG7+'];
@@ -500,9 +646,9 @@ function buildOuTable(rows) {
     '<thead>' +
     '  <tr><th rowspan="2">时间戳</th><th colspan="12" class="group-ng">进球分布赔率</th><th colspan="8" class="group-tg">总进球概率</th><th colspan="9" class="group-ou-base">大小球赔率 + 公平概率 + EV</th></tr>' +
     '  <tr class="subheader-row">' +
-    '    <th>H1</th><th>H2</th><th>H3</th><th>H4</th><th>H5</th><th>H6</th>' +
-    '    <th>A1</th><th>A2</th><th>A3</th><th>A4</th><th>A5</th><th>A6</th>';
-  for (var ti=0; ti<tgLabels.length; ti++) theadHTML += '<th>'+tgLabels[ti]+'</th>';
+    '    <th class="group-ng">H1</th><th class="group-ng">H2</th><th class="group-ng">H3</th><th class="group-ng">H4</th><th class="group-ng">H5</th><th class="group-ng">H6</th>' +
+    '    <th class="group-ng">A1</th><th class="group-ng">A2</th><th class="group-ng">A3</th><th class="group-ng">A4</th><th class="group-ng">A5</th><th class="group-ng">A6</th>';
+  for (var ti=0; ti<tgLabels.length; ti++) theadHTML += '<th class="group-tg">'+tgLabels[ti]+'</th>';
   theadHTML +=
     '    <th class="group-ou-base">大球OO</th><th class="group-ou-base">小球UO</th><th class="group-ou-base ou-divider">盘口LI</th>' +
     '    <th class="group-ou-hv1">HV1大</th><th class="group-ou-hv1">HV1小</th><th class="group-ou-hv1 ou-divider">HV1盘</th>' +
@@ -611,6 +757,7 @@ function buildOuTable(rows) {
 // 让球表格
 function buildWinTable(rows) {
   var container = document.getElementById('tableWin');
+  container.innerHTML = '';
   var table = document.createElement('table');
   var ngCols = ['h1','h2','h3','h4','h5','h6','a1','a2','a3','a4','a5','a6'];
   var displayLabels = ['+4+', '+3', '+2', '+1', '0', '-1', '-2', '-3', '-4-'];
@@ -618,14 +765,14 @@ function buildWinTable(rows) {
     '<thead>' +
     '  <tr><th rowspan="2">时间戳</th><th colspan="12" class="group-ng">进球分布赔率</th><th colspan="9" class="group-tg">净胜球概率</th><th colspan="9" class="group-win-base">让球赔率 + 公平概率 + EV</th></tr>' +
     '  <tr class="subheader-row">' +
-    '    <th>H1</th><th>H2</th><th>H3</th><th>H4</th><th>H5</th><th>H6</th>' +
-    '    <th>A1</th><th>A2</th><th>A3</th><th>A4</th><th>A5</th><th>A6</th>';
-  for (var ti=0; ti<displayLabels.length; ti++) theadHTML += '<th>'+displayLabels[ti]+'</th>';
+    '    <th class="group-ng">H1</th><th class="group-ng">H2</th><th class="group-ng">H3</th><th class="group-ng">H4</th><th class="group-ng">H5</th><th class="group-ng">H6</th>' +
+    '    <th class="group-ng">A1</th><th class="group-ng">A2</th><th class="group-ng">A3</th><th class="group-ng">A4</th><th class="group-ng">A5</th><th class="group-ng">A6</th>';
+  for (var ti=0; ti<displayLabels.length; ti++) theadHTML += '<th class="group-tg">'+displayLabels[ti]+'</th>';
   theadHTML +=
     '    <th class="group-win-base">主队</th><th class="group-win-base">客队</th><th class="group-win-base ou-divider">盘口</th>' +
     '    <th class="group-win-hv1">HV1主</th><th class="group-win-hv1">HV1客</th><th class="group-win-hv1 ou-divider">HV1盘</th>' +
     '    <th class="group-win-hv2">HV2主</th><th class="group-win-hv2">HV2客</th><th class="group-win-hv2">HV2盘</th>' +
-    '  </table></thead>';
+    '  </tr></thead>';
   table.innerHTML = theadHTML + '<tbody></tbody>';
   container.appendChild(table);
   var tbody = table.querySelector('tbody');
@@ -636,7 +783,7 @@ function buildWinTable(rows) {
     var folder = rows[ri].folder, rec = rows[ri].rec;
     var tr = document.createElement('tr');
     if (!rec) {
-      tr.innerHTML = '<td class="folder-cell">'+folder+'</td><td colspan="30" class="missing">— 该时间段无此赛事 —</td>';
+      tr.innerHTML = '<td class="folder-cell">'+folder+'<td><td colspan="30" class="missing">— 该时间段无此赛事 —</td>';
       tbody.appendChild(tr);
       continue;
     }
@@ -657,10 +804,9 @@ function buildWinTable(rows) {
       var awayOdds = [ng.a1,ng.a2,ng.a3,ng.a4,ng.a5,ng.a6];
       var hp = normalizeOdds(homeOdds);
       var ap = normalizeOdds(awayOdds);
-      gdProbs = calcGoalDiff(hp, ap);  // 升序: -4- .. +4+
+      gdProbs = calcGoalDiff(hp, ap);
     }
     var curGd = gdProbs ? gdProbs.slice() : new Array(9).fill('');
-    // 逆序输出，使表格从左到右为 +4+ ... -4-
     for (var gi=0; gi<9; gi++) {
       var origIdx = 8 - gi;
       var gval = gdProbs ? (gdProbs[origIdx]*100).toFixed(1)+'%' : '<span class="missing">-</span>';
@@ -668,7 +814,6 @@ function buildWinTable(rows) {
       htmlOut += '<td class="tg-val'+gchg+'">'+gval+'</td>';
     }
 
-    // 解析让球盘口
     var baseHandicap = null, baseHomeOdds = null, baseAwayOdds = null;
     if (win.g && win.gg && win.ho && win.ao) {
       var gDir = win.g;
