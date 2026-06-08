@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>⚽ 足球分析记录库</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      background: #f0f2f5;
+      color: #1a1a1a;
+      min-height: 100vh;
+    }
+
+    /* ---- TOP HEADER ---- */
+    .top-header {
+      background: linear-gradient(135deg, #1F4E79 0%, #2980b9 100%);
+      color: #fff;
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+    .top-header h1 { font-size: 24px; font-weight: 700; letter-spacing: 1px; }
+    .top-header .meta { font-size: 12px; opacity: 0.85; text-align: right; line-height: 1.8; }
+
+    /* ---- LAYOUT ---- */
+    .layout { display: flex; min-height: calc(100vh - 66px); }
+
+    /* ---- SIDEBAR ---- */
+    .sidebar {
+      width: 240px;
+      min-width: 200px;
+      background: #fff;
+      border-right: 1px solid #e0e4ea;
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.04);
+    }
+    .sidebar h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1F4E79;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #e8f0fb;
+    }
+    .sidebar label { font-size: 12px; color: #555; display: block; margin-bottom: 4px; }
+    .sidebar input[type="text"],
+    .sidebar select {
+      width: 100%;
+      padding: 7px 9px;
+      border: 1px solid #d1d8e0;
+      border-radius: 6px;
+      font-size: 13px;
+      color: #333;
+      background: #fafbfd;
+      transition: border .2s;
+    }
+    .sidebar input[type="text"]:focus,
+    .sidebar select:focus { border-color: #2980b9; outline: none; }
+
+    .filter-group { display: flex; flex-direction: column; gap: 8px; }
+
+    /* league checkboxes */
+    .league-list {
+      max-height: 160px;
+      overflow-y: auto;
+      border: 1px solid #e0e4ea;
+      border-radius: 6px;
+      padding: 6px 8px;
+      background: #fafbfd;
+    }
+    .league-list label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 0;
+      font-size: 12px;
+      color: #444;
+      cursor: pointer;
+    }
+    .league-list input[type="checkbox"] { accent-color: #2980b9; }
+
+    /* sort direction */
+    .sort-row { display: flex; gap: 8px; align-items: center; }
+    .sort-row select { flex: 1; }
+    .dir-btn {
+      background: #eaf2fb;
+      border: 1px solid #b5d4f0;
+      border-radius: 6px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #1F4E79;
+      transition: background .15s;
+      white-space: nowrap;
+    }
+    .dir-btn:hover { background: #c5dff5; }
+
+    /* action buttons */
+    .btn {
+      width: 100%;
+      padding: 9px;
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: opacity .15s, transform .1s;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary { background: #2980b9; color: #fff; }
+    .btn-success { background: #27ae60; color: #fff; }
+    .btn:hover { opacity: 0.9; }
+
+    /* stats cards */
+    .stats-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .stat-card {
+      flex: 1;
+      min-width: 56px;
+      background: #eaf2fb;
+      border-radius: 8px;
+      padding: 8px 6px;
+      text-align: center;
+    }
+    .stat-card .sv { font-size: 17px; font-weight: 700; color: #1F4E79; }
+    .stat-card .sl { font-size: 10px; color: #777; margin-top: 2px; }
+
+    /* ---- MAIN CONTENT ---- */
+    .main {
+      flex: 1;
+      padding: 20px 24px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #2C3E50;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e0e4ea;
+    }
+
+    .result-info {
+      font-size: 12px;
+      color: #777;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .result-info span { display: flex; align-items: center; gap: 4px; }
+
+    /* ---- TABLE WRAPPER ---- */
+    .table-wrapper {
+      overflow-x: auto;
+      overflow-y: auto;
+      max-height: calc(100vh - 260px);
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      background: #fff;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    thead tr th {
+      background: #1F4E79;
+      color: #fff;
+      padding: 9px 10px;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      border-right: 1px solid rgba(255,255,255,0.1);
+      transition: background .15s;
+    }
+    thead tr th:hover { background: #2471a3; }
+    thead tr th.th-sortable { cursor: pointer; background: #16375a; }
+    thead tr th.th-sortable:hover { background: #1a4570; }
+    thead tr th.sorted-asc::after { content: " ▲"; font-size: 10px; }
+    thead tr th.sorted-desc::after { content: " ▼"; font-size: 10px; }
+
+    tbody tr { transition: background .1s; }
+    tbody tr:nth-child(even) { background: #f8fafd; }
+    tbody tr:hover { background: #eaf4ff !important; }
+
+    tbody td {
+      padding: 7px 10px;
+      text-align: center;
+      border-bottom: 1px solid #f0f0f0;
+      border-right: 1px solid #f0f0f0;
+    }
+    tbody td:nth-child(4),
+    tbody td:nth-child(5),
+    tbody td:nth-child(6) { text-align: left; }
+
+    /* ---- CELL HIGHLIGHT STYLES ---- */
+    .hl-red { background-color: #ff4444 !important; color: #fff !important; font-weight: 700; border-radius: 4px; }
+    .hl-yellow { background-color: #ffeb3b !important; color: #000 !important; font-weight: 700; border-radius: 4px; }
+    .hl-green { background-color: #c8e6c9 !important; color: #1b5e20 !important; font-weight: 700; border-radius: 4px; }
+
+    /* goal prob group separator */
+    .goal-sep { border-left: 2px solid #b0bec5 !important; }
+
+    /* ---- LEGEND ---- */
+    .legend {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      font-size: 11px;
+      color: #555;
+    }
+    .legend-item { display: flex; align-items: center; gap: 5px; }
+    .legend-dot {
+      width: 14px; height: 14px;
+      border-radius: 3px;
+      display: inline-block;
+    }
+
+    /* ---- LOADING / EMPTY ---- */
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 200px;
+      font-size: 15px;
+      color: #888;
+      gap: 10px;
+    }
+    .spinner {
+      width: 22px; height: 22px;
+      border: 3px solid #ddd;
+      border-top: 3px solid #2980b9;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .empty-tip {
+      text-align: center;
+      padding: 60px 20px;
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    /* ---- FILE INPUT ---- */
+    .file-section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .file-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: #1F4E79;
+      color: #fff;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: opacity .15s;
+    }
+    .file-label:hover { opacity: 0.88; }
+    #fileInput { display: none; }
+    .file-info { font-size: 12px; color: #888; }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 768px) {
+      .layout { flex-direction: column; }
+      .sidebar { width: 100%; border-right: none; border-bottom: 1px solid #e0e4ea; }
+      .main { padding: 14px; }
+    }
+
+    /* scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #f0f2f5; }
+    ::-webkit-scrollbar-thumb { background: #b0bec5; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #78909c; }
+  </style>
+</head>
+<body>
+
+<!-- TOP HEADER -->
+<div class="top-header">
+  <h1>⚽ 足球分析记录库</h1>
+  <div class="meta" id="metaInfo">暂未加载数据</div>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div>
+      <h3>📂 数据来源</h3>
+      <div class="file-section" style="flex-direction:column; align-items:flex-start;">
+        <label class="file-label" for="fileInput">
+          📁 选择 data/ 文件夹
+        </label>
+        <input type="file" id="fileInput" webkitdirectory directory multiple accept=".json" />
+        <div class="file-info" id="fileInfo">点击后选择整个 data/ 目录，自动读取所有 JSON</div>
+      </div>
+    </div>
+
+    <div>
+      <h3>🔍 数据筛选</h3>
+      <div class="filter-group">
+        <div>
+          <label>搜索主队 / 客队</label>
+          <input type="text" id="searchInput" placeholder="输入队名关键词…" />
+        </div>
+        <div>
+          <label>联赛筛选</label>
+          <div class="league-list" id="leagueList">
+            <label style="color:#aaa;">（加载后显示）</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3>↕ 排序</h3>
+      <div style="font-size:12px;color:#555;line-height:1.8;">
+        点击表格中<br>
+        <b>「时间」</b> 或 <b>「记录时间」</b><br>
+        列标题切换升/降序
+      </div>
+    </div>
+
+    <div>
+      <button class="btn btn-success" id="exportBtn">📥 导出筛选结果 CSV</button>
+    </div>
+
+    <div>
+      <h3>📊 当前统计</h3>
+      <div class="stats-row" id="statsRow">
+        <div class="stat-card"><div class="sv" id="statWin">—</div><div class="sl">均胜概率</div></div>
+        <div class="stat-card"><div class="sv" id="statDraw">—</div><div class="sl">均平概率</div></div>
+        <div class="stat-card"><div class="sv" id="statLose">—</div><div class="sl">均负概率</div></div>
+      </div>
+    </div>
+
+    <div>
+      <h3>🎨 图例</h3>
+      <div class="legend" style="flex-direction:column; gap:6px;">
+        <div class="legend-item">
+          <span class="legend-dot" style="background:#ff4444;"></span>
+          <span>概率≥50% 或 赔付≥均值且概率≥50%</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot" style="background:#ffeb3b; border:1px solid #ccc;"></span>
+          <span>赔付≥均值但概率&lt;50%</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot" style="background:#c8e6c9;"></span>
+          <span>进球概率≥9.5%</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+    <div class="section-title">📋 比赛分析记录</div>
+    <div class="result-info" id="resultInfo">
+      <span>💡 请先通过左侧"选择 JSON 文件"按钮加载数据</span>
+    </div>
+
+    <div class="table-wrapper" id="tableWrapper">
+      <div class="loading">
+        <div>💡 请加载数据文件以开始分析</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+/* =========================================================
+   全局状态
+========================================================= */
+let allRecords = [];        // 合并后的全量记录（已展开进球列）
+let filteredRecords = [];   // 当前筛选+排序后的记录
+let allLeagues = [];        // 所有联赛列表
+let metaInfo = { generated_at: '', total_processed: 0, simulation_count: 0 };
+
+// 排序状态：sortCol 只允许 '时间' 或 '记录时间'，sortAscending 控制方向
+let sortCol = '记录时间';
+let sortAscending = false;
+
+/* =========================================================
+   工具函数
+========================================================= */
+function parseGoalProbs(probStr) {
+  const keys = ['0球','1球','2球','3球','4球','5球','6球','7+球'];
+  const result = {};
+  keys.forEach(k => { result[k] = '0.0%'; });
+  if (!probStr || probStr === '待模拟' || probStr === '无') return result;
+  // 格式: "0:2.1% 1:8.3% 2:15.7% 3:19.9% 4:19.4% 5:22.5% 6:9.1% 7+:2.9%"
+  probStr.trim().split(/\s+/).forEach(part => {
+    const idx = part.indexOf(':');
+    if (idx === -1) return;
+    const key = part.slice(0, idx);
+    const val = part.slice(idx + 1);
+    if (key === '7+') {
+      result['7+球'] = val;
+    } else if (/^\d+$/.test(key)) {
+      result[key + '球'] = val;
+    }
+  });
+  return result;
+}
+
+function parsePercent(str) {
+  if (typeof str === 'number') return str;
+  if (!str) return NaN;
+  return parseFloat(String(str).replace('%', ''));
+}
+
+function parseNum(str) {
+  if (typeof str === 'number') return str;
+  if (!str) return NaN;
+  return parseFloat(str);
+}
+
+function formatDate(dt) {
+  if (!dt) return '';
+  return dt.replace('T', ' ');
+}
+
+/* =========================================================
+   加载 JSON 文件
+========================================================= */
+document.getElementById('fileInput').addEventListener('change', async (e) => {
+  const files = Array.from(e.target.files).filter(f => f.name.endsWith('.json'));
+  if (!files.length) {
+    document.getElementById('fileInfo').textContent = '未找到 JSON 文件，请检查所选目录';
+    return;
+  }
+
+  document.getElementById('fileInfo').textContent = `已选 ${files.length} 个文件，正在解析…`;
+  document.getElementById('tableWrapper').innerHTML = '<div class="loading"><div class="spinner"></div><span>正在加载数据…</span></div>';
+
+  allRecords = [];
+  let latestGeneratedAt = '';
+  let totalProcessed = 0;
+  let simCount = 0;
+
+  // 按文件名排序（文件名含时间戳）
+  files.sort((a, b) => a.name.localeCompare(b.name));
+
+  const promises = files.map(f => new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      try {
+        const data = JSON.parse(ev.target.result);
+        resolve(data);
+      } catch (err) {
+        resolve(null);
+      }
+    };
+    reader.readAsText(f, 'utf-8');
+  }));
+
+  const results = await Promise.all(promises);
+
+  results.forEach(data => {
+    if (!data || typeof data !== 'object') return;
+    const records = data.records || [];
+    records.forEach(rec => {
+      const probStr = rec['轮次>10%'] || '';
+      const probs = parseGoalProbs(probStr);
+      Object.assign(rec, probs);
+    });
+    allRecords.push(...records);
+
+    const genAt = data.generated_at || '';
+    if (genAt > latestGeneratedAt) {
+      latestGeneratedAt = genAt;
+      totalProcessed = data.total_processed || 0;
+      simCount = (data.simulation_params || {}).n_sims || 0;
+    }
+  });
+
+  metaInfo = { generated_at: latestGeneratedAt, total_processed: totalProcessed, simulation_count: simCount };
+  document.getElementById('fileInfo').textContent = `已加载 ${files.length} 文件，共 ${allRecords.length} 条记录`;
+
+  // 提取联赛
+  const leagueSet = new Set();
+  allRecords.forEach(r => { if (r['赛事']) leagueSet.add(r['赛事']); });
+  allLeagues = Array.from(leagueSet).sort();
+  renderLeagueFilter(allLeagues);
+  updateMetaHeader();
+  applyFiltersAndSort();
+});
+
+/* =========================================================
+   联赛筛选渲染
+========================================================= */
+function renderLeagueFilter(leagues) {
+  const container = document.getElementById('leagueList');
+  if (!leagues.length) {
+    container.innerHTML = '<label style="color:#aaa;">无联赛数据</label>';
+    return;
+  }
+  container.innerHTML = leagues.map(lg =>
+    `<label><input type="checkbox" class="league-cb" value="${escapeAttr(lg)}" checked /> ${escapeHtml(lg)}</label>`
+  ).join('');
+  container.querySelectorAll('.league-cb').forEach(cb => {
+    cb.addEventListener('change', applyFiltersAndSort);
+  });
+}
+
+/* =========================================================
+   筛选 + 排序 + 渲染
+========================================================= */
+function applyFiltersAndSort() {
+  if (!allRecords.length) return;
+
+  const search = document.getElementById('searchInput').value.trim().toLowerCase();
+  const selectedLeagues = new Set(
+    Array.from(document.querySelectorAll('.league-cb:checked')).map(cb => cb.value)
+  );
+  const asc = sortAscending;
+
+  // 筛选
+  filteredRecords = allRecords.filter(rec => {
+    if (selectedLeagues.size > 0 && !selectedLeagues.has(rec['赛事'])) return false;
+    if (search) {
+      const home = (rec['主队'] || '').toLowerCase();
+      const away = (rec['客队'] || '').toLowerCase();
+      if (!home.includes(search) && !away.includes(search)) return false;
+    }
+    return true;
+  });
+
+  // 排序（仅支持 '时间' / '记录时间' 两个字符串时间列）
+  filteredRecords.sort((a, b) => {
+    const va = a[sortCol] || '';
+    const vb = b[sortCol] || '';
+    if (va === vb) return 0;
+    return asc ? va.localeCompare(vb) : vb.localeCompare(va);
+  });
+
+  updateStats();
+  renderTable();
+}
+
+/* =========================================================
+   统计卡片
+========================================================= */
+function updateStats() {
+  const avg = (col) => {
+    const vals = filteredRecords.map(r => parsePercent(r[col])).filter(v => !isNaN(v));
+    if (!vals.length) return '—';
+    return (vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(1) + '%';
+  };
+  document.getElementById('statWin').textContent = avg('胜概率');
+  document.getElementById('statDraw').textContent = avg('平概率');
+  document.getElementById('statLose').textContent = avg('负概率');
+}
+
+/* =========================================================
+   顶部 meta 信息
+========================================================= */
+function updateMetaHeader() {
+  const el = document.getElementById('metaInfo');
+  const { generated_at, total_processed, simulation_count } = metaInfo;
+  el.innerHTML = `📅 最新生成: ${generated_at || '未知'}<br>🎲 模拟次数: ${(simulation_count || 0).toLocaleString()}`;
+}
+
+/* =========================================================
+   表格渲染
+========================================================= */
+// 特殊列：ID 列映射 match_id 字段，表头显示 ID
+const ID_COL = 'ID';
+const BASE_COLS = ['时间', ID_COL, '赛事','主队','客队','胜概率','平概率','负概率',
+                   '主进球','客进球','胜赔付','平赔付','负赔付','平均赔付'];
+const GOAL_COLS = ['0球','1球','2球','3球','4球','5球','6球','7+球'];
+const DISPLAY_COLS = [...BASE_COLS, ...GOAL_COLS, '记录时间'];
+
+// 列名 → 记录字段名 的映射（仅特殊列需要）
+function getRecordKey(col) {
+  if (col === ID_COL) return 'match_id';
+  return col;
+}
+
+
+function getCellClass(rec, col) {
+  const probPayoutMap = {
+    '胜赔付': '胜概率',
+    '平赔付': '平概率',
+    '负赔付': '负概率',
+  };
+  const probCols = new Set(['胜概率','平概率','负概率']);
+  const goalCols = new Set(GOAL_COLS);
+
+  // 概率列
+  if (probCols.has(col)) {
+    const v = parsePercent(rec[col]);
+    if (!isNaN(v) && v >= 50) return 'hl-red';
+    return '';
+  }
+
+  // 赔付列
+  if (col in probPayoutMap) {
+    const payout = parseNum(rec[col]);
+    const avg = parseNum(rec['平均赔付']);
+    const probCol = probPayoutMap[col];
+    const prob = parsePercent(rec[probCol]);
+    if (!isNaN(payout) && !isNaN(avg) && payout >= avg) {
+      if (!isNaN(prob) && prob >= 50) return 'hl-red';
+      return 'hl-yellow';
+    }
+    return '';
+  }
+
+  // 进球概率列
+  if (goalCols.has(col)) {
+    const v = parsePercent(rec[col]);
+    if (!isNaN(v) && v >= 9.5) return 'hl-green';
+    return '';
+  }
+
+  return '';
+}
+
+function renderTable() {
+  const wrapper = document.getElementById('tableWrapper');
+  const total = allRecords.length;
+  const shown = filteredRecords.length;
+  const SORTABLE_COLS = new Set(['时间', '记录时间']);
+
+  document.getElementById('resultInfo').innerHTML =
+    `<span>📊 当前显示 <b>${shown}</b> 条（共 ${total} 条）</span>` +
+    `<span>📅 最新数据: ${metaInfo.generated_at || '未知'}</span>` +
+    `<span>🎲 模拟次数: ${(metaInfo.simulation_count || 0).toLocaleString()}</span>`;
+
+  if (!filteredRecords.length) {
+    wrapper.innerHTML = '<div class="empty-tip">😕 没有符合条件的记录</div>';
+    return;
+  }
+
+  // 表头（仅时间和记录时间列可点击排序）
+  const thHtml = DISPLAY_COLS.map(col => {
+    const isSortable = SORTABLE_COLS.has(col);
+    let cls = '';
+    if (isSortable) {
+      if (col === sortCol) {
+        cls = sortAscending ? 'sorted-asc th-sortable' : 'sorted-desc th-sortable';
+      } else {
+        cls = 'th-sortable';
+      }
+    }
+    const sep = col === '0球' ? ' style="border-left:2px solid rgba(255,255,255,0.4);"' : '';
+    const dataCol = isSortable ? ` data-col="${escapeAttr(col)}"` : '';
+    return `<th class="${cls}"${dataCol}${sep}>${escapeHtml(col)}</th>`;
+  }).join('');
+
+  // 表格行
+  const rowsHtml = filteredRecords.map(rec => {
+    const cells = DISPLAY_COLS.map(col => {
+      const fieldKey = getRecordKey(col);
+      const val = rec[fieldKey] != null ? rec[fieldKey] : '';
+      const cls = getCellClass(rec, col);
+      const sep = col === '0球' ? ' goal-sep' : '';
+      if (cls) {
+        return `<td class="${cls}${sep}">${escapeHtml(String(val))}</td>`;
+      }
+      return `<td class="${sep}">${escapeHtml(String(val))}</td>`;
+    }).join('');
+    return `<tr>${cells}</tr>`;
+  }).join('');
+
+  wrapper.innerHTML = `
+    <table>
+      <thead><tr>${thHtml}</tr></thead>
+      <tbody>${rowsHtml}</tbody>
+    </table>
+  `;
+
+  // 只给可排序列绑定点击事件
+  wrapper.querySelectorAll('thead th[data-col]').forEach(th => {
+    th.addEventListener('click', () => {
+      const col = th.dataset.col;
+      if (col === sortCol) {
+        sortAscending = !sortAscending;
+      } else {
+        sortCol = col;
+        sortAscending = false;
+      }
+      applyFiltersAndSort();
+    });
+  });
+}
+
+/* =========================================================
+   事件绑定
+========================================================= */
+// 搜索框
+document.getElementById('searchInput').addEventListener('input', applyFiltersAndSort);
+
+// 导出 CSV
+document.getElementById('exportBtn').addEventListener('click', () => {
+  if (!filteredRecords.length) { alert('暂无数据可导出'); return; }
+  const header = DISPLAY_COLS.join(',');
+  const rows = filteredRecords.map(rec =>
+    DISPLAY_COLS.map(col => {
+      const fieldKey = getRecordKey(col);
+      const v = rec[fieldKey] != null ? String(rec[fieldKey]) : '';
+      return v.includes(',') || v.includes('"') || v.includes('\n')
+        ? `"${v.replace(/"/g, '""')}"` : v;
+    }).join(',')
+  );
+  const csvContent = '\uFEFF' + [header, ...rows].join('\r\n');
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const now = new Date();
+  const ts = now.getFullYear().toString() +
+    String(now.getMonth()+1).padStart(2,'0') +
+    String(now.getDate()).padStart(2,'0') + '_' +
+    String(now.getHours()).padStart(2,'0') +
+    String(now.getMinutes()).padStart(2,'0') +
+    String(now.getSeconds()).padStart(2,'0');
+  a.href = url;
+  a.download = `analysis_export_${ts}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+/* =========================================================
+   HTML 转义工具
+========================================================= */
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+function escapeAttr(str) {
+  return String(str).replace(/"/g, '&quot;');
+}
+</script>
+</body>
+</html>
