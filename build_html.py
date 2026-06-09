@@ -213,7 +213,7 @@ html_template = r"""<!DOCTYPE html>
   }
   tr:last-child td { border-bottom: none; }
   tr:hover td { 
-  background: #d0d8e8 !important;
+  background: #b8e0e8 !important;
   outline: 1px solid #1a3c6e;
   }
   .folder-cell { font-weight: 700; color: #1a3c6e; font-family: monospace; font-size: 11px; }
