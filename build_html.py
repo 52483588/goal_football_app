@@ -187,6 +187,21 @@ html_template = r"""<!DOCTYPE html>
   .subheader-row th.group-win-hv1 { background: #2c6b5d; }
   .subheader-row th.group-win-hv2 { background: #1d5246; }
 
+  /* ========== 时间戳行状态颜色（赛前/赛后） ========== */
+  /* 赛前 - 亮黄色 */
+  .time-before {
+    background-color: #d1ecf1 !important;
+    color: #0c5460 !important;
+    font-weight: 500;
+  }
+  /* 赛后 - 浅蓝色 */
+  .time-after {
+    background-color: #f5c6cb !important;
+    color: #721c24 !important;
+    font-weight: 500;
+  }
+  /* 无法判断或开赛时间缺失 - 默认无特殊背景 */
+
   td.ou-divider, th.ou-divider { border-right: 2px solid rgba(255,255,255,0.3); }
   td { 
     padding: 6px 5px; 
@@ -275,6 +290,8 @@ html_template = r"""<!DOCTYPE html>
     <span class="legend-item"><span class="legend-color" style="background:#5b3a70"></span>总进球/净胜球概率</span>
     <span class="legend-item"><span class="legend-color" style="background:#7a1e1e"></span>大小球/让球赔率+公平P(蓝)+EV(红正)</span>
     <span class="legend-item"><span class="legend-color" style="background:#fff3cd;border:1px solid #e0c060"></span>数值变化</span>
+    <span class="legend-item"><span class="legend-color" style="background:#d4edda;border:1px solid #155724"></span>📅 赛前快照</span>
+    <span class="legend-item"><span class="legend-color" style="background:#f8d7da;border:1px solid #721c24"></span>📅 赛后快照</span>
   </div>
 
   <div class="view-ou active" id="viewOu">
@@ -439,6 +456,64 @@ function calcAsianEVForGD(handicap, homeOdds, awayOdds, gdProbs) {
     fairHome: fairHome,
     fairAway: fairAway
   };
+}
+
+// ========== 时间比较函数 ==========
+// 解析文件夹时间戳，格式：20260608_170034 -> Date对象
+function parseFileTimestamp(folderName) {
+  // folderName 格式如 "20260608_170034"
+  var parts = folderName.split('_');
+  if (parts.length !== 2) return null;
+  var dateStr = parts[0];  // 20260608
+  var timeStr = parts[1];  // 170034
+
+  if (dateStr.length !== 8) return null;
+  var year = parseInt(dateStr.substring(0, 4));
+  var month = parseInt(dateStr.substring(4, 6)) - 1;
+  var day = parseInt(dateStr.substring(6, 8));
+  var hour = parseInt(timeStr.substring(0, 2));
+  var minute = parseInt(timeStr.substring(2, 4));
+  var second = parseInt(timeStr.substring(4, 6));
+
+  return new Date(year, month, day, hour, minute, second);
+}
+
+// 解析比赛开赛时间，格式：20260609 02:45 -> Date对象
+function parseMatchTime(matchTimeStr) {
+  if (!matchTimeStr) return null;
+  // 格式如 "20260609 02:45" 或 "20260609 02:45:00"
+  var parts = matchTimeStr.trim().split(' ');
+  if (parts.length < 2) return null;
+  var dateStr = parts[0];  // 20260609
+  var timeStr = parts[1];  // 02:45
+
+  if (dateStr.length !== 8) return null;
+  var year = parseInt(dateStr.substring(0, 4));
+  var month = parseInt(dateStr.substring(4, 6)) - 1;
+  var day = parseInt(dateStr.substring(6, 8));
+
+  var timeParts = timeStr.split(':');
+  var hour = parseInt(timeParts[0]);
+  var minute = parseInt(timeParts[1]);
+  var second = timeParts[2] ? parseInt(timeParts[2]) : 0;
+
+  return new Date(year, month, day, hour, minute, second);
+}
+
+// 判断时间戳相对于开赛时间的状态
+// 返回值: 'before' (赛前), 'after' (赛后), null (无法判断)
+function getTimeStatus(folderName, matchTimeStr) {
+  var fileTime = parseFileTimestamp(folderName);
+  var matchTime = parseMatchTime(matchTimeStr);
+
+  if (!fileTime || !matchTime) return null;
+
+  // 比较时间戳和开赛时间
+  if (fileTime < matchTime) {
+    return 'before';
+  } else {
+    return 'after';
+  }
 }
 
 // ========== 数据初始化 ==========
@@ -663,7 +738,7 @@ function buildOuTable(rows) {
     '    <th class="group-ou-base">大球OO</th><th class="group-ou-base">小球UO</th><th class="group-ou-base ou-divider">盘口LI</th>' +
     '    <th class="group-ou-hv1">HV1大</th><th class="group-ou-hv1">HV1小</th><th class="group-ou-hv1 ou-divider">HV1盘</th>' +
     '    <th class="group-ou-hv2">HV2大</th><th class="group-ou-hv2">HV2小</th><th class="group-ou-hv2">HV2盘</th>' +
-    '  </tr></thead>';
+    '  <tr></thead>';
   table.innerHTML = theadHTML + '<tbody></tbody>';
   container.appendChild(table);
   var tbody = table.querySelector('tbody');
@@ -678,9 +753,21 @@ function buildOuTable(rows) {
       tbody.appendChild(tr);
       continue;
     }
+
+    // 获取开赛时间并判断时间状态
+    var matchGt = rec.oc && rec.oc.gt ? rec.oc.gt : null;
+    var timeStatus = getTimeStatus(folder, matchGt);
+    var timeClass = '';
+    if (timeStatus === 'before') {
+      timeClass = 'time-before';
+    } else if (timeStatus === 'after') {
+      timeClass = 'time-after';
+    }
+
     var ng = rec.ng || {}, ou = rec.ou || {};
     var curNg = ngCols.map(function(k){ return ng[k]||''; });
-    var htmlOut = '<td class="folder-cell">'+folder+'</td>';
+    // 时间戳列添加状态类名
+    var htmlOut = '<td class="folder-cell ' + timeClass + '">'+folder+'</td>';
 
     for (var ni=0; ni<ngCols.length; ni++) {
       var nval = ng[ngCols[ni]] || '<span class="missing">-</span>';
@@ -793,13 +880,25 @@ function buildWinTable(rows) {
     var folder = rows[ri].folder, rec = rows[ri].rec;
     var tr = document.createElement('tr');
     if (!rec) {
-      tr.innerHTML = '<td class="folder-cell">'+folder+'<td><td colspan="30" class="missing">— 该时间段无此赛事 —</td>';
+      tr.innerHTML = '<td class="folder-cell">'+folder+'</td><td colspan="30" class="missing">— 该时间段无此赛事 —</td>';
       tbody.appendChild(tr);
       continue;
     }
+
+    // 获取开赛时间并判断时间状态
+    var matchGt = rec.oc && rec.oc.gt ? rec.oc.gt : null;
+    var timeStatus = getTimeStatus(folder, matchGt);
+    var timeClass = '';
+    if (timeStatus === 'before') {
+      timeClass = 'time-before';
+    } else if (timeStatus === 'after') {
+      timeClass = 'time-after';
+    }
+
     var ng = rec.ng || {}, win = rec.win || {};
     var curNg = ngCols.map(function(k){ return ng[k]||''; });
-    var htmlOut = '<td class="folder-cell">'+folder+'</td>';
+    // 时间戳列添加状态类名
+    var htmlOut = '<td class="folder-cell ' + timeClass + '">'+folder+'</td>';
 
     for (var ni=0; ni<ngCols.length; ni++) {
       var nval = ng[ngCols[ni]] || '<span class="missing">-</span>';
