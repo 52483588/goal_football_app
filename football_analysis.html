@@ -32,8 +32,8 @@
 
     /* ---- SIDEBAR ---- */
     .sidebar {
-      width: 240px;
-      min-width: 200px;
+      width: 210px;
+      min-width: 180px;
       background: #fff;
       border-right: 1px solid #e0e4ea;
       padding: 20px 16px;
@@ -121,17 +121,6 @@
     .btn:hover { opacity: 0.9; }
 
     /* stats cards */
-    .stats-row { display: flex; gap: 8px; flex-wrap: wrap; }
-    .stat-card {
-      flex: 1;
-      min-width: 56px;
-      background: #eaf2fb;
-      border-radius: 8px;
-      padding: 8px 6px;
-      text-align: center;
-    }
-    .stat-card .sv { font-size: 17px; font-weight: 700; color: #1F4E79; }
-    .stat-card .sl { font-size: 10px; color: #777; margin-top: 2px; }
 
     /* ---- MAIN CONTENT ---- */
     .main {
@@ -272,15 +261,22 @@
       align-items: center;
       gap: 6px;
       padding: 8px 14px;
-      background: #1F4E79;
-      color: #fff;
+      background: #2980b9 !important;
+      color: #ffffff !important;
       border-radius: 7px;
       cursor: pointer;
-      font-size: 13px;
-      font-weight: 600;
-      transition: opacity .15s;
+      font-size: 13px !important;
+      font-weight: 700;
+      border: 2px solid #1a6599;
+      box-shadow: 0 2px 6px rgba(41,128,185,0.35);
+      transition: background .15s, box-shadow .15s;
+      letter-spacing: 0.3px;
+      margin-bottom: 0 !important;
     }
-    .file-label:hover { opacity: 0.88; }
+    .file-label:hover {
+      background: #1a6599 !important;
+      box-shadow: 0 3px 10px rgba(41,128,185,0.5);
+    }
     #fileInput { display: none; }
     .file-info { font-size: 12px; color: #888; }
 
@@ -296,6 +292,258 @@
     ::-webkit-scrollbar-track { background: #f0f2f5; }
     ::-webkit-scrollbar-thumb { background: #b0bec5; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #78909c; }
+
+    /* ---- ROW SELECT CHECKBOX ---- */
+    .row-select-col {
+      width: 30px;
+      min-width: 30px;
+      padding: 7px 4px !important;
+      text-align: center !important;
+    }
+    .row-select-col input[type="radio"] {
+      width: 14px;
+      height: 14px;
+      accent-color: #2980b9;
+      cursor: pointer;
+    }
+    thead .row-select-col { cursor: default; }
+
+    /* ---- ANALYZE BUTTON ---- */
+    .btn-analyze {
+      background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(211,84,0,0.3);
+      transition: opacity .15s, transform .1s;
+      letter-spacing: 0.3px;
+    }
+    .btn-analyze:hover { opacity: 0.88; }
+    .btn-analyze:active { transform: scale(0.97); }
+
+    .section-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* ---- REPORT MODAL ---- */
+    .report-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 9999;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 30px;
+      animation: fadeIn 0.25s;
+      overflow-y: auto;
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+    .report-card {
+      background: #fff;
+      border-radius: 14px;
+      width: 680px;
+      max-width: 95vw;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.28);
+      animation: slideIn 0.3s ease;
+      margin-bottom: 40px;
+      overflow: hidden;
+    }
+
+    .report-header {
+      background: linear-gradient(135deg, #1a3c6e 0%, #2563a8 100%);
+      color: #fff;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .report-header h2 { font-size: 18px; font-weight: 700; letter-spacing: 0.5px; }
+    .report-close {
+      background: rgba(255,255,255,0.15);
+      border: none; color: #fff;
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s;
+      line-height: 1;
+    }
+    .report-close:hover { background: rgba(255,255,255,0.3); }
+
+    .report-body { padding: 24px; }
+
+    .report-section {
+      margin-bottom: 20px;
+    }
+    .report-section:last-child { margin-bottom: 0; }
+
+    .report-section-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1a3c6e;
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #e8f0fb;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .report-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+    .report-info-grid .info-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      padding: 4px 0;
+    }
+    .report-info-grid .info-label { color: #666; font-size: 13px; min-width: 54px; white-space: nowrap; }
+    .report-info-grid .info-value { color: #1a1a1a; font-weight: 600; }
+
+    .report-info-grid.single-col .info-item { grid-column: span 2; }
+
+    .info-flex-row {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+    .info-flex-row .info-item {
+      font-size: 14px;
+      padding: 4px 0;
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .info-flex-row .info-item .info-label { color: #666; font-size: 13px; min-width: 54px; white-space: nowrap; }
+    .info-flex-row .info-item .info-value { color: #1a1a1a; font-weight: 600; }
+
+    .info-single-row {
+      margin-bottom: 0;
+    }
+    .info-single-row .info-item {
+      font-size: 14px;
+      padding: 4px 0;
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .info-single-row .info-item .info-label { color: #666; font-size: 13px; min-width: 54px; white-space: nowrap; }
+    .info-single-row .info-item .info-value { color: #1a1a1a; font-weight: 600; }
+
+    .prob-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+    .prob-item {
+      background: #f8fafd;
+      border: 1px solid #e0e4ea;
+      border-radius: 8px;
+      padding: 10px 16px;
+      text-align: center;
+      min-width: 100px;
+      flex: 1;
+    }
+    .prob-item .prob-label { font-size: 12px; color: #888; margin-bottom: 2px; }
+    .prob-item .prob-value {
+      font-size: 22px; font-weight: 700;
+    }
+    .prob-item.prob-warn {
+      background: #fff5f5;
+      border-color: #ff4444;
+    }
+    .prob-item.prob-warn .prob-value { color: #dc2626; }
+
+    .prob-alert {
+      margin-top: 8px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .prob-alert.danger {
+      background: #fee2e2; color: #991b1b;
+      border-left: 4px solid #dc2626;
+    }
+    .prob-alert.critical {
+      background: #fff3cd; color: #856404;
+      border-left: 4px solid #f59e0b;
+    }
+    .prob-alert.warning {
+      background: #fff8e1; color: #8a6d14;
+      border-left: 4px solid #ffc107;
+    }
+
+    .total-goal {
+      background: #f0f7ff;
+      border-radius: 8px;
+      padding: 12px 16px;
+      text-align: center;
+      margin-top: 4px;
+    }
+    .total-goal .tg-label { font-size: 12px; color: #666; }
+    .total-goal .tg-value { font-size: 28px; font-weight: 700; color: #1a3c6e; }
+
+    .goal-bar-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .goal-bar-item {
+      flex: 1; min-width: 64px;
+      text-align: center;
+      background: #f8fafd;
+      border-radius: 8px;
+      padding: 8px 6px;
+      border: 1px solid #e0e4ea;
+      transition: all .15s;
+    }
+    .goal-bar-item.goal-hot {
+      background: #e8f5e9;
+      border-color: #66bb6a;
+    }
+    .goal-bar-item .gb-label { font-size: 11px; color: #888; margin-bottom: 2px; }
+    .goal-bar-item .gb-value { font-size: 16px; font-weight: 700; color: #333; }
+    .goal-bar-item.goal-hot .gb-value { color: #1b5e20; }
+    .goal-bar-item .gb-bar {
+      height: 4px; background: #e0e4ea;
+      border-radius: 2px; margin-top: 4px; overflow: hidden;
+    }
+    .goal-bar-item .gb-bar-fill {
+      height: 100%; border-radius: 2px;
+      background: linear-gradient(90deg, #4caf50, #81c784);
+      transition: width .3s;
+    }
+    .goal-bar-item.goal-hot .gb-bar-fill { background: linear-gradient(90deg, #2e7d32, #43a047); }
+
+    .goal-summary {
+      margin-top: 10px;
+      padding: 8px 14px;
+      background: #f0f7ff;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #1a3c6e;
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
@@ -352,15 +600,6 @@
     </div>
 
     <div>
-      <h3>📊 当前统计</h3>
-      <div class="stats-row" id="statsRow">
-        <div class="stat-card"><div class="sv" id="statWin">—</div><div class="sl">均胜概率</div></div>
-        <div class="stat-card"><div class="sv" id="statDraw">—</div><div class="sl">均平概率</div></div>
-        <div class="stat-card"><div class="sv" id="statLose">—</div><div class="sl">均负概率</div></div>
-      </div>
-    </div>
-
-    <div>
       <h3>🎨 图例</h3>
       <div class="legend" style="flex-direction:column; gap:6px;">
         <div class="legend-item">
@@ -381,7 +620,10 @@
 
   <!-- MAIN CONTENT -->
   <main class="main">
-    <div class="section-title">📋 比赛分析记录</div>
+    <div class="section-title-row">
+      <div class="section-title">📋 比赛分析记录</div>
+      <button class="btn-analyze" id="analyzeBtn" title="分析选中的比赛">🔍 分析选中</button>
+    </div>
     <div class="result-info" id="resultInfo">
       <span>💡 请先通过左侧"选择 JSON 文件"按钮加载数据</span>
     </div>
@@ -392,6 +634,11 @@
       </div>
     </div>
   </main>
+</div>
+
+<!-- REPORT MODAL -->
+<div class="report-overlay" id="reportOverlay" style="display:none;">
+  <div class="report-card" id="reportCard"></div>
 </div>
 
 <script>
@@ -561,27 +808,12 @@ function applyFiltersAndSort() {
     return asc ? va.localeCompare(vb) : vb.localeCompare(va);
   });
 
-  updateStats();
   renderTable();
 }
 
 /* =========================================================
-   统计卡片
-========================================================= */
-function updateStats() {
-  const avg = (col) => {
-    const vals = filteredRecords.map(r => parsePercent(r[col])).filter(v => !isNaN(v));
-    if (!vals.length) return '—';
-    return (vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(1) + '%';
-  };
-  document.getElementById('statWin').textContent = avg('胜概率');
-  document.getElementById('statDraw').textContent = avg('平概率');
-  document.getElementById('statLose').textContent = avg('负概率');
-}
-
-/* =========================================================
    顶部 meta 信息
-========================================================= */
+=========================================================*/
 function updateMetaHeader() {
   const el = document.getElementById('metaInfo');
   const { generated_at, total_processed, simulation_count } = metaInfo;
@@ -660,8 +892,9 @@ function renderTable() {
     return;
   }
 
-  // 表头（仅时间和记录时间列可点击排序）
-  const thHtml = DISPLAY_COLS.map(col => {
+  // 表头：首列为选择列，后续为数据列
+  const selectTh = `<th class="row-select-col" title="选择行">◎</th>`;
+  const thHtml = selectTh + DISPLAY_COLS.map(col => {
     const isSortable = SORTABLE_COLS.has(col);
     let cls = '';
     if (isSortable) {
@@ -676,8 +909,9 @@ function renderTable() {
     return `<th class="${cls}"${dataCol}${sep}>${escapeHtml(col)}</th>`;
   }).join('');
 
-  // 表格行
-  const rowsHtml = filteredRecords.map(rec => {
+  // 表格行：首列为单选按钮
+  const rowsHtml = filteredRecords.map((rec, idx) => {
+    const selectTd = `<td class="row-select-col"><input type="radio" name="rowSelect" value="${idx}" /></td>`;
     const cells = DISPLAY_COLS.map(col => {
       const fieldKey = getRecordKey(col);
       const val = rec[fieldKey] != null ? rec[fieldKey] : '';
@@ -688,7 +922,7 @@ function renderTable() {
       }
       return `<td class="${sep}">${escapeHtml(String(val))}</td>`;
     }).join('');
-    return `<tr>${cells}</tr>`;
+    return `<tr data-idx="${idx}">${selectTd}${cells}</tr>`;
   }).join('');
 
   wrapper.innerHTML = `
@@ -697,6 +931,15 @@ function renderTable() {
       <tbody>${rowsHtml}</tbody>
     </table>
   `;
+
+  // 点击行时自动选中该行的单选框
+  wrapper.querySelectorAll('tbody tr').forEach(tr => {
+    tr.addEventListener('click', (e) => {
+      if (e.target.tagName === 'INPUT') return;
+      const radio = tr.querySelector('input[type="radio"]');
+      if (radio) radio.checked = true;
+    });
+  });
 
   // 只给可排序列绑定点击事件
   wrapper.querySelectorAll('thead th[data-col]').forEach(th => {
@@ -761,6 +1004,254 @@ function escapeHtml(str) {
 function escapeAttr(str) {
   return String(str).replace(/"/g, '&quot;');
 }
+
+/* =========================================================
+   分析选中 - 打开 index.html + 生成分析报告弹窗
+========================================================= */
+const INDEX_URL = 'file:///C:/Users/52483/Desktop/football/FairPlay/try/docs/index.html';
+let indexWin = null;   // 保存已打开的窗口引用
+
+document.getElementById('analyzeBtn').addEventListener('click', () => {
+  const radio = document.querySelector('input[name="rowSelect"]:checked');
+  if (!radio) {
+    alert('请先选中一条数据（点击行左侧的选择框）');
+    return;
+  }
+  const idx = parseInt(radio.value, 10);
+  const rec = filteredRecords[idx];
+  if (!rec) { alert('找不到选中的数据'); return; }
+
+  // ① 生成分析报告弹窗
+  showReport(rec);
+
+  // ② 填入 docs/index.html
+  fillIndexHtml(rec);
+});
+
+// 关闭弹窗（点击遮罩或按钮）
+document.getElementById('reportOverlay').addEventListener('click', function(e) {
+  if (e.target === this || e.target.classList.contains('report-close')) {
+    this.style.display = 'none';
+  }
+});
+
+/* =========================================================
+   分析报告生成
+========================================================= */
+function showReport(rec) {
+  const winPct   = parsePercent(rec['胜概率']);
+  const drawPct  = parsePercent(rec['平概率']);
+  const losePct  = parsePercent(rec['负概率']);
+  const homeGoal = parseNum(rec['主进球']);
+  const awayGoal = parseNum(rec['客进球']);
+  const totalGoal = (!isNaN(homeGoal) && !isNaN(awayGoal)) ? (homeGoal + awayGoal).toFixed(3) : '—';
+  const winPay   = parseNum(rec['胜赔付']);
+  const drawPay  = parseNum(rec['平赔付']);
+  const losePay  = parseNum(rec['负赔付']);
+  const avgPay   = parseNum(rec['平均赔付']);
+
+  // 概率超50%判断
+  const probMap = { '胜': winPct, '平': drawPct, '负': losePct };
+  const over50 = Object.entries(probMap).filter(([, v]) => !isNaN(v) && v >= 50);
+
+  // === 基本信息区 ===
+  let html = '';
+  html += `<div class="report-header"><h2>⚽ 分析报告</h2><button class="report-close">&times;</button></div>`;
+  html += `<div class="report-body">`;
+
+  // — 基本信息 —
+  html += `<div class="report-section">`;
+  html += `<div class="report-section-title">📋 基本信息</div>`;
+  html += `<div class="info-flex-row">`;
+  html += item('时间', rec['时间']);
+  html += item('ID',   rec['match_id'] || rec['ID']);
+  html += item('赛事', rec['赛事']);
+  html += `</div>`;
+  html += `<div class="report-info-grid">`;
+  html += item('主队', rec['主队']);
+  html += item('客队', rec['客队']);
+  html += `</div></div>`;
+
+  // — 概率分析 —
+  html += `<div class="report-section">`;
+  html += `<div class="report-section-title">📊 概率分析</div>`;
+  html += `<div class="prob-row">`;
+  ['胜','平','负'].forEach(lbl => {
+    const p = lbl === '胜' ? winPct : lbl === '平' ? drawPct : losePct;
+    const warnCls = (!isNaN(p) && p >= 50) ? ' prob-warn' : '';
+    html += `<div class="prob-item${warnCls}"><div class="prob-label">${lbl}概率</div><div class="prob-value">${isNaN(p) ? '—' : p + '%'}</div></div>`;
+  });
+  html += `</div>`;
+
+  if (over50.length > 0) {
+    const names = over50.map(([k]) => `${k}概率`);
+    html += `<div class="prob-alert danger">⚠️ ${names.join('、')}超过 50%，占有明显优势</div>`;
+  }
+  html += `</div>`;
+
+  // — 进球数据 —
+  html += `<div class="report-section">`;
+  html += `<div class="report-section-title">⚡ 进球数据</div>`;
+  html += `<div class="report-info-grid">`;
+  html += item('主进球', homeGoal);
+  html += item('客进球', awayGoal);
+  html += `</div>`;
+  html += `<div class="total-goal"><div class="tg-label">总进球</div><div class="tg-value">${totalGoal}</div></div>`;
+  html += `</div>`;
+
+  // — 赔付分析 —
+  html += `<div class="report-section">`;
+  html += `<div class="report-section-title">💰 赔付分析</div>`;
+  html += `<div class="info-flex-row">`;
+  html += item('胜赔付', winPay);
+  html += item('平赔付', drawPay);
+  html += item('负赔付', losePay);
+  html += `</div>`;
+  html += `<div class="info-single-row">`;
+  html += item('平均赔付', avgPay);
+  html += `</div>`;
+
+  const payoutMap = { '胜': winPay, '平': drawPay, '负': losePay };
+  let payoutAlerts = [];
+  Object.entries(payoutMap).forEach(([k, v]) => {
+    if (!isNaN(v) && !isNaN(avgPay) && v >= avgPay) {
+      const isOver50 = !isNaN(probMap[k]) && probMap[k] >= 50;
+      payoutAlerts.push({ label: `${k}赔付`, value: v, critical: isOver50 });
+    }
+  });
+  payoutAlerts.forEach(a => {
+    const cls = a.critical ? 'danger' : 'warning';
+    const label = a.critical ? '🔥 特别警示！！' : '⚠️ 警示！';
+    html += `<div class="prob-alert ${cls}">${label} ${a.label}：${a.value}</div>`;
+  });
+  html += `</div>`;
+
+  // — 总进球数分布 —
+  html += `<div class="report-section">`;
+  html += `<div class="report-section-title">🎯 总进球数分布</div>`;
+  html += `<div class="goal-bar-grid">`;
+  const goalLabels = ['0','1','2','3','4','5','6','7+'];
+  const hotGoals = [];
+  goalLabels.forEach(gl => {
+    const fieldKey = gl === '7+' ? '7+球' : gl + '球';
+    const p = parsePercent(rec[fieldKey]);
+    const isHot = !isNaN(p) && p >= 9.5;
+    if (isHot) hotGoals.push(gl);
+    const hotCls = isHot ? ' goal-hot' : '';
+    html += `<div class="goal-bar-item${hotCls}">`;
+    html += `<div class="gb-label">${gl === '7+' ? '7+球' : gl + '球'}</div>`;
+    html += `<div class="gb-value">${isNaN(p) ? '—' : p + '%'}</div>`;
+    html += `<div class="gb-bar"><div class="gb-bar-fill" style="width:${Math.min(isNaN(p) ? 0 : p, 100)}%"></div></div>`;
+    html += `</div>`;
+  });
+  html += `</div>`;
+
+  if (hotGoals.length > 0) {
+    html += `<div class="goal-summary">✅ 进球数概率超过 9.5% 的项目：进球数 ${hotGoals.join('、')}</div>`;
+  }
+  html += `</div>`;
+
+  html += `</div>`; // report-body
+
+  document.getElementById('reportCard').innerHTML = html;
+  document.getElementById('reportOverlay').style.display = 'flex';
+}
+
+function item(label, val) {
+  const display = (typeof val === 'number' && !isNaN(val)) ? String(val) : String(val ?? '—');
+  return `<div class="info-item"><span class="info-label">${label}</span><span class="info-value">${escapeHtml(display)}</span></div>`;
+}
+
+/* =========================================================
+   填入 docs/index.html（原有逻辑）
+========================================================= */
+function fillIndexHtml(rec) {
+  const league = String(rec['赛事'] || '').trim();
+  const matchId = String(rec['match_id'] || rec['ID'] || '').trim();
+
+  if (!league && !matchId) return;
+
+  if (!indexWin || indexWin.closed) {
+    indexWin = window.open(INDEX_URL, 'fairplay_index');
+    const payload = { type: 'FAIRPLAY_FILL', league, matchId };
+    const check = setInterval(() => {
+      try {
+        if (!indexWin || indexWin.closed) { clearInterval(check); return; }
+        const w = indexWin;
+        if (w.document.readyState !== 'complete') return;
+        const sel = w.document.getElementById('leagueSelect');
+        if (!sel || sel.options.length <= 1) return;
+        clearInterval(check);
+        w.postMessage(payload, '*');
+      } catch(e) {}
+    }, 150);
+    setTimeout(() => clearInterval(check), 12000);
+  } else {
+    indexWin.focus();
+    indexWin.postMessage({ type: 'FAIRPLAY_FILL', league, matchId }, '*');
+  }
+}
+
+/* =========================================================
+   接收来自 docs/index.html 的大小球盘口分析报告
+========================================================= */
+window.addEventListener('message', function(e) {
+  if (!e.data || e.data.type !== 'OU_REPORT') return;
+  var results = e.data.results || [];
+  var matchId = e.data.matchId || '';
+
+  // 构建 OU 分析 HTML
+  var ouHtml = buildOuReportHtml(results, matchId);
+
+  // 如果报告弹窗已打开，追加内容；否则自动打开
+  var overlay = document.getElementById('reportOverlay');
+  if (overlay.style.display === 'flex') {
+    var oldOu = document.getElementById('ouReportSection');
+    if (oldOu) oldOu.remove();
+    var card = document.getElementById('reportCard');
+    card.innerHTML += ouHtml;
+  } else {
+    // 弹窗未打开 → 自动打开，仅显示大小球盘口报告
+    openOuOnlyReport(ouHtml);
+  }
+});
+
+function openOuOnlyReport(ouHtml) {
+  var card = document.getElementById('reportCard');
+  card.innerHTML = '<div class="report-header"><h2>⚽ 大小球盘口分析报告</h2><button class="report-close">&times;</button></div>' +
+    '<div class="report-body">' + ouHtml + '</div>';
+  document.getElementById('reportOverlay').style.display = 'flex';
+}
+
+function buildOuReportHtml(results, matchId) {
+  if (!results || results.length === 0) return '';
+
+  var summary = '<div class="report-section" id="ouReportSection">' +
+    '<div class="report-section-title">🎯 大小球盘口分析</div>' +
+    '<div class="goal-summary">📋 共 <b>' + results.length + '</b> 条时间戳数据 · 仅取第一个盘口 · 公平P大的一方 EV≥0 则反选对方</div>';
+
+  for (var i = 0; i < results.length; i++) {
+    var r = results[i];
+    var evNum = Number(r.ev);
+    var evStr = (evNum >= 0 ? '+' : '') + evNum.toFixed(3);
+    var evCls = evNum >= 0 ? '#2e7d32' : '#c62828';
+    var concBg = r.concClass === 'over' ? '#fff3e0' : '#e8f5e9';
+    var concColor = r.concClass === 'over' ? '#e65100' : '#1b5e20';
+
+    summary += '<div style="display:flex;align-items:center;gap:10px;padding:6px 10px;border-bottom:1px solid #f0f2f5;font-size:13px;flex-wrap:wrap;">' +
+      '<span style="background:#517ea8;color:#fff;border-radius:4px;padding:2px 7px;font-weight:700;font-size:12px;">' + r.folder + '</span>' +
+      '<span style="background:#e8f4ff;color:#1a3c6e;border-radius:4px;padding:2px 7px;font-weight:700;font-size:12px;">盘口 ' + r.handicap + '</span>' +
+      '<span style="font-weight:600;color:#2e7d32;">公平P: ' + r.fairP + '%</span>' +
+      '<span style="font-weight:600;color:' + evCls + ';">EV ' + evStr + '</span>' +
+      '<span style="font-weight:700;font-size:13px;padding:2px 8px;border-radius:4px;background:' + concBg + ';color:' + concColor + ';">' + r.conclusion + '</span>' +
+      '<span style="font-weight:700;font-size:13px;padding:2px 8px;border-radius:4px;background:#f0f7ff;color:#1a3c6e;">' + (r.threshold || '') + '</span>' +
+      '</div>';
+  }
+
+  summary += '</div>';
+  return summary;
+}
+
 </script>
 </body>
 </html>
