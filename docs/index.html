@@ -1085,8 +1085,10 @@ function generateOuReport() {
     var pickOver = overFairP >= underFairP;
     var pickEV = pickOver ? overEV : underEV;
 
-    // Step2: 若公平P大的那一方 EV >= 0，反过来选对方
+    // Step2: 若公平P大的那一方 EV >= 0，反过来选对方（标记反转）
+    var reversed = false;
     if (pickEV >= 0) {
+      reversed = true;
       pickOver = !pickOver;
       pickEV = pickOver ? overEV : underEV;
     }
@@ -1104,7 +1106,8 @@ function generateOuReport() {
       ev: bestEV,
       conclusion: conclusion,
       concClass: concClass,
-      threshold: threshold
+      threshold: threshold,
+      reversed: reversed
     });
   }
 
@@ -1130,7 +1133,8 @@ function sendOuReportToFootball(results) {
           ev: r.ev,
           conclusion: r.conclusion,
           concClass: r.concClass,
-          threshold: r.threshold
+          threshold: r.threshold,
+          reversed: r.reversed
         };
       })
     };
