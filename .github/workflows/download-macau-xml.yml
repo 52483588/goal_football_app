@@ -108,8 +108,8 @@ jobs:
       - name: Generate his_data.js
         run: python parse_xml.py
 
-      - name: Generate index.html
-        run: python build_html.py
+      # - name: Generate index.html
+      #   run: python build_html.py
 
       - name: 提交静态文件到仓库（可选，保留历史记录）
         run: |
