@@ -50,7 +50,6 @@
   .view-switch button { background: #4a6f8f; color: white; border: none; border-radius: 6px; padding: 9px 18px; cursor: pointer; }
   .view-switch button.active { background: #1a3c6e; box-shadow: inset 0 0 0 2px white; }
 
-  /* 主要容器 - 可滚动区域 */
   .scrollable-container {
     flex: 1;
     overflow-y: auto;
@@ -87,7 +86,6 @@
   .legend-item { display: flex; align-items: center; gap: 5px; }
   .legend-color { width: 14px; height: 14px; border-radius: 2px; }
 
-  /* 视图容器 */
   .view-ou, .view-win { 
     display: none;
     flex: 1;
@@ -105,7 +103,6 @@
     font-size: 16px; 
   }
 
-  /* 表格容器 - 支持滚动时表头固定 */
   .table-container { 
     flex: 1;
     overflow: auto;
@@ -113,7 +110,6 @@
     position: relative;
   }
 
-  /* 表格样式 - 关键：表头固定 */
   table { 
     width: 100%; 
     border-collapse: collapse; 
@@ -123,7 +119,6 @@
     min-width: 1400px;
   }
 
-  /* 主表头单元格 - 固定高度 */
   th {
     padding: 10px 7px;
     line-height: 1.2;
@@ -136,14 +131,12 @@
     text-shadow: 0 1px 1px rgba(0,0,0,0.2);
   }
 
-  /* 固定表头核心样式 - 主表头 */
   thead tr:first-child th {
     position: sticky;
     top: 0;
     z-index: 11;
   }
 
-  /* 副表头 - 紧贴主表头 */
   .subheader-row th {
     position: sticky;
     top: 44px;
@@ -154,7 +147,6 @@
     text-shadow: 0 1px 1px rgba(0,0,0,0.2);
   }
 
-  /* ========== 主表头颜色分组 ========== */
   thead tr:first-child th.group-ng { background: #1e5c2e; }
   thead tr:first-child th.group-tg { background: #5b3a70; }
   thead tr:first-child th.group-ou-base { background: #b52b2b; }
@@ -164,10 +156,8 @@
   thead tr:first-child th.group-win-hv1 { background: #1f5348; }
   thead tr:first-child th.group-win-hv2 { background: #153d34; }
 
-  /* 第一列时间戳单独设置背景色（深蓝色，与表格主题一致） */
   thead tr:first-child th:first-child { background: #1a3c6e; }
 
-  /* ========== 副表头颜色分组 ========== */
   .subheader-row th.group-ng { background: #2d7a3f; }
   .subheader-row th.group-tg { background: #754a90; }
   .subheader-row th.group-ou-base { background: #c73e3e; }
@@ -177,20 +167,16 @@
   .subheader-row th.group-win-hv1 { background: #2c6b5d; }
   .subheader-row th.group-win-hv2 { background: #1d5246; }
 
-  /* ========== 时间戳行状态颜色（赛前/赛后） ========== */
-  /* 赛前 - 亮黄色 */
   .time-before {
     background-color: #d1ecf1 !important;
     color: #0c5460 !important;
     font-weight: 500;
   }
-  /* 赛后 - 浅蓝色 */
   .time-after {
     background-color: #f5c6cb !important;
     color: #721c24 !important;
     font-weight: 500;
   }
-  /* 无法判断或开赛时间缺失 - 默认无特殊背景 */
 
   td.ou-divider, th.ou-divider { border-right: 2px solid rgba(255,255,255,0.3); }
   td { 
@@ -220,7 +206,6 @@
 
   .changed { background: #fff3cd !important; }
 
-  /* 自动补全样式 */
   .autocomplete-list { 
     position: absolute; 
     background: white; 
@@ -237,7 +222,6 @@
   .autocomplete-list div em { font-style: normal; color: #2563a8; font-weight: 600; }
   .autocomplete-wrapper { position: relative; }
 
-  /* 滚动条美化 */
   ::-webkit-scrollbar { width: 8px; height: 8px; }
   ::-webkit-scrollbar-track { background: #f0f2f5; border-radius: 4px; }
   ::-webkit-scrollbar-thumb { background: #c0c8d0; border-radius: 4px; }
@@ -249,7 +233,7 @@
 
 <div class="header">
   <h1>历史盘口数据查询工具</h1>
-  <p>读取所有时间戳文件夹 · 按时序对比 odds_config / numberofgoals / overunder / winodds · 自动计算EV与公平概率</p>
+  <p>读取所有文件夹 · 按时序对比</p>
 </div>
 
 <div class="search-area">
@@ -303,11 +287,9 @@
 
 <script src="his_data.js"></script>
 <script>
-// ========== 全局状态 ==========
 var currentRows = [];
 var currentMatchId = '';
 
-// ========== 核心计算函数 ==========
 function normalizeOdds(oddsArr) {
   var probs = [], sumInv = 0, invs = [];
   for (var i = 0; i < 6; i++) {
@@ -324,7 +306,6 @@ function normalizeOdds(oddsArr) {
   return probs;
 }
 
-// 总进球概率（0-7+）
 function calcTotalGoals(hp, ap) {
   var tg = new Array(8).fill(0);
   var h = hp, a = ap;
@@ -341,7 +322,6 @@ function calcTotalGoals(hp, ap) {
   return tg;
 }
 
-// 净胜球概率（-4- .. +4+，基于进球分布1-6球）
 function calcGoalDiff(hp, ap) {
   var hProb = new Array(7).fill(0);
   var aProb = new Array(7).fill(0);
@@ -354,7 +334,6 @@ function calcGoalDiff(hp, ap) {
   }
   hProb[0] = Math.max(0, 1 - sumH);
   aProb[0] = Math.max(0, 1 - sumA);
-  // 卷积净胜球 -6..+6
   var gd = new Array(13).fill(0);
   for (var hg=0; hg<=6; hg++) {
     for (var ag=0; ag<=6; ag++) {
@@ -362,7 +341,6 @@ function calcGoalDiff(hp, ap) {
       gd[idx] += hProb[hg] * aProb[ag];
     }
   }
-  // 合并到 -4- .. +4+
   var result = new Array(9).fill(0);
   for (var d=-6; d<=6; d++) {
     var val = gd[d+6];
@@ -373,7 +351,6 @@ function calcGoalDiff(hp, ap) {
   return result;
 }
 
-// 亚洲盘EV计算（用于总进球，数组长度8，索引0~7对应0~7+球）
 function calcAsianEV(handicap, overOdds, underOdds, totalProb) {
   var intPart = Math.floor(handicap);
   var frac = Math.round((handicap - intPart) * 100) / 100;
@@ -418,7 +395,6 @@ function calcAsianEV(handicap, overOdds, underOdds, totalProb) {
   };
 }
 
-// 让球亚洲盘 EV 计算（基于净胜球概率数组，索引0~8对应 -4-,-3,...,+4+）
 function calcAsianEVForGD(handicap, homeOdds, awayOdds, gdProbs) {
   var gdValues = [-4, -3, -2, -1, 0, 1, 2, 3, 4];
   var pHomeWin = 0, pHomeHalf = 0, pPush = 0, pAwayHalf = 0, pAwayWin = 0;
@@ -456,14 +432,11 @@ function calcAsianEVForGD(handicap, homeOdds, awayOdds, gdProbs) {
   };
 }
 
-// ========== 时间比较函数 ==========
-// 解析文件夹时间戳，格式：20260608_170034 -> Date对象
 function parseFileTimestamp(folderName) {
-  // folderName 格式如 "20260608_170034"
   var parts = folderName.split('_');
   if (parts.length !== 2) return null;
-  var dateStr = parts[0];  // 20260608
-  var timeStr = parts[1];  // 170034
+  var dateStr = parts[0];  
+  var timeStr = parts[1];  
 
   if (dateStr.length !== 8) return null;
   var year = parseInt(dateStr.substring(0, 4));
@@ -476,14 +449,12 @@ function parseFileTimestamp(folderName) {
   return new Date(year, month, day, hour, minute, second);
 }
 
-// 解析比赛开赛时间，格式：20260609 02:45 -> Date对象
 function parseMatchTime(matchTimeStr) {
   if (!matchTimeStr) return null;
-  // 格式如 "20260609 02:45" 或 "20260609 02:45:00"
   var parts = matchTimeStr.trim().split(' ');
   if (parts.length < 2) return null;
-  var dateStr = parts[0];  // 20260609
-  var timeStr = parts[1];  // 02:45
+  var dateStr = parts[0];  
+  var timeStr = parts[1];  
 
   if (dateStr.length !== 8) return null;
   var year = parseInt(dateStr.substring(0, 4));
@@ -498,15 +469,12 @@ function parseMatchTime(matchTimeStr) {
   return new Date(year, month, day, hour, minute, second);
 }
 
-// 判断时间戳相对于开赛时间的状态
-// 返回值: 'before' (赛前), 'after' (赛后), null (无法判断)
 function getTimeStatus(folderName, matchTimeStr) {
   var fileTime = parseFileTimestamp(folderName);
   var matchTime = parseMatchTime(matchTimeStr);
 
   if (!fileTime || !matchTime) return null;
 
-  // 比较时间戳和开赛时间
   if (fileTime < matchTime) {
     return 'before';
   } else {
@@ -514,11 +482,9 @@ function getTimeStatus(folderName, matchTimeStr) {
   }
 }
 
-// ========== 数据初始化 ==========
 var DATA = RAW_DATA;
 var FOLDER_LIST = FOLDERS;
 
-// 构建联赛索引
 var allLeagues = {};
 var leagueNames = [];
 (function buildLeagueIndex() {
@@ -582,7 +548,6 @@ function onLeagueChange() {
   document.getElementById('statusTip').textContent = '当前联赛共 ' + Object.keys(currentIdIndex).length + ' 场比赛';
 }
 
-// 自动补全
 var searchInput = document.getElementById('searchInput');
 var autocompleteEl = document.getElementById('autocomplete');
 searchInput.addEventListener('input', function() {
@@ -719,11 +684,9 @@ function doSearch() {
   buildOuTable(currentRows);
   buildWinTable(currentRows);
 
-  // 显示分析报告按钮
   document.getElementById('btnOuReport').style.display = count > 0 ? 'inline-block' : 'none';
 }
 
-// 大小球表格
 function buildOuTable(rows) {
   var container = document.getElementById('tableOu');
   container.innerHTML = '';
@@ -757,7 +720,6 @@ function buildOuTable(rows) {
       continue;
     }
 
-    // 获取开赛时间并判断时间状态
     var matchGt = rec.oc && rec.oc.gt ? rec.oc.gt : null;
     var timeStatus = getTimeStatus(folder, matchGt);
     var timeClass = '';
@@ -769,7 +731,6 @@ function buildOuTable(rows) {
 
     var ng = rec.ng || {}, ou = rec.ou || {};
     var curNg = ngCols.map(function(k){ return ng[k]||''; });
-    // 时间戳列添加状态类名
     var htmlOut = '<td class="folder-cell ' + timeClass + '">'+folder+'</td>';
 
     for (var ni=0; ni<ngCols.length; ni++) {
@@ -854,7 +815,6 @@ function buildOuTable(rows) {
   }
 }
 
-// 让球表格
 function buildWinTable(rows) {
   var container = document.getElementById('tableWin');
   container.innerHTML = '';
@@ -888,7 +848,6 @@ function buildWinTable(rows) {
       continue;
     }
 
-    // 获取开赛时间并判断时间状态
     var matchGt = rec.oc && rec.oc.gt ? rec.oc.gt : null;
     var timeStatus = getTimeStatus(folder, matchGt);
     var timeClass = '';
@@ -900,7 +859,6 @@ function buildWinTable(rows) {
 
     var ng = rec.ng || {}, win = rec.win || {};
     var curNg = ngCols.map(function(k){ return ng[k]||''; });
-    // 时间戳列添加状态类名
     var htmlOut = '<td class="folder-cell ' + timeClass + '">'+folder+'</td>';
 
     for (var ni=0; ni<ngCols.length; ni++) {
@@ -991,16 +949,11 @@ function buildWinTable(rows) {
   }
 }
 
-/* =========================================================
-   接收来自 football_analysis.html 的 postMessage，
-   自动填入联赛 + ID 并触发查询
-========================================================= */
 window.addEventListener('message', function(e) {
   if (!e.data || e.data.type !== 'FAIRPLAY_FILL') return;
   var league   = e.data.league  || '';
   var matchId  = e.data.matchId || '';
 
-  // 1. 填联赛
   var leagueSel = document.getElementById('leagueSelect');
   if (leagueSel && league) {
     var found = false;
@@ -1014,22 +967,16 @@ window.addEventListener('message', function(e) {
     if (found && typeof onLeagueChange === 'function') onLeagueChange();
   }
 
-  // 2. 填 ID（短暂延迟等待 onLeagueChange 初始化索引）
   setTimeout(function() {
     var searchEl = document.getElementById('searchInput');
     if (searchEl && matchId) {
       searchEl.disabled = false;
       searchEl.value = matchId;
     }
-    // 3. 触发查询
     if (typeof doSearch === 'function') doSearch();
   }, 200);
 });
 
-/* =========================================================
-   盘口分析报告 - 大小球盘口分析
-   将分析结果发送给 football_analysis.html 统一展示
-========================================================= */
 function generateOuReport() {
   if (!currentRows || currentRows.length === 0) {
     alert('暂无数据，请先查询一个比赛ID');
@@ -1046,17 +993,14 @@ function generateOuReport() {
     var ou = rec.ou || {};
     var ng = rec.ng || {};
 
-    // 第一个盘口（基准盘）
     var ooVal = parseFloat(ou.oo);
     var uoVal = parseFloat(ou.uo);
     var liVal = parseFloat(ou.li);
     if (isNaN(ooVal) || isNaN(uoVal) || isNaN(liVal) || ooVal <= 0 || uoVal <= 0) continue;
 
-    // 盘口值（原始 li 除以 4）
     var handicap = liVal / 4;
     var displayHandicap = handicap.toFixed(2);
 
-    // 计算总进球概率
     var ngCols = ['h1','h2','h3','h4','h5','h6','a1','a2','a3','a4','a5','a6'];
     var hasNg = ngCols.every(function(k){ return ng[k] && parseFloat(ng[k]) > 0; });
     if (!hasNg) continue;
@@ -1068,24 +1012,20 @@ function generateOuReport() {
     var tgProbs = calcTotalGoals(hp, ap);
     if (!tgProbs) continue;
 
-    // 计算亚洲盘 EV
     var res;
     try {
       res = calcAsianEV(handicap, ooVal, uoVal, tgProbs);
       if (!res || isNaN(res.fairOver) || isNaN(res.fairUnder)) continue;
     } catch(e) { continue; }
 
-    // 选择公平P大的；若公平P大的一方 EV >= 0，则反过来选对方
     var overFairP = res.fairOver;
     var underFairP = res.fairUnder;
     var overEV = res.evOver;
     var underEV = res.evUnder;
 
-    // Step1: 公平P大的一方
     var pickOver = overFairP >= underFairP;
     var pickEV = pickOver ? overEV : underEV;
 
-    // Step2: 若公平P大的那一方 EV >= 0，反过来选对方（标记反转）
     var reversed = false;
     if (pickEV >= 0) {
       reversed = true;
@@ -1116,7 +1056,6 @@ function generateOuReport() {
     return;
   }
 
-  // 发送给 football_analysis.html 统一展示
   sendOuReportToFootball(results);
 }
 
@@ -1139,11 +1078,9 @@ function sendOuReportToFootball(results) {
       })
     };
 
-    // 优先通过 opener 发送（football_analysis.html 通过 window.open 打开了本页）
     if (window.opener && !window.opener.closed) {
       window.opener.postMessage(payload, '*');
     } else {
-      // fallback：广播，football_analysis.html 监听 message 事件
       window.postMessage(payload, '*');
     }
   } catch(e) {}
