@@ -642,27 +642,19 @@
 </div>
 
 <script>
-/* =========================================================
-   全局状态
-========================================================= */
-let allRecords = [];        // 合并后的全量记录（已展开进球列）
-let filteredRecords = [];   // 当前筛选+排序后的记录
-let allLeagues = [];        // 所有联赛列表
+let allRecords = [];        
+let filteredRecords = [];   
+let allLeagues = [];        
 let metaInfo = { generated_at: '', total_processed: 0, simulation_count: 0 };
 
-// 排序状态：sortCol 只允许 '时间' 或 '记录时间'，sortAscending 控制方向
 let sortCol = '记录时间';
 let sortAscending = false;
 
-/* =========================================================
-   工具函数
-========================================================= */
 function parseGoalProbs(probStr) {
   const keys = ['0球','1球','2球','3球','4球','5球','6球','7+球'];
   const result = {};
   keys.forEach(k => { result[k] = '0.0%'; });
   if (!probStr || probStr === '待模拟' || probStr === '无') return result;
-  // 格式: "0:2.1% 1:8.3% 2:15.7% 3:19.9% 4:19.4% 5:22.5% 6:9.1% 7+:2.9%"
   probStr.trim().split(/\s+/).forEach(part => {
     const idx = part.indexOf(':');
     if (idx === -1) return;
@@ -694,9 +686,6 @@ function formatDate(dt) {
   return dt.replace('T', ' ');
 }
 
-/* =========================================================
-   加载 JSON 文件
-========================================================= */
 document.getElementById('fileInput').addEventListener('change', async (e) => {
   const files = Array.from(e.target.files).filter(f => f.name.endsWith('.json'));
   if (!files.length) {
@@ -712,7 +701,6 @@ document.getElementById('fileInput').addEventListener('change', async (e) => {
   let totalProcessed = 0;
   let simCount = 0;
 
-  // 按文件名排序（文件名含时间戳）
   files.sort((a, b) => a.name.localeCompare(b.name));
 
   const promises = files.map(f => new Promise((resolve) => {
@@ -751,7 +739,6 @@ document.getElementById('fileInput').addEventListener('change', async (e) => {
   metaInfo = { generated_at: latestGeneratedAt, total_processed: totalProcessed, simulation_count: simCount };
   document.getElementById('fileInfo').textContent = `已加载 ${files.length} 文件，共 ${allRecords.length} 条记录`;
 
-  // 提取联赛
   const leagueSet = new Set();
   allRecords.forEach(r => { if (r['赛事']) leagueSet.add(r['赛事']); });
   allLeagues = Array.from(leagueSet).sort();
@@ -760,9 +747,6 @@ document.getElementById('fileInput').addEventListener('change', async (e) => {
   applyFiltersAndSort();
 });
 
-/* =========================================================
-   联赛筛选渲染
-========================================================= */
 function renderLeagueFilter(leagues) {
   const container = document.getElementById('leagueList');
   if (!leagues.length) {
@@ -777,9 +761,6 @@ function renderLeagueFilter(leagues) {
   });
 }
 
-/* =========================================================
-   筛选 + 排序 + 渲染
-========================================================= */
 function applyFiltersAndSort() {
   if (!allRecords.length) return;
 
@@ -789,7 +770,6 @@ function applyFiltersAndSort() {
   );
   const asc = sortAscending;
 
-  // 筛选
   filteredRecords = allRecords.filter(rec => {
     if (selectedLeagues.size > 0 && !selectedLeagues.has(rec['赛事'])) return false;
     if (search) {
@@ -800,7 +780,6 @@ function applyFiltersAndSort() {
     return true;
   });
 
-  // 排序（仅支持 '时间' / '记录时间' 两个字符串时间列）
   filteredRecords.sort((a, b) => {
     const va = a[sortCol] || '';
     const vb = b[sortCol] || '';
@@ -811,26 +790,18 @@ function applyFiltersAndSort() {
   renderTable();
 }
 
-/* =========================================================
-   顶部 meta 信息
-=========================================================*/
 function updateMetaHeader() {
   const el = document.getElementById('metaInfo');
   const { generated_at, total_processed, simulation_count } = metaInfo;
   el.innerHTML = `📅 最新生成: ${generated_at || '未知'}<br>🎲 模拟次数: ${(simulation_count || 0).toLocaleString()}`;
 }
 
-/* =========================================================
-   表格渲染
-========================================================= */
-// 特殊列：ID 列映射 match_id 字段，表头显示 ID
 const ID_COL = 'ID';
 const BASE_COLS = ['时间', ID_COL, '赛事','主队','客队','胜概率','平概率','负概率',
                    '主进球','客进球','胜赔付','平赔付','负赔付','平均赔付'];
 const GOAL_COLS = ['0球','1球','2球','3球','4球','5球','6球','7+球'];
 const DISPLAY_COLS = [...BASE_COLS, ...GOAL_COLS, '记录时间'];
 
-// 列名 → 记录字段名 的映射（仅特殊列需要）
 function getRecordKey(col) {
   if (col === ID_COL) return 'match_id';
   return col;
@@ -846,14 +817,12 @@ function getCellClass(rec, col) {
   const probCols = new Set(['胜概率','平概率','负概率']);
   const goalCols = new Set(GOAL_COLS);
 
-  // 概率列
   if (probCols.has(col)) {
     const v = parsePercent(rec[col]);
     if (!isNaN(v) && v >= 50) return 'hl-red';
     return '';
   }
 
-  // 赔付列
   if (col in probPayoutMap) {
     const payout = parseNum(rec[col]);
     const avg = parseNum(rec['平均赔付']);
@@ -866,7 +835,6 @@ function getCellClass(rec, col) {
     return '';
   }
 
-  // 进球概率列
   if (goalCols.has(col)) {
     const v = parsePercent(rec[col]);
     if (!isNaN(v) && v >= 9.5) return 'hl-green';
@@ -892,7 +860,6 @@ function renderTable() {
     return;
   }
 
-  // 表头：首列为选择列，后续为数据列
   const selectTh = `<th class="row-select-col" title="选择行">◎</th>`;
   const thHtml = selectTh + DISPLAY_COLS.map(col => {
     const isSortable = SORTABLE_COLS.has(col);
@@ -909,7 +876,6 @@ function renderTable() {
     return `<th class="${cls}"${dataCol}${sep}>${escapeHtml(col)}</th>`;
   }).join('');
 
-  // 表格行：首列为单选按钮
   const rowsHtml = filteredRecords.map((rec, idx) => {
     const selectTd = `<td class="row-select-col"><input type="radio" name="rowSelect" value="${idx}" /></td>`;
     const cells = DISPLAY_COLS.map(col => {
@@ -932,7 +898,6 @@ function renderTable() {
     </table>
   `;
 
-  // 点击行时自动选中该行的单选框
   wrapper.querySelectorAll('tbody tr').forEach(tr => {
     tr.addEventListener('click', (e) => {
       if (e.target.tagName === 'INPUT') return;
@@ -941,7 +906,6 @@ function renderTable() {
     });
   });
 
-  // 只给可排序列绑定点击事件
   wrapper.querySelectorAll('thead th[data-col]').forEach(th => {
     th.addEventListener('click', () => {
       const col = th.dataset.col;
@@ -956,13 +920,8 @@ function renderTable() {
   });
 }
 
-/* =========================================================
-   事件绑定
-========================================================= */
-// 搜索框
 document.getElementById('searchInput').addEventListener('input', applyFiltersAndSort);
 
-// 导出 CSV
 document.getElementById('exportBtn').addEventListener('click', () => {
   if (!filteredRecords.length) { alert('暂无数据可导出'); return; }
   const header = DISPLAY_COLS.join(',');
@@ -991,9 +950,6 @@ document.getElementById('exportBtn').addEventListener('click', () => {
   URL.revokeObjectURL(url);
 });
 
-/* =========================================================
-   HTML 转义工具
-========================================================= */
 function escapeHtml(str) {
   return String(str)
     .replace(/&/g, '&amp;')
@@ -1005,9 +961,6 @@ function escapeAttr(str) {
   return String(str).replace(/"/g, '&quot;');
 }
 
-/* =========================================================
-   分析选中 - 打开 index.html + 生成分析报告弹窗
-========================================================= */
 const INDEX_URL = './docs/index.html';
 let indexWin = null;   // 保存已打开的窗口引用
 
@@ -1021,23 +974,17 @@ document.getElementById('analyzeBtn').addEventListener('click', () => {
   const rec = filteredRecords[idx];
   if (!rec) { alert('找不到选中的数据'); return; }
 
-  // ① 生成分析报告弹窗
   showReport(rec);
 
-  // ② 填入 docs/index.html
   fillIndexHtml(rec);
 });
 
-// 关闭弹窗（点击遮罩或按钮）
 document.getElementById('reportOverlay').addEventListener('click', function(e) {
   if (e.target === this || e.target.classList.contains('report-close')) {
     this.style.display = 'none';
   }
 });
 
-/* =========================================================
-   分析报告生成
-========================================================= */
 function showReport(rec) {
   const winPct   = parsePercent(rec['胜概率']);
   const drawPct  = parsePercent(rec['平概率']);
@@ -1050,16 +997,13 @@ function showReport(rec) {
   const losePay  = parseNum(rec['负赔付']);
   const avgPay   = parseNum(rec['平均赔付']);
 
-  // 概率超50%判断
   const probMap = { '胜': winPct, '平': drawPct, '负': losePct };
   const over50 = Object.entries(probMap).filter(([, v]) => !isNaN(v) && v >= 50);
 
-  // === 基本信息区 ===
   let html = '';
   html += `<div class="report-header"><h2>⚽ 分析报告</h2><button class="report-close">&times;</button></div>`;
   html += `<div class="report-body">`;
 
-  // — 基本信息 —
   html += `<div class="report-section">`;
   html += `<div class="report-section-title">📋 基本信息</div>`;
   html += `<div class="info-flex-row">`;
@@ -1072,7 +1016,6 @@ function showReport(rec) {
   html += item('客队', rec['客队']);
   html += `</div></div>`;
 
-  // — 概率分析 —
   html += `<div class="report-section">`;
   html += `<div class="report-section-title">📊 概率分析</div>`;
   html += `<div class="prob-row">`;
@@ -1089,7 +1032,6 @@ function showReport(rec) {
   }
   html += `</div>`;
 
-  // — 进球数据 —
   html += `<div class="report-section">`;
   html += `<div class="report-section-title">⚡ 进球数据</div>`;
   html += `<div class="report-info-grid">`;
@@ -1099,7 +1041,6 @@ function showReport(rec) {
   html += `<div class="total-goal"><div class="tg-label">总进球</div><div class="tg-value">${totalGoal}</div></div>`;
   html += `</div>`;
 
-  // — 赔付分析 —
   html += `<div class="report-section">`;
   html += `<div class="report-section-title">💰 赔付分析</div>`;
   html += `<div class="info-flex-row">`;
@@ -1126,7 +1067,6 @@ function showReport(rec) {
   });
   html += `</div>`;
 
-  // — 总进球数分布 —
   html += `<div class="report-section">`;
   html += `<div class="report-section-title">🎯 总进球数分布</div>`;
   html += `<div class="goal-bar-grid">`;
@@ -1162,9 +1102,6 @@ function item(label, val) {
   return `<div class="info-item"><span class="info-label">${label}</span><span class="info-value">${escapeHtml(display)}</span></div>`;
 }
 
-/* =========================================================
-   填入 docs/index.html（原有逻辑）
-========================================================= */
 function fillIndexHtml(rec) {
   const league = String(rec['赛事'] || '').trim();
   const matchId = String(rec['match_id'] || rec['ID'] || '').trim();
@@ -1192,18 +1129,13 @@ function fillIndexHtml(rec) {
   }
 }
 
-/* =========================================================
-   接收来自 docs/index.html 的大小球盘口分析报告
-========================================================= */
 window.addEventListener('message', function(e) {
   if (!e.data || e.data.type !== 'OU_REPORT') return;
   var results = e.data.results || [];
   var matchId = e.data.matchId || '';
 
-  // 构建 OU 分析 HTML
   var ouHtml = buildOuReportHtml(results, matchId);
 
-  // 如果报告弹窗已打开，追加内容；否则自动打开
   var overlay = document.getElementById('reportOverlay');
   if (overlay.style.display === 'flex') {
     var oldOu = document.getElementById('ouReportSection');
@@ -1211,7 +1143,6 @@ window.addEventListener('message', function(e) {
     var card = document.getElementById('reportCard');
     card.innerHTML += ouHtml;
   } else {
-    // 弹窗未打开 → 自动打开，仅显示大小球盘口报告
     openOuOnlyReport(ouHtml);
   }
 });
