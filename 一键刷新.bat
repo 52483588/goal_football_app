@@ -1,11 +1,8 @@
 @echo off
 
 cd /d "%~dp0"
-echo ÕıÔÚ½âÎö XML Éú³É his_data.js...
+echo æ­£åœ¨è§£æ XML ç”Ÿæˆ his_data.js...
 python parse_xml.py
 if errorlevel 1 pause & exit /b
-echo ÕıÔÚÉú³É index.html...
-python build_html.py
-if errorlevel 1 pause & exit /b
-echo Ë¢ĞÂÍê³É£¡
+echo åˆ·æ–°å®Œæˆï¼
 pause
