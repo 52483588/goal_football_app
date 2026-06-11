@@ -128,13 +128,13 @@ echo 已移动至 %HISDATA_DIR%\%timestamp%
 :: ========================
 :: 7. 运行python应用
 :: ========================
-echo 正在启动 python 应用 (b.py) ...
-if not exist "b.py" (
-    echo 错误：未找到 b.py 文件！
+echo 正在启动 python 应用 (a.py) ...
+if not exist "a.py" (
+    echo 错误：未找到 a.py 文件！
     pause
     exit /b 1
 )
-python b.py
+python a.py
 
 echo 正在解析 XML 生成 his_data.js...
 python parse_xml.py
