@@ -96,7 +96,7 @@ jobs:
           git commit -m "归档 ${{ env.TIMESTAMP }} 并更新最新XML" || echo "No changes"
           git push
 
-      # ========== 以下为生成静态文件（his_data.js + index.html）步骤 ==========
+      # ========== 以下为生成静态文件（his_data.js ）步骤 ==========
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -107,9 +107,6 @@ jobs:
 
       - name: Generate his_data.js
         run: python parse_xml.py
-
-      # - name: Generate index.html
-      #   run: python build_html.py
 
       - name: 提交静态文件到仓库（可选，保留历史记录）
         run: |
