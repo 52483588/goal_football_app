@@ -8,41 +8,34 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: #f5f7fa; color: #333; }
 
-  /* 顶部固定区域 */
   .sticky-header { position: sticky; top: 0; background: #fff; z-index: 100; padding: 12px 24px 8px; border-bottom: 2px solid #e0e0e0; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
   .main-header { font-size: 26px; font-weight: bold; color: #1F4E79; text-align: center; margin-bottom: 10px; }
   .sub-header { font-size: 17px; font-weight: 600; color: #2C3E50; margin: 18px 0 10px; border-bottom: 2px solid #e0e0e0; padding-bottom: 5px; }
 
-  /* 导航标签 */
   .nav-tabs { display: flex; gap: 6px; margin-bottom: 10px; }
   .nav-tab { padding: 7px 18px; border: none; border-radius: 6px 6px 0 0; background: #e8edf3; color: #555; cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.2s; }
   .nav-tab:hover { background: #d0d8e8; }
   .nav-tab.active { background: #1F4E79; color: #fff; }
 
-  /* 比赛信息条 */
   .match-info { display: flex; gap: 20px; flex-wrap: wrap; margin: 8px 0; }
   .match-info .mi-item { background: #f0f4f8; border-radius: 6px; padding: 6px 14px; font-size: 13px; }
   .match-info .mi-label { color: #888; font-size: 11px; }
   .match-info .mi-val { font-weight: 600; color: #1F4E79; }
 
-  /* 选择器 */
   .selectors { display: flex; gap: 12px; margin: 8px 0; }
   .selectors select { padding: 6px 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 13px; min-width: 180px; }
 
-  /* 指标卡片 */
   .metric-row { display: flex; gap: 12px; margin: 10px 0; }
   .metric-box { flex: 1; background: #f8f9fa; border-radius: 8px; padding: 14px 10px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
   .metric-value { font-size: 26px; font-weight: bold; color: #1F4E79; }
   .metric-label { font-size: 12px; color: #6c757d; margin-top: 4px; }
 
-  /* 表格 */
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th { background: #1F4E79; color: #fff; padding: 7px 8px; position: sticky; top: 0; }
   td { padding: 6px 8px; border-bottom: 1px solid #eee; }
   tr:nth-child(even) { background: #f9f9f9; }
   tr:hover { background: #e8f0fe; }
 
-  /* 按钮 */
   .btn { padding: 8px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500; }
   .btn-primary { background: #1F4E79; color: #fff; }
   .btn-primary:hover { background: #163a5c; }
@@ -51,10 +44,8 @@
   .btn-success { background: #198754; color: #fff; }
   .btn-danger { background: #dc3545; color: #fff; }
 
-  /* 页面容器 */
   .page-content { padding: 16px 24px; }
 
-  /* 侧边栏 */
   .sidebar { position: fixed; right: 0; top: 0; width: 260px; height: 100vh; background: #fff; box-shadow: -2px 0 8px rgba(0,0,0,0.08); padding: 20px 16px; overflow-y: auto; z-index: 200; display: none; }
   .sidebar.open { display: block; }
   .sidebar h3 { font-size: 15px; color: #1F4E79; margin-bottom: 12px; }
@@ -62,41 +53,33 @@
   .sidebar label { font-size: 12px; color: #666; display: block; margin-bottom: 4px; }
   .sidebar input[type=number] { width: 100%; padding: 5px 8px; border: 1px solid #ccc; border-radius: 4px; }
 
-  /* 文件加载区 */
   .load-area { max-width: 600px; margin: 60px auto; text-align: center; }
   .load-area h2 { color: #1F4E79; margin-bottom: 20px; }
   .folder-btn { display: inline-block; padding: 14px 36px; background: #1F4E79; color: #fff; border-radius: 8px; cursor: pointer; font-size: 16px; }
   .folder-btn:hover { background: #163a5c; }
   #folderInput { display: none; }
 
-  /* 概率高亮 */
   .prob-high { background: #d4edda !important; font-weight: bold; }
   .prob-medium { background: #fff3cd !important; }
   .payout-high { background: #cfe2ff !important; }
 
-  /* 图表容器 */
   .chart-container { width: 100%; max-width: 500px; margin: 10px auto; }
   .bar-chart { display: flex; align-items: flex-end; gap: 3px; height: 200px; padding: 10px 0 0; border-bottom: 1px solid #ccc; }
   .bar-chart .bar { flex: 1; background: #1F4E79; border-radius: 3px 3px 0 0; position: relative; min-width: 8px; transition: height 0.3s; }
   .bar-chart .bar-label { position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #666; }
   .bar-chart .bar-val { position: absolute; top: -16px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #333; white-space: nowrap; }
 
-  /* 分析记录表特殊样式 */
   .analysis-table th, .analysis-table td { font-size: 12px; padding: 5px 6px; }
   .highlight-cell { background: #d4edda !important; font-weight: bold; }
 
-  /* 加载动画 */
   .spinner { border: 3px solid #f3f3f3; border-top: 3px solid #1F4E79; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 20px auto; }
   @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-  /* 下拉筛选 */
   .filter-row { display: flex; gap: 10px; align-items: center; margin: 10px 0; flex-wrap: wrap; }
   .filter-row select, .filter-row input { padding: 5px 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; }
 
-  /* 顶部右侧按钮组 */
   .top-right-btns { position: fixed; right: 20px; top: 20px; z-index: 300; display: flex; gap: 8px; }
 
-  /* 总进球分析面板 */
   .panel-section { background: #fff; border-radius: 8px; padding: 16px; margin: 12px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
   .panel-title { font-size: 15px; font-weight: 600; color: #1F4E79; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid #e0e0e0; }
   .highlight-row { background: #fffbeb !important; }
@@ -108,20 +91,17 @@
   .advice-success { background: #e8f5e9; border-color: #4caf50; }
   .advice-caption { color: #888; font-size: 12px; margin-top: 10px; }
 
-  /* 展开/折叠 */
   .expander { border: 1px solid #e0e0e0; border-radius: 6px; margin: 8px 0; }
   .expander-header { padding: 8px 14px; background: #f8f9fa; cursor: pointer; font-size: 13px; font-weight: 500; color: #555; border-radius: 6px; user-select: none; }
   .expander-header:hover { background: #e8edf3; }
   .expander-body { padding: 12px 14px; display: none; font-size: 13px; line-height: 1.8; }
   .expander.open .expander-body { display: block; }
 
-  /* SVG 图表 */
   .svg-chart { width: 100%; max-width: 640px; margin: 10px auto; display: block; }
 </style>
 </head>
 <body>
 
-<!-- ==================== 文件加载页面 ==================== -->
 <div id="loadPage" class="load-area">
   <h2>⚽ 足球比分模拟器</h2>
   <p style="color:#666; margin-bottom:24px;">请选择包含 XML 数据的文件夹<br>（例如 <code>Hisdata/20260608_080030</code>）</p>
@@ -130,9 +110,7 @@
   <div id="loadStatus" style="margin-top:16px; color:#666;"></div>
 </div>
 
-<!-- ==================== 主应用（默认隐藏） ==================== -->
 <div id="appPage" style="display:none;">
-  <!-- 顶部固定区域 -->
   <div class="sticky-header">
     <div class="main-header">⚽ 足球比分模拟器 · 闯关概率模型</div>
     <div class="nav-tabs">
@@ -149,12 +127,10 @@
     </div>
   </div>
 
-  <!-- 顶部右侧按钮组 -->
   <div class="top-right-btns">
     <button class="btn btn-primary" onclick="runSimulation()">🚀 开始模拟</button>
     <button class="btn btn-secondary" onclick="toggleSidebar()">⚙️ 设置</button>
   </div>
-  <!-- 侧边栏设置 -->
   <div class="sidebar" id="sidebar">
     <h3>⚙️ 模拟设置</h3>
     <div class="form-group">
@@ -174,12 +150,10 @@
     <div id="simStatus" style="margin-top:12px;font-size:13px;"></div>
   </div>
 
-  <!-- 页面内容 -->
   <div class="page-content" id="pageContent"></div>
 </div>
 
 <script>
-// ==================== 全局状态 ====================
 const state = {
   xmlData: {},          // { filename: xmlString }
   parsed: {             // 解析后的数据
@@ -200,7 +174,6 @@ const state = {
   currentPage: 'home'
 };
 
-// ==================== XML 解析函数 ====================
 function parseNumberofgoals(xmlStr) {
   const parser = new DOMParser();
   const doc = parser.parseFromString(xmlStr, 'text/xml');
@@ -325,7 +298,6 @@ function parseWinodds(xmlStr) {
   return result;
 }
 
-// ==================== 加载 XML 文件 ====================
 document.getElementById('folderInput').addEventListener('change', function(e) {
   const files = Array.from(e.target.files).filter(f => f.name.endsWith('.xml'));
   if (files.length === 0) {
@@ -389,7 +361,6 @@ function parseAllXml() {
   }
 }
 
-// ==================== 构建联赛->比赛映射 ====================
 function buildLeagueMap() {
   const map = {};
   const order = [];
@@ -398,17 +369,14 @@ function buildLeagueMap() {
     if (!map[league]) { map[league] = []; order.push(league); }
     if (!map[league].includes(id)) map[league].push(id);
   }
-  // 按ID数字排序
   for (const league of Object.keys(map)) {
     map[league].sort((a, b) => parseInt(a) - parseInt(b));
   }
   state.leagueMatchMap = map;
-  // 默认选中第一场比赛
   const firstLeague = order[0];
   state.selectedMatchId = map[firstLeague][0];
 }
 
-// ==================== 初始化应用 ====================
 function initApp() {
   renderLeagueSelect();
   renderMatchInfo();
@@ -426,7 +394,6 @@ function renderLeagueSelect() {
     opt.textContent = league;
     ls.appendChild(opt);
   }
-  // 设置当前联赛
   const currentLeague = getLeagueForMatch(state.selectedMatchId);
   ls.value = currentLeague;
   renderMatchSelect();
@@ -467,14 +434,12 @@ function onMatchChange() {
   state.selectedMatchId = document.getElementById('matchSelect').value;
   renderMatchInfo();
   autoUpdateProbs();
-  // 重新渲染当前页面
   switchPage(state.currentPage);
 }
 
 function renderMatchInfo() {
   const info = getMatchBasicInfo(state.selectedMatchId);
   let gt = info.gt || '';
-  // 格式化时间：20260607 08:00 -> 2026-06-07 08:00
   if (gt && gt.length >= 14) {
     gt = `${gt.substring(0,4)}-${gt.substring(4,6)}-${gt.substring(6,8)} ${gt.substring(9)}`;
   }
@@ -490,7 +455,6 @@ function getMatchBasicInfo(matchId) {
   return state.parsed.odds_config[matchId] || { gt: '', st: '', sh: '', sa: '' };
 }
 
-// ==================== 闯关概率模型 ====================
 function calcE(oddsList) {
   // oddsList: 前6个赔率
   let sumInv = 0;
@@ -515,7 +479,6 @@ function oddsToProbs(homeOdds, awayOdds) {
   return [calcE(homeOdds.slice(0,6)), calcE(awayOdds.slice(0,6))];
 }
 
-// ==================== 概率输入框 ====================
 function renderProbInputs() {
   const homeDiv = document.getElementById('homeProbInputs');
   const awayDiv = document.getElementById('awayProbInputs');
@@ -548,7 +511,6 @@ function autoUpdateProbs() {
   }
 }
 
-// ==================== 蒙特卡洛模拟 ====================
 function simulateGoals(probs, nSims) {
   const goals = new Array(nSims).fill(0);
   for (let s = 0; s < nSims; s++) {
@@ -575,14 +537,12 @@ function runSimulation() {
   const statusEl = document.getElementById('simStatus');
   statusEl.innerHTML = `<div class="spinner"></div><div>正在进行 ${nSims.toLocaleString()} 次模拟...</div>`;
 
-  // 使用 setTimeout 让 UI 先更新
   setTimeout(() => {
     const t0 = performance.now();
 
     const homeGoals = simulateGoals(homeP, nSims);
     const awayGoals = simulateGoals(awayP, nSims);
 
-    // 统计
     const scoreMap = {};
     const totalGoalsMap = {};
     let homeWin = 0, draw = 0, awayWin = 0;
@@ -612,11 +572,9 @@ function runSimulation() {
     expHome /= nSims;
     expAway /= nSims;
 
-    // 比分排序
     const scoreCounts = Object.entries(scoreMap).map(([score, cnt]) => ({ score, cnt, prob: cnt / nSims }));
     scoreCounts.sort((a, b) => b.prob - a.prob);
 
-    // 总进球分布
     const totalGoalsArr = [];
     for (let g = 0; g <= 7; g++) {
       totalGoalsArr.push({ goals: g, cnt: totalGoalsMap[g] || 0, prob: (totalGoalsMap[g] || 0) / nSims });
@@ -633,7 +591,6 @@ function runSimulation() {
       nSims, elapsed
     };
 
-    // 保存到分析记录库
     saveToAnalysisRecords();
 
     statusEl.innerHTML = `<span style="color:green;">✅ 模拟完成！耗时 ${elapsed.toFixed(3)} 秒</span>`;
@@ -641,7 +598,6 @@ function runSimulation() {
   }, 50);
 }
 
-// ==================== 分析记录库 ====================
 function saveToAnalysisRecords() {
   const id = state.selectedMatchId;
   const data = state.simData;
@@ -653,7 +609,6 @@ function saveToAnalysisRecords() {
     gt = `${gt.substring(0,4)}-${gt.substring(4,6)}-${gt.substring(6,8)} ${gt.substring(9)}`;
   }
 
-  // 总进球概率分布字符串
   let totalProbStr = '';
   if (data.totalGoalsArr) {
     const parts = [];
@@ -685,7 +640,6 @@ function saveToAnalysisRecords() {
     recordTime: new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })
   };
 
-  // 更新或添加
   const idx = state.analysisRecords.findIndex(r => r.match_id === id);
   if (idx >= 0) {
     state.analysisRecords[idx] = record;
@@ -694,10 +648,8 @@ function saveToAnalysisRecords() {
   }
 }
 
-// ==================== 页面切换 ====================
 function switchPage(page) {
   state.currentPage = page;
-  // 更新标签样式
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   document.querySelector(`.nav-tab[data-page="${page}"]`).classList.add('active');
   renderPageContent(page);
@@ -712,7 +664,6 @@ function renderPageContent(page) {
   else if (page === 'records') el.innerHTML = renderRecordsPage();
 }
 
-// ==================== 首页 ====================
 function renderHomePage() {
   const data = state.simData;
   if (!data) {
@@ -723,18 +674,14 @@ function renderHomePage() {
   const id = state.selectedMatchId;
   const wdw = state.parsed.windrawwin[id] || { ho: 0, do: 0, ao: 0 };
 
-  // 胜平负概率与赔付
   const probs = [data.homeWinProb, data.drawProb, data.awayWinProb];
   const odds = [wdw.ho, wdw.do, wdw.ao];
   const payouts = [probs[0]*odds[0], probs[1]*odds[1], probs[2]*odds[2]];
 
-  // 前十比分
   const top10 = data.scoreCounts.slice(0, 10);
 
-  // 总进球柱状图
   const totalHtml = renderBarChart(data.totalGoalsArr.slice(0, 8), '总进球', 'prob');
 
-  // 主客队进球分布
   const homeDist = data.homeGoalCount.slice(0, 6).map((p, i) => ({ label: i, prob: p }));
   const awayDist = data.awayGoalCount.slice(0, 6).map((p, i) => ({ label: i, prob: p }));
 
@@ -782,7 +729,6 @@ function renderHomePage() {
   `;
 }
 
-// ==================== 柱状图渲染 ====================
 function renderBarChart(dataArr, xLabel, valKey) {
   const maxVal = Math.max(...dataArr.map(d => d.prob || d[valKey] || 0)) * 1.15;
   const bars = dataArr.map(d => {
@@ -797,18 +743,15 @@ function renderBarChart(dataArr, xLabel, valKey) {
   return `<div class="bar-chart">${bars}</div><div style="text-align:center;font-size:12px;color:#666;margin-top:18px;">${xLabel}</div>`;
 }
 
-// ==================== 赔率一览页面 ====================
 function renderOddsPage() {
   const id = state.selectedMatchId;
   let html = '';
 
-  // odds_config 信息
   const info = getMatchBasicInfo(id);
   html += `<div class="sub-header">🏟️ 比赛信息 (odds_config.xml)</div>`;
   html += `<table><tr><th>时间</th><th>赛事</th><th>主队</th><th>客队</th></tr>
     <tr><td>${info.gt||''}</td><td>${info.st||''}</td><td>${info.sh||''}</td><td>${info.sa||''}</td></tr></table>`;
 
-  // numberofgoals
   const ng = state.parsed.numberofgoals[id];
   if (ng) {
     html += `<div class="sub-header">⚽ 进球数赔率 (numberofgoals.xml)</div>`;
@@ -819,7 +762,6 @@ function renderOddsPage() {
     html += `</table>`;
   }
 
-  // correctscore + halffull
   html += `<div class="sub-header">🎯 正确比分 & 半全场赔率</div><div style="display:flex;gap:20px;">`;
   const cs = state.parsed.correctscore[id];
   const csLabels = ['1-0','2-0','2-1','3-0','3-1','3-2','4-0','4-1','4-2','4-3',
@@ -848,7 +790,6 @@ function renderOddsPage() {
   }
   html += `</div>`;
 
-  // overunder + windrawwin + windrawwinfirsthalf
   html += `<div class="sub-header">📏 大小球 & 胜平负 & 上半场胜平负</div><div style="display:flex;gap:20px;">`;
   const ou = state.parsed.overunder[id];
   if (ou) {
@@ -1035,7 +976,6 @@ function parseGoal(label) {
   return parseFloat(s) || 0.0;
 }
 
-// ==================== 总进球页面 ====================
 function renderGoalsPage() {
   const data = state.simData;
   if (!data) {
@@ -1052,11 +992,9 @@ function renderGoalsPage() {
   const goalLabels = totalArr.map(d => d.goals >= 7 ? '7+' : String(d.goals));
   const goalValues = totalArr.map(d => d.goals >= 7 ? 7.0 : d.goals);
 
-  // 期望进球数
   let expectedGoals = 0;
   for (let i = 0; i < goalValues.length; i++) expectedGoals += goalValues[i] * probValues[i];
 
-  // 累计概率
   const cumProbs = [];
   let cum = 0;
   for (const p of probValues) { cum += p; cumProbs.push(cum); }
@@ -1064,13 +1002,11 @@ function renderGoalsPage() {
   const hcpType = getHandicapType(hcp);
   const hcpTypeLabel = handicapTypeLabel(hcp);
 
-  // 逐进球结算
   const overReturns = goalValues.map(g => overReturn(hcp, g, oo));
   const underReturns = goalValues.map(g => underReturn(hcp, g, uo));
   const overDescs = goalValues.map(g => overReturnDesc(hcp, g));
   const underDescs = goalValues.map(g => underReturnDesc(hcp, g));
 
-  // EV计算
   let evOver = 0, evUnder = 0;
   for (let i = 0; i < probValues.length; i++) {
     evOver += probValues[i] * overReturns[i];
@@ -1081,15 +1017,12 @@ function renderGoalsPage() {
   const evOverPct = evOver * 100;
   const evUnderPct = evUnder * 100;
 
-  // 公平赔率
   const { fairOver, fairUnder, fairOverProb, fairUnderProb } = calcFairOdds(hcp, probValues, goalLabels);
 
-  // 隐含概率 & 抽水
   const impliedOver = 1.0 / oo;
   const impliedUnder = 1.0 / uo;
   const overroundPct = (impliedOver + impliedUnder) * 100;
 
-  // 概览指标
   const modeIdx = probValues.indexOf(Math.max(...probValues));
   const modeLabel = goalLabels[modeIdx];
   const pGeq4 = probValues.slice(4).reduce((a, b) => a + b, 0);
@@ -1098,7 +1031,6 @@ function renderGoalsPage() {
 
   let html = '';
 
-  // ===== 1. 基准数据 =====
   html += `<div class="panel-section"><div class="panel-title">📐 基准数据</div>`;
   html += `<div class="metric-row">
     <div class="metric-box"><div class="metric-value">${hcp.toFixed(2)}</div><div class="metric-label">🏠 大小球盘口</div></div>
@@ -1108,7 +1040,6 @@ function renderGoalsPage() {
     <div class="metric-box"><div class="metric-value">${(fairUnderProb*100).toFixed(2)}%</div><div class="metric-label">⚽ 小球公平概率</div></div>
   </div></div>`;
 
-  // ===== 2. 期望值（EV）分析 =====
   html += `<div class="panel-section"><div class="panel-title">📈 期望值（EV）分析</div>`;
   html += `<div class="metric-row">
     <div class="metric-box"><div class="metric-value ${evOverPct >= 0 ? 'ev-positive' : 'ev-negative'}">${evOverPct.toFixed(2)}%</div><div class="metric-label">🏠 大球 EV</div></div>
@@ -1117,13 +1048,11 @@ function renderGoalsPage() {
     <div class="metric-box"><div class="metric-value">${fairUnder === Infinity ? '∞' : fairUnder.toFixed(3)}</div><div class="metric-label">🚀 小球公平赔率</div></div>
   </div>`;
 
-  // EV 条形图（水平）
   html += renderEVBarChart(
     [`大球 ${hcp.toFixed(2)} @ ${oo.toFixed(3)}`, `小球 ${hcp.toFixed(2)} @ ${uo.toFixed(3)}`],
     [evOverPct, evUnderPct]
   );
 
-  // EV 计算过程（可展开）
   html += `<div class="expander" id="evExpander">
     <div class="expander-header" onclick="this.parentElement.classList.toggle('open')">📝 EV 计算过程</div>
     <div class="expander-body">
@@ -1133,7 +1062,6 @@ function renderGoalsPage() {
     </div>
   </div></div>`;
 
-  // ===== 3. 概览指标 =====
   html += `<div class="panel-section"><div class="panel-title">📊 概览指标</div>`;
   html += `<div class="metric-row">
     <div class="metric-box"><div class="metric-value">${expectedGoals.toFixed(2)}</div><div class="metric-label">期望进球数</div></div>
@@ -1143,7 +1071,6 @@ function renderGoalsPage() {
     <div class="metric-box"><div class="metric-value">${(pEq3*100).toFixed(1)}%</div><div class="metric-label">P(=3球)</div></div>
   </div></div>`;
 
-  // ===== 4. 盘口结算明细 =====
   html += `<div class="panel-section"><div class="panel-title">📋 盘口结算明细：${hcp.toFixed(2)}（${hcpTypeLabel}）</div>`;
   html += `<div style="color:#888;font-size:12px;margin-bottom:8px;">大球 @ ${oo.toFixed(3)} / 小球 @ ${uo.toFixed(3)}</div>`;
   html += `<table>
@@ -1166,17 +1093,14 @@ function renderGoalsPage() {
   }
   html += `</div>`;
 
-  // ===== 5. 进球概率分布图 =====
   html += `<div class="panel-section"><div class="panel-title">📊 进球概率分布</div>`;
   html += renderGoalDistChart(goalLabels, probValues, modeIdx);
   html += `</div>`;
 
-  // ===== 6. 赔率对比图 =====
   html += `<div class="panel-section"><div class="panel-title">🏷️ 赔率对比：市场 vs 公平</div>`;
   html += renderOddsCompareChart(oo, uo, fairOver, fairUnder);
   html += `</div>`;
 
-  // ===== 7. 投注建议 =====
   const betterSide = evOverPct >= evUnderPct ? '大球' : '小球';
   const betterEV = evOverPct >= evUnderPct ? evOverPct : evUnderPct;
   const betterOdds = evOverPct >= evUnderPct ? oo : uo;
@@ -1219,14 +1143,12 @@ function renderGoalsPage() {
   return html;
 }
 
-// ==================== 总进球图表渲染 ====================
 function renderEVBarChart(evLabels, evVals) {
   const w = 640, h = 180, barH = 36, gap = 14, leftM = 180;
   const maxAbs = Math.max(Math.abs(Math.min(...evVals)), Math.abs(Math.max(...evVals)), 0.5);
   const scale = (w - leftM - 60) / (maxAbs * 2);
 
   let svg = `<svg class="svg-chart" viewBox="0 0 ${w} ${h}" style="max-width:100%;">`;
-  // 零线
   const zeroX = leftM + maxAbs * scale;
   svg += `<line x1="${zeroX}" y1="10" x2="${zeroX}" y2="${h-20}" stroke="#94a3b8" stroke-dasharray="4,3" stroke-width="1"/>`;
 
@@ -1238,17 +1160,14 @@ function renderEVBarChart(evLabels, evVals) {
     const x = val >= 0 ? zeroX : zeroX - barW;
 
     svg += `<rect x="${x}" y="${y}" width="${barW}" height="${barH}" rx="3" fill="${color}" opacity="0.85"/>`;
-    // 标签
     const textX = val >= 0 ? x - 8 : x + barW + 8;
     const textAnchor = val >= 0 ? 'end' : 'start';
     svg += `<text x="${textX}" y="${y+barH/2+5}" text-anchor="${textAnchor}" font-size="12" fill="#333">${evLabels[i]}</text>`;
-    // 数值
     const valX = val >= 0 ? x + barW + 5 : x - 5;
     const valAnchor = val >= 0 ? 'start' : 'end';
     svg += `<text x="${valX}" y="${y+barH/2+5}" text-anchor="${valAnchor}" font-size="12" font-weight="bold" fill="${color}">${val.toFixed(2)}%</text>`;
   }
 
-  // X轴标签
   svg += `<text x="${zeroX}" y="${h-2}" text-anchor="middle" font-size="11" fill="#666">期望净收益 (%)</text>`;
   svg += `</svg>`;
   return svg;
@@ -1262,7 +1181,6 @@ function renderGoalDistChart(goalLabels, probValues, modeIdx) {
   const startX = (w - (goalLabels.length * (barW + gap) - gap)) / 2;
 
   let svg = `<svg class="svg-chart" viewBox="0 0 ${w} ${h}" style="max-width:100%;">`;
-  // Y轴
   svg += `<line x1="${startX-10}" y1="${top}" x2="${startX-10}" y2="${h-bottom}" stroke="#ccc" stroke-width="1"/>`;
 
   for (let i = 0; i < goalLabels.length; i++) {
@@ -1274,13 +1192,10 @@ function renderGoalDistChart(goalLabels, probValues, modeIdx) {
     if (i === modeIdx) color = '#f59e0b';
 
     svg += `<rect x="${x}" y="${y}" width="${barW}" height="${barH}" rx="3" fill="${color}" opacity="0.9"/>`;
-    // 数值
     svg += `<text x="${x+barW/2}" y="${y-6}" text-anchor="middle" font-size="11" fill="#333">${pctValues[i].toFixed(1)}%</text>`;
-    // 标签
     svg += `<text x="${x+barW/2}" y="${h-bottom+16}" text-anchor="middle" font-size="12" fill="#666">${goalLabels[i]}</text>`;
   }
 
-  // Y轴标签
   svg += `<text x="10" y="${h/2}" text-anchor="middle" font-size="11" fill="#666" transform="rotate(-90,10,${h/2})">概率 (%)</text>`;
   svg += `<text x="${w/2}" y="${h-2}" text-anchor="middle" font-size="11" fill="#666">总进球</text>`;
   svg += `</svg>`;
@@ -1316,12 +1231,10 @@ function renderOddsCompareChart(overOdds, underOdds, fairOver, fairUnder) {
       svg += `<rect x="${x}" y="${y}" width="${barW-6}" height="${barH}" rx="3" fill="${colors[b]}" opacity="0.9"/>`;
       const dispVal = (g === 0 && b === 1 && fairOver === Infinity) ? '∞' : groups[g].vals[b].toFixed(3);
       svg += `<text x="${x+(barW-6)/2}" y="${y-6}" text-anchor="middle" font-size="10" fill="#333">${dispVal}</text>`;
-      // 柱底标签
       if (g === 0) {
         svg += `<text x="${x+(barW-6)/2}" y="${h-bottom+16}" text-anchor="middle" font-size="11" fill="#666">${labels[b]}</text>`;
       }
     }
-    // 组标签
     svg += `<text x="${gx+(barW*2+10)/2}" y="${h-2}" text-anchor="middle" font-size="12" font-weight="bold" fill="#1F4E79">${groups[g].label}</text>`;
   }
 
@@ -1330,7 +1243,6 @@ function renderOddsCompareChart(overOdds, underOdds, fairOver, fairUnder) {
   return svg;
 }
 
-// ==================== 比分页面 ====================
 function renderScoresPage() {
   const data = state.simData;
   if (!data) {
@@ -1344,7 +1256,6 @@ function renderScoresPage() {
                       '0-1','0-2','1-2','0-3','1-3','2-3','0-4','1-4','2-4','3-4'];
   const drawScores = ['0-0','1-1','2-2','3-3','4-4'];
 
-  // 构建赔率映射
   const oddsMap = {};
   if (cs) {
     baseScores.forEach((s, i) => {
@@ -1356,7 +1267,6 @@ function renderScoresPage() {
     oddsMap['其他'] = cs['o16'] || 0;
   }
 
-  // 构建行数据
   const rows = [];
   const probDict = {};
   data.scoreCounts.forEach(sc => { probDict[sc.score] = sc.prob; });
@@ -1373,7 +1283,6 @@ function renderScoresPage() {
   const otherProb = 1 - rows.reduce((sum, r) => sum + r.prob, 0);
   rows.push({ score: '其他', net: '-', prob: otherProb, odds: oddsMap['其他'] || 0, payout: otherProb * (oddsMap['其他'] || 0) });
 
-  // 按赔付值排序
   rows.sort((a, b) => b.payout - a.payout);
 
   let html = `<div class="sub-header">📊 比分详情 & 净胜球（按期望赔付排序）</div>`;
@@ -1393,7 +1302,6 @@ function renderScoresPage() {
   return html;
 }
 
-// ==================== 分析记录库页面 ====================
 function renderRecordsPage() {
   if (state.analysisRecords.length === 0) {
     return `<div style="text-align:center;padding:60px;color:#888;">
@@ -1401,7 +1309,6 @@ function renderRecordsPage() {
     </div>`;
   }
 
-  // 解析记录用于显示
   const displayRows = state.analysisRecords.map(rec => {
     const goalProbs = {};
     for (let g = 0; g <= 7; g++) goalProbs[g] = '0.0%';
@@ -1440,7 +1347,6 @@ function renderRecordsPage() {
     };
   });
 
-  // 筛选器
   const leagues = [...new Set(displayRows.map(r => r.league))];
   const leagueOptions = leagues.map(l => `<option value="${l}">${l}</option>`).join('');
 
@@ -1465,7 +1371,6 @@ function renderRecordsPage() {
 
   html += `<div id="recordsTable">${renderRecordsTable(displayRows)}</div>`;
 
-  // 导出 CSV 按钮
   html += `<button class="btn btn-success" style="margin-top:12px;" onclick="exportRecordsCSV()">📥 导出 CSV</button>`;
 
   return html;
@@ -1522,12 +1427,10 @@ function filterRecords() {
     return { ...rec, goalProbs };
   })];
 
-  // 联赛筛选
   if (selectedLeagues.length > 0) {
     rows = rows.filter(r => selectedLeagues.includes(r.league));
   }
 
-  // 排序
   rows.sort((a, b) => {
     let va = a[sortCol] || 0;
     let vb = b[sortCol] || 0;
@@ -1599,7 +1502,6 @@ function exportRecordsCSV() {
   URL.revokeObjectURL(url);
 }
 
-// ==================== 侧边栏 ====================
 function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('open');
 }
