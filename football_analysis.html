@@ -1136,22 +1136,23 @@ if (!results || results.length === 0) return '';
 
 var summary = '<div class="report-section" id="ouReportSection">' +
 '<div class="report-section-title">🎯 大小球盘口分析</div>' +
-'<div class="goal-summary">📋 共 <b>' + results.length + '</b> 条时间戳数据</div>';
+'<div class="goal-summary">📋 共 <b>' + results.length + '</b> 条时间戳数据 · 结论 = 公平P大的一方 · EV 仅影响备注</div>';
 
 for (var i = 0; i < results.length; i++) {
 var r = results[i];
 var evNum = Number(r.ev);
 var evStr = (evNum >= 0 ? '+' : '') + evNum.toFixed(3);
-var evCls = evNum >= 0 ? '#2e7d32' : '#c62828';
-var concBg = r.concClass === 'over' ? '#fff3e0' : '#e8f5e9';
+
+var evCls = evNum >= 0 ? '#c62828' : '#2e7d32';
+var concBg    = r.concClass === 'over' ? '#fff3e0' : '#e8f5e9';
 var concColor = r.concClass === 'over' ? '#e65100' : '#1b5e20';
 
-var reversedWarning = r.reversed
-? '<span style="font-weight:700;font-size:12px;padding:2px 8px;border-radius:4px;background:#fff3e0;color:#e65100;border:1px solid #ffcc80;">⚠️ 警示！反转</span>'
-: '';
-var deviatedWarning = (!r.reversed && r.deviated)
-? '<span style="font-weight:700;font-size:12px;padding:2px 8px;border-radius:4px;background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7;">⚠️ 警示！偏离</span>'
-: '';
+var warningTag = '';
+if (r.warning === 'reversed') {
+warningTag = '<span style="font-weight:700;font-size:12px;padding:2px 8px;border-radius:4px;background:#fff3e0;color:#e65100;border:1px solid #ffcc80;">⚠️ 警示！反转</span>';
+} else if (r.warning === 'deviated') {
+warningTag = '<span style="font-weight:700;font-size:12px;padding:2px 8px;border-radius:4px;background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7;">⚠️ 警示！偏离</span>';
+}
 
 summary += '<div style="display:flex;align-items:center;gap:10px;padding:6px 10px;border-bottom:1px solid #f0f2f5;font-size:13px;flex-wrap:wrap;">' +
 '<span style="background:#517ea8;color:#fff;border-radius:4px;padding:2px 7px;font-weight:700;font-size:12px;">' + r.folder + '</span>' +
@@ -1160,8 +1161,7 @@ summary += '<div style="display:flex;align-items:center;gap:10px;padding:6px 10p
 '<span style="font-weight:600;color:' + evCls + ';">EV ' + evStr + '</span>' +
 '<span style="font-weight:700;font-size:13px;padding:2px 8px;border-radius:4px;background:' + concBg + ';color:' + concColor + ';">' + r.conclusion + '</span>' +
 '<span style="font-weight:700;font-size:13px;padding:2px 8px;border-radius:4px;background:#f0f7ff;color:#1a3c6e;">' + (r.threshold || '') + '</span>' +
-reversedWarning +
-deviatedWarning +
+warningTag +
 '</div>';
 }
 

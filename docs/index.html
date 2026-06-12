@@ -1033,39 +1033,29 @@ var overEV = res.evOver;
 var underEV = res.evUnder;
 
 var pickOver = overFairP >= underFairP;
-var pickEV = pickOver ? overEV : underEV;
+var pickEV   = pickOver ? overEV : underEV;
 
-var origPickEV = pickEV;
-
-var reversed = false;
+var warning = '';
 if (pickEV >= 0) {
-reversed = true;
-pickOver = !pickOver;
-pickEV = pickOver ? overEV : underEV;
+warning = 'reversed';
+} else if (pickEV > -0.020) {
+warning = 'deviated';
 }
 
-var deviated = false;
-if (!reversed && origPickEV > -0.020 && origPickEV < 0) {
-deviated = true;
-
-}
-
-var bestFairP = pickOver ? overFairP : underFairP;
-var bestEV = pickEV;
-var conclusion = pickOver ? '大球' : '小球';
-var concClass = pickOver ? 'over' : 'under';
-var threshold = pickOver ? ('>=' + displayHandicap) : ('<=' + displayHandicap);
+var conclusion  = pickOver ? '大球' : '小球';
+var concClass   = pickOver ? 'over'  : 'under';
+var threshold   = pickOver ? ('>=' + displayHandicap) : ('<=' + displayHandicap);
+var bestFairP   = pickOver ? overFairP : underFairP;
 
 results.push({
-folder: folder,
-handicap: displayHandicap,
-fairP: (bestFairP * 100).toFixed(1),
-ev: bestEV,
+folder:    folder,
+handicap:  displayHandicap,
+fairP:     (bestFairP * 100).toFixed(1),
+ev:        pickEV,
 conclusion: conclusion,
-concClass: concClass,
-threshold: threshold,
-reversed: reversed,
-deviated: deviated
+concClass:  concClass,
+threshold:  threshold,
+warning:    warning
 });
 }
 
@@ -1084,15 +1074,14 @@ type: 'OU_REPORT',
 matchId: currentMatchId,
 results: results.map(function(r) {
 return {
-folder: r.folder,
-handicap: r.handicap,
-fairP: r.fairP,
-ev: r.ev,
+folder:     r.folder,
+handicap:   r.handicap,
+fairP:      r.fairP,
+ev:         r.ev,
 conclusion: r.conclusion,
-concClass: r.concClass,
-threshold: r.threshold,
-reversed: r.reversed,
-deviated: r.deviated
+concClass:  r.concClass,
+threshold:  r.threshold,
+warning:    r.warning
 };
 })
 };
