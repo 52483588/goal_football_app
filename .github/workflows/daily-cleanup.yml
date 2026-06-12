@@ -25,7 +25,7 @@ jobs:
         run: |
           cd data
           
-          TWO_DAYS_AGO=$(date -d '1 days ago' +%Y%m%d)
+          TWO_DAYS_AGO=$(date -d '0 days ago' +%Y%m%d)
           echo "2天前日期: $TWO_DAYS_AGO"
           
           for file in analysis_output_[0-9]*.json; do
