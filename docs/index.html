@@ -999,6 +999,9 @@ var folder = currentRows[ri].folder;
 var rec = currentRows[ri].rec;
 if (!rec) continue;
 
+var matchGt = rec.oc && rec.oc.gt ? rec.oc.gt : null;
+var isAfterKickoff = (getTimeStatus(folder, matchGt) === 'after');
+
 var ou = rec.ou || {};
 var ng = rec.ng || {};
 
@@ -1057,6 +1060,8 @@ concClass:  concClass,
 threshold:  threshold,
 warning:    warning
 });
+
+if (isAfterKickoff) break;
 }
 
 if (results.length === 0) {
