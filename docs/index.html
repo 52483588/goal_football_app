@@ -1032,7 +1032,11 @@ function generateOuReport() {
       pickOver = !pickOver;
       pickEV = pickOver ? overEV : underEV;
     }
-
+    var deviated = false;
+    if (!reversed && origPickEV > -0.020 && origPickEV < 0) {
+      deviated = true;
+    }
+   
     var bestFairP = pickOver ? overFairP : underFairP;
     var bestEV = pickEV;
     var conclusion = pickOver ? '大球' : '小球';
@@ -1073,7 +1077,8 @@ function sendOuReportToFootball(results) {
           conclusion: r.conclusion,
           concClass: r.concClass,
           threshold: r.threshold,
-          reversed: r.reversed
+          reversed: r.reversed,
+          deviated: r.deviated
         };
       })
     };
