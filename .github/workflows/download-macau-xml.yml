@@ -132,11 +132,4 @@ jobs:
           add: "data/"
           github_token: ${{ secrets.PAT_TOKEN }}
 
-      # ========== 新增：部署到 GitHub Pages（替换默认的 pages-build-deployment） ==========
-      - name: 上传 Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: docs/          # 静态网站文件所在的目录（你的 index.html / his_data.js 等）
 
-      - name: 部署到 GitHub Pages
-        uses: actions/deploy-pages@v4
