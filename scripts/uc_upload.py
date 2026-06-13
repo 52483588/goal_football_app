@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-UC网盘自动上传脚本
-基于抓包分析：登录 + 分片上传
+UC网盘自动上传脚本（使用 Cookie 认证）
 """
 
 import os
@@ -11,12 +10,16 @@ import json
 import glob
 import requests
 
-# 从环境变量读取账号密码
-UC_USER = os.environ.get('UC_USER', '')
-UC_PWD = os.environ.get('UC_PWD', '')
+# 从环境变量读取 Cookie
+UC_COOKIE = os.environ.get('UC_COOKIE', '')
 
-if not UC_USER or not UC_PWD:
-    print("❌ 错误: 未设置 UC_USER 或 UC_PWD 环境变量")
+if not UC_COOKIE:
+    print("❌ 错误: 未设置 UC_COOKIE 环境变量")
+    print("   请按以下步骤获取 Cookie：")
+    print("   1. 浏览器登录 UC 网盘")
+    print("   2. F12 → Network → 找任意请求")
+    print("   3. 复制 Cookie 请求头完整内容")
+    print("   4. 添加到 GitHub Secrets: UC_COOKIE")
     sys.exit(1)
 
 # 查找要上传的文件
@@ -32,51 +35,21 @@ file_size = os.path.getsize(upload_file)
 file_name = os.path.basename(upload_file)
 print(f"📦 找到文件: {file_name} ({file_size / 1024 / 1024:.2f} MB)")
 
+# 创建会话，使用 Cookie 认证
+session = requests.Session()
+session.headers.update({
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+    'Referer': 'https://drive.uc.cn/',
+    'Origin': 'https://drive.uc.cn',
+    'Cookie': UC_COOKIE
+})
 
-def login_uc():
-    """登录 UC 网盘，返回 session 和 token"""
-    
-    login_url = "https://api.open.uc.cn/cas/custom/login/commit?custom_login_type=common"
-    
-    session = requests.Session()
-    session.headers.update({
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-        'Referer': 'https://drive.uc.cn/',
-        'Origin': 'https://drive.uc.cn',
-        'Content-Type': 'application/x-www-form-urlencoded'
-    })
-    
-    login_data = {
-        "login_name": UC_USER,
-        "password": UC_PWD,
-        "remember": "true"
-    }
-    
-    print(f"🔐 正在登录 UC 网盘...")
-    
-    resp = session.post(login_url, data=login_data)
-    
-    if resp.status_code == 200:
-        result = resp.json()
-        if result.get('status') == 20000:
-            token = result.get('data')
-            print(f"✅ 登录成功")
-            return session, token
-        else:
-            print(f"❌ 登录失败: {result}")
-            return None, None
-    else:
-        print(f"❌ 登录请求失败: HTTP {resp.status_code}")
-        return None, None
-
-
-def get_upload_pre(session, token, file_path):
+def get_upload_pre(file_path):
     """获取上传预处理信息"""
     
     pre_url = "https://pc-api.uc.cn/1/clouddrive/file/upload/pre?pr=UCBrowser&fr=pc"
     
     session.headers.update({
-        'Authorization': f'Bearer {token}',
         'Content-Type': 'application/json',
         'Accept': 'application/json'
     })
@@ -110,7 +83,6 @@ def get_upload_pre(session, token, file_path):
     else:
         print(f"❌ 预处理请求失败: HTTP {resp.status_code}")
         return None
-
 
 def upload_file_content(upload_info, file_path):
     """上传文件内容到 PDS 存储"""
@@ -149,8 +121,7 @@ def upload_file_content(upload_info, file_path):
         print(f"❌ 上传异常: {e}")
         return False
 
-
-def complete_upload(session, token, upload_info, file_name, file_size):
+def complete_upload(upload_info, file_name, file_size):
     """完成上传，通知服务器"""
     
     complete_url = "https://pc-api.uc.cn/1/clouddrive/file/upload/complete?pr=UCBrowser&fr=pc"
@@ -188,25 +159,19 @@ print("=" * 50)
 print("UC 网盘自动上传脚本启动")
 print("=" * 50)
 
-# 1. 登录
-session, token = login_uc()
-if not session or not token:
-    print("❌ 登录失败，退出")
-    sys.exit(1)
-
-# 2. 获取上传预处理信息
-upload_info = get_upload_pre(session, token, upload_file)
+# 1. 获取上传预处理信息
+upload_info = get_upload_pre(upload_file)
 if not upload_info:
     print("❌ 获取上传预处理失败，退出")
     sys.exit(1)
 
-# 3. 上传文件内容
+# 2. 上传文件内容
 if not upload_file_content(upload_info, upload_file):
     print("❌ 文件内容上传失败，退出")
     sys.exit(1)
 
-# 4. 完成上传确认
-complete_upload(session, token, upload_info, file_name, file_size)
+# 3. 完成上传确认
+complete_upload(upload_info, file_name, file_size)
 
 print("=" * 50)
 print(f"✅ 文件 {file_name} 上传 UC 网盘完成")
