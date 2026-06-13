@@ -183,6 +183,7 @@ jobs:
         env:
           UC_USER: ${{ secrets.UC_USER }}
           UC_PWD: ${{ secrets.UC_PWD }}
+          UC_COOKIE: ${{ secrets.UC_COOKIE }}
         run: |
           python scripts/uc_upload.py
 
