@@ -140,102 +140,94 @@ def get_file_fsid(dir_path, filename, access_token):
         return None
 
 
-def create_share_link(file_path, access_token):
-    """创建分享链接 - 多策略重试"""
+def create_share_link(file_path, access_token, fs_id=None):
+    """创建分享链接 - 使用官方新版 apaas API"""
     
     print(f"🔗 正在创建分享链接...")
+    print(f"   使用端点: /apaas/1.0/share/set (新版)")
     
-    # ====== 策略1: XPAN Open Platform API (path_list方式) ======
-    print(f"   方案1: XPAN API (path_list)")
+    # 如果没有传入 fs_id，先获取
+    if fs_id is None:
+        dir_path = os.path.dirname(file_path)
+        filename = os.path.basename(file_path)
+        fs_id = get_file_fsid(dir_path if dir_path else "/apps/autobackup", filename, access_token)
+    
+    if fs_id is None:
+        print(f"❌ 无法获取文件 fs_id，无法创建分享")
+        return None
+    
+    # ====== 新版 api: /apaas/1.0/share/set ======
+    # 文档: https://pan.baidu.com/union/doc/Tlaaocmkj
+    share_url = "https://pan.baidu.com/apaas/1.0/share/set"
+    
+    # access_token / appid / product 必须放 URL query 中
+    query_params = {
+        "access_token": access_token,
+        "appid": BAIDU_APP_KEY,
+        "product": "netdisk",
+    }
+    
+    # Body 用 multipart/form-data 格式
+    # fsid_list: fs_id 列表的 JSON 数组字符串
+    # pwd: 必填，4位（数字+小写字母），这里用固定值 "abcd"
+    # period: 有效期（天），7=7天
+    form_data = {
+        "fsid_list": json.dumps([str(fs_id)]),
+        "period": "7",
+        "pwd": "abcd",
+        "remark": "auto_backup_share",
+    }
+    
     try:
-        # 关键修复: 使用 path_list 而非 path，格式为JSON数组字符串
-        xpan_url = "https://pan.baidu.com/rest/2.0/xpan/share"
-        query_params = {
-            "method": "create",
-            "access_token": access_token,
-        }
-        post_data = {
-            "path_list": json.dumps([file_path]),  # JSON数组字符串
-            "period": "604800",  # 7天 = 604800秒
-        }
-        
         resp = requests.post(
-            xpan_url, 
-            params=query_params, 
-            data=post_data,
+            share_url,
+            params=query_params,
+            data=form_data,
             timeout=15
         )
         print(f"   HTTP状态: {resp.status_code}")
         
-        if resp.status_code == 200:
+        # 尝试解析 JSON
+        try:
             result = resp.json()
-            errno = result.get('errno')
-            if errno == 0:
-                link = result.get('link')
-                if link:
-                    print(f"✅ 分享链接创建成功!")
-                    print(f"   链接: {link}")
-                    return link
+        except Exception:
+            print(f"   ⚠️ 响应非JSON: {resp.text[:500]}")
+            return None
+        
+        errno = result.get('errno', -1)
+        
+        if errno == 0:
+            data = result.get('data', {})
+            link = data.get('link', '')
+            short_url = data.get('short_url', '')
+            pwd = data.get('pwd', '')
             
-            # 记录详细错误
-            print(f"⚠️ XPAN分享失败: errno={errno}")
-            print(f"   完整响应: {json.dumps(result, ensure_ascii=False)}")
+            print(f"✅ 分享链接创建成功!")
+            print(f"   链接: {link}")
+            if short_url:
+                print(f"   短链: {short_url}")
+            if pwd:
+                print(f"   提取码: {pwd}")
+            
+            # 返回完整分享信息
+            full_link = f"{link} (提取码: {pwd})" if pwd else link
+            return link  # 返回短链接或完整链接
         else:
-            print(f"⚠️ XPAN请求失败: HTTP {resp.status_code}")
-            print(f"   响应体: {resp.text[:500]}")
+            show_msg = result.get('show_msg', '')
+            print(f"❌ 分享失败: errno={errno}, msg={show_msg}")
+            print(f"   完整响应: {json.dumps(result, ensure_ascii=False)}")
+            
+            # 如果是 errno=2，提示可能需要购买分享服务
+            if errno == 2:
+                print(f"   💡 提示: errno=2 可能表示:")
+                print(f"      - 账号未完成实名/手机绑定")
+                print(f"      - 应用未开通分享服务（需付费购买）")
+                print(f"      - 请访问 https://pan.baidu.com/union/console 检查应用权限")
+            return None
             
     except Exception as e:
-        print(f"⚠️ 方案1异常: {e}")
-    
-    # ====== 策略2: 获取 fs_id 后用旧版 share/set 端点 ======
-    print(f"   方案2: 旧版 share/set API (需要 fs_id)")
-    dir_path = os.path.dirname(file_path)
-    filename = os.path.basename(file_path)
-    
-    fs_id = get_file_fsid(dir_path if dir_path else "/apps/autobackup", filename, access_token)
-    
-    if fs_id:
-        try:
-            old_share_url = "https://pan.baidu.com/share/set"
-            post_data = {
-                "fid_list": json.dumps([int(fs_id)]),
-                "schannel": "0",
-                "channel_list": json.dumps([]),
-                "period": "0",
-                "pwd": "",
-            }
-            # 旧版API使用access_token作为查询参数
-            resp = requests.post(
-                old_share_url,
-                params={"access_token": access_token},
-                data=post_data,
-                timeout=15
-            )
-            print(f"   HTTP状态: {resp.status_code}")
-            
-            if resp.status_code == 200:
-                result = resp.json()
-                errno = result.get('errno')
-                if errno == 0:
-                    link = result.get('link')
-                    if link:
-                        print(f"✅ 分享链接创建成功!")
-                        print(f"   链接: {link}")
-                        return link
-                
-                print(f"⚠️ 旧版分享失败: errno={errno}")
-                print(f"   完整响应: {json.dumps(result, ensure_ascii=False)}")
-            else:
-                print(f"⚠️ 旧版请求失败: HTTP {resp.status_code}")
-                print(f"   响应体: {resp.text[:500]}")
-                
-        except Exception as e:
-            print(f"⚠️ 方案2异常: {e}")
-    else:
-        print(f"⚠️ 无法获取 fs_id，跳过方案2")
-    
-    print(f"❌ 所有分享方案均失败")
-    return None
+        print(f"❌ 请求异常: {e}")
+        return None
 
 
 def test_token(access_token):
