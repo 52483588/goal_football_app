@@ -1,8 +1,7 @@
 name: 定时下载、处理并上传UC网盘
 
 on:
-  schedule:
-    - cron: '0 0,12 * * *'      # 每天北京时间 08:00 和 20:00
+  
   workflow_dispatch:              # 允许手动触发
 
 jobs:
