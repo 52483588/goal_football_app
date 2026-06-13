@@ -6,6 +6,7 @@
 
 import os
 import sys
+import json
 import glob
 import requests
 import time
@@ -99,41 +100,142 @@ def upload_to_baidu(file_path, access_token):
         return None
 
 
-def create_share_link(file_path, access_token):
-    """创建分享链接"""
+def get_file_fsid(dir_path, filename, access_token):
+    """通过列出目录获取文件的 fs_id"""
+    print(f"🔍 正在获取文件 fs_id...")
     
-    print(f"🔗 正在创建分享链接...")
-    
-    share_url = "https://pan.baidu.com/rest/2.0/xpan/share"
-    
+    list_url = "https://pan.baidu.com/rest/2.0/xpan/file"
     params = {
-        "method": "create",
+        "method": "list",
         "access_token": access_token,
-        "path": file_path,
-        "schannel": "0",
-        "period": "0",
-        "pwd": ""
+        "dir": dir_path,
+        "web": "1"
     }
     
     try:
-        resp = requests.post(share_url, params=params)
+        resp = requests.get(list_url, params=params, timeout=15)
+        if resp.status_code != 200:
+            print(f"⚠️ 获取文件列表失败: HTTP {resp.status_code}")
+            print(f"   响应: {resp.text[:500]}")
+            return None
+        
+        result = resp.json()
+        if result.get('errno') != 0:
+            print(f"⚠️ 列表API返回错误: {result}")
+            return None
+        
+        file_list = result.get('list', [])
+        for f in file_list:
+            if f.get('server_filename') == filename:
+                fs_id = f.get('fs_id')
+                print(f"✅ 找到 fs_id: {fs_id}")
+                return fs_id
+        
+        print(f"⚠️ 在列表中未找到文件: {filename}")
+        print(f"   目录中共有 {len(file_list)} 个文件")
+        return None
+        
+    except Exception as e:
+        print(f"⚠️ 获取fs_id异常: {e}")
+        return None
+
+
+def create_share_link(file_path, access_token):
+    """创建分享链接 - 多策略重试"""
+    
+    print(f"🔗 正在创建分享链接...")
+    
+    # ====== 策略1: XPAN Open Platform API (path_list方式) ======
+    print(f"   方案1: XPAN API (path_list)")
+    try:
+        # 关键修复: 使用 path_list 而非 path，格式为JSON数组字符串
+        xpan_url = "https://pan.baidu.com/rest/2.0/xpan/share"
+        query_params = {
+            "method": "create",
+            "access_token": access_token,
+        }
+        post_data = {
+            "path_list": json.dumps([file_path]),  # JSON数组字符串
+            "period": "604800",  # 7天 = 604800秒
+        }
+        
+        resp = requests.post(
+            xpan_url, 
+            params=query_params, 
+            data=post_data,
+            timeout=15
+        )
+        print(f"   HTTP状态: {resp.status_code}")
         
         if resp.status_code == 200:
             result = resp.json()
-            if result.get('errno') == 0:
+            errno = result.get('errno')
+            if errno == 0:
                 link = result.get('link')
-                print(f"✅ 分享链接创建成功")
-                print(f"   链接: {link}")
-                return link
-            else:
-                print(f"⚠️ 分享失败: {result}")
-                return None
+                if link:
+                    print(f"✅ 分享链接创建成功!")
+                    print(f"   链接: {link}")
+                    return link
+            
+            # 记录详细错误
+            print(f"⚠️ XPAN分享失败: errno={errno}")
+            print(f"   完整响应: {json.dumps(result, ensure_ascii=False)}")
         else:
-            print(f"⚠️ 分享请求失败: HTTP {resp.status_code}")
-            return None
+            print(f"⚠️ XPAN请求失败: HTTP {resp.status_code}")
+            print(f"   响应体: {resp.text[:500]}")
+            
     except Exception as e:
-        print(f"⚠️ 分享异常: {e}")
-        return None
+        print(f"⚠️ 方案1异常: {e}")
+    
+    # ====== 策略2: 获取 fs_id 后用旧版 share/set 端点 ======
+    print(f"   方案2: 旧版 share/set API (需要 fs_id)")
+    dir_path = os.path.dirname(file_path)
+    filename = os.path.basename(file_path)
+    
+    fs_id = get_file_fsid(dir_path if dir_path else "/apps/autobackup", filename, access_token)
+    
+    if fs_id:
+        try:
+            old_share_url = "https://pan.baidu.com/share/set"
+            post_data = {
+                "fid_list": json.dumps([int(fs_id)]),
+                "schannel": "0",
+                "channel_list": json.dumps([]),
+                "period": "0",
+                "pwd": "",
+            }
+            # 旧版API使用access_token作为查询参数
+            resp = requests.post(
+                old_share_url,
+                params={"access_token": access_token},
+                data=post_data,
+                timeout=15
+            )
+            print(f"   HTTP状态: {resp.status_code}")
+            
+            if resp.status_code == 200:
+                result = resp.json()
+                errno = result.get('errno')
+                if errno == 0:
+                    link = result.get('link')
+                    if link:
+                        print(f"✅ 分享链接创建成功!")
+                        print(f"   链接: {link}")
+                        return link
+                
+                print(f"⚠️ 旧版分享失败: errno={errno}")
+                print(f"   完整响应: {json.dumps(result, ensure_ascii=False)}")
+            else:
+                print(f"⚠️ 旧版请求失败: HTTP {resp.status_code}")
+                print(f"   响应体: {resp.text[:500]}")
+                
+        except Exception as e:
+            print(f"⚠️ 方案2异常: {e}")
+    else:
+        print(f"⚠️ 无法获取 fs_id，跳过方案2")
+    
+    print(f"❌ 所有分享方案均失败")
+    return None
 
 
 def test_token(access_token):
