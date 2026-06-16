@@ -45,7 +45,9 @@ print(f"✅ 登录成功，用户: {user.user_name}")
 # 1. 上传文件
 print(f"📤 正在上传到阿里云盘...")
 remote_file = ali.upload_file(upload_file, parent_file_id='root')
-print(f"✅ 上传成功，file_id: {remote_file.file_id}")
+print(f"✅ 上传成功")
+print(f"   文件ID: {remote_file.file_id}")
+print(f"   云端路径: /{remote_file.name}")
 
 # 2. 创建分享链接（永久有效，无密码）
 print(f"🔗 正在创建分享链接...")
