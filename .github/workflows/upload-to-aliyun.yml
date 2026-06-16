@@ -193,19 +193,19 @@ jobs:
           if [ -n "$SHARE_LINK" ]; then
             MESSAGE="【备份完成通知】
 
-✅ 备份成功
-📅 时间: ${CURRENT_TIME}
-📦 内容: HisData / docs / data
-☁️ 位置: 阿里云盘
-🔗 链接: ${SHARE_LINK}"
+          ✅ 备份成功
+          📅 时间: ${CURRENT_TIME}
+          📦 内容: HisData / docs / data
+          ☁️ 位置: 阿里云盘
+          🔗 链接: ${SHARE_LINK}"
           else
             MESSAGE="【备份完成通知】
 
-✅ 备份成功
-📅 时间: ${CURRENT_TIME}
-📦 内容: HisData / docs / data
-☁️ 位置: 阿里云盘
-⚠️ 分享链接创建失败，请手动分享"
+          ✅ 备份成功
+          📅 时间: ${CURRENT_TIME}
+          📦 内容: HisData / docs / data
+          ☁️ 位置: 阿里云盘
+          ⚠️ 分享链接创建失败，请手动分享"
           fi
           
           curl -s -X POST "http://www.pushplus.plus/send" \
