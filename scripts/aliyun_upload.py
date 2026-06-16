@@ -3,8 +3,8 @@
 import os
 import sys
 import glob
-from aligo import Aligo
 import requests
+from aligo import Aligo
 
 ALIYUN_REFRESH_TOKEN = os.environ.get('ALIYUN_REFRESH_TOKEN', '')
 
@@ -41,64 +41,75 @@ print(f"✅ 上传成功")
 file_id = remote_file.file_id if hasattr(remote_file, 'file_id') else str(remote_file)
 print(f"   文件ID: {file_id}")
 
-# ========== 分享链接创建（直接调用官方API） ==========
+# ========== 获取 access_token ==========
+access_token = None
+
+# 尝试多种方式获取 token
+if hasattr(ali, '_auth') and hasattr(ali._auth, 'access_token'):
+    access_token = ali._auth.access_token
+elif hasattr(ali, 'auth') and hasattr(ali.auth, 'access_token'):
+    access_token = ali.auth.access_token
+elif hasattr(ali, 'default_auth') and hasattr(ali.default_auth, 'access_token'):
+    access_token = ali.default_auth.access_token
+elif hasattr(ali, 'token'):
+    access_token = ali.token
+
+# 如果还是获取不到，直接打印 ali 的所有属性来调试
+if not access_token:
+    print(f"   ⚠️ 无法获取 access_token，ali 对象的属性: {dir(ali)}")
+    print(f"   尝试使用备用方案...")
+    
+    # 备用方案：直接使用 refresh_token 重新获取
+    token_url = "https://api.aliyundrive.com/v2/account/token"
+    token_data = {
+        "grant_type": "refresh_token",
+        "refresh_token": ALIYUN_REFRESH_TOKEN
+    }
+    try:
+        token_resp = requests.post(token_url, json=token_data)
+        if token_resp.status_code == 200:
+            token_result = token_resp.json()
+            access_token = token_result.get('access_token')
+            print(f"   ✅ 通过备用方案获取到 access_token")
+    except Exception as e:
+        print(f"   ❌ 备用方案也失败: {e}")
+
+# ========== 创建分享链接 ==========
 print(f"🔗 正在创建分享链接...")
 share_url = None
 
-# 1. 首先从 aligo 实例中获取有效的 access_token
-try:
-    # aligo 实例在初始化后已经包含了 token 信息
-    access_token = ali.auth.access_token
-except AttributeError:
-    # 如果直接获取不到，尝试另一种方式
-    access_token = ali.default_auth.access_token
-
-if not access_token:
-    print("   ❌ 无法获取 access_token，请检查 aligo 登录状态")
-else:
-    # 2. 手动构造官方分享接口的请求
+if access_token:
     official_share_url = "https://api.aliyundrive.com/adrive/v2/share_link/create"
     
-    # 请求头
     headers = {
         "Authorization": f"Bearer {access_token}",
         "Content-Type": "application/json",
     }
     
-    # 请求体 - 创建分享链接的核心参数
     payload = {
-        "file_id_list": [file_id],   # 要分享的文件ID列表
-        "expiration": "",             # 空字符串表示永久有效
-        "share_pwd": "",              # 空字符串表示无提取码
+        "file_id_list": [file_id],
+        "expiration": "",
+        "share_pwd": "",
     }
     
     try:
-        # 发送POST请求
         response = requests.post(official_share_url, headers=headers, json=payload)
+        print(f"   HTTP 状态码: {response.status_code}")
         
         if response.status_code == 200:
             result = response.json()
-            # 从返回结果中提取 share_id
             share_id = result.get('share_id')
             if share_id:
                 share_url = f"https://www.aliyundrive.com/s/{share_id}"
-                print(f"   ✅ 分享链接创建成功 (直接调用API)")
+                print(f"   ✅ 分享链接创建成功")
             else:
-                print(f"   ⚠️ API返回成功但未包含share_id，完整响应: {result}")
+                print(f"   ⚠️ API返回但未包含share_id: {result}")
         else:
-            print(f"   ❌ 分享API请求失败，状态码: {response.status_code}")
-            print(f"      响应内容: {response.text}")
-            
+            print(f"   ❌ 分享API失败: {response.text}")
     except Exception as e:
-        print(f"   ❌ 调用分享API时发生异常: {e}")
-
-# ... (后续的 share_url 判断和输出保持不变)
-
-if share_url:
-    print(f"✅ 分享链接创建成功")
-    print(f"🔗 链接: {share_url}")
+        print(f"   ❌ 请求异常: {e}")
 else:
-    print(f"⚠️ 所有分享创建方法均失败")
+    print(f"   ❌ 无法获取 access_token，跳过分享创建")
 
 # 输出结果
 github_env = os.environ.get('GITHUB_ENV')
