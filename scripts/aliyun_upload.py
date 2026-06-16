@@ -54,7 +54,6 @@ if hasattr(remote_file, 'file_id'):
 elif hasattr(remote_file, 'id'):
     file_id = remote_file.id
 else:
-    # 如果直接是字符串
     file_id = str(remote_file)
 
 print(f"   文件ID: {file_id}")
@@ -63,8 +62,8 @@ print(f"   文件ID: {file_id}")
 print(f"🔗 正在创建分享链接...")
 share = ali.share_file(
     file_id=file_id,
-    share_pwd=None,      # 无提取码
-    expiration=''        # 空字符串表示永久有效
+    share_pwd=None,
+    expiration=''
 )
 
 # 获取分享ID构建链接
@@ -74,7 +73,6 @@ if hasattr(share, 'share_id'):
 elif hasattr(share, 'id'):
     share_id = share.id
 else:
-    # 如果返回的是字符串
     share_id = str(share) if share else None
 
 if share_id and share_id != 'None':
