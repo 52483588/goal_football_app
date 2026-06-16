@@ -91,6 +91,7 @@ if github_env and share_url:
         f.write(f"REMOTE_FILE_ID={file_id}\n")
 
 print("=" * 50)
+print("脚本版本: v2.0 - 修复分享链接问题")
 if share_url:
     print(f"✅ 文件 {file_name} 处理完成")
     print(f"🔗 分享链接: {share_url}")
