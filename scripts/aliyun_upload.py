@@ -49,6 +49,8 @@ print(f"✅ 上传成功")
 print(f"   文件ID: {remote_file.file_id}")
 print(f"   云端路径: /{remote_file.name}")
 
+# ... (脚本开头的导入和上传部分保持不变)
+
 # 2. 创建分享链接（永久有效，无密码）
 print(f"🔗 正在创建分享链接...")
 share = ali.share_file(
@@ -57,9 +59,18 @@ share = ali.share_file(
     expiration=''        # 空字符串表示永久有效
 )
 
-share_url = f"https://www.aliyundrive.com/s/{share.share_id}"
-print(f"✅ 分享链接创建成功")
-print(f"🔗 链接: {share_url}")
+# 【修改点】直接从返回对象中获取 share_id 来构建链接
+share_id = getattr(share, 'share_id', None)
+if share_id:
+    share_url = f"https://www.aliyundrive.com/s/{share_id}"
+    print(f"✅ 分享链接创建成功")
+    print(f"🔗 链接: {share_url}")
+else:
+    # 如果连 share_id 都获取不到，则打印整个对象以便调试
+    print(f"⚠️ 未能从返回中解析到 share_id，返回对象: {share}")
+    share_url = None
+
+# ... (后续的通知和退出部分保持不变)
 
 # 3. 输出结果供通知使用
 github_env = os.environ.get('GITHUB_ENV')
