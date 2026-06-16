@@ -46,42 +46,58 @@ print(f"✅ 登录成功，用户: {user.user_name}")
 print(f"📤 正在上传到阿里云盘...")
 remote_file = ali.upload_file(upload_file, parent_file_id='root')
 print(f"✅ 上传成功")
-print(f"   文件ID: {remote_file.file_id}")
-print(f"   云端路径: /{remote_file.name}")
 
-# ... (脚本开头的导入和上传部分保持不变)
+# 获取文件ID（不同版本 aligo 返回对象不同）
+file_id = None
+if hasattr(remote_file, 'file_id'):
+    file_id = remote_file.file_id
+elif hasattr(remote_file, 'id'):
+    file_id = remote_file.id
+else:
+    # 如果直接是字符串
+    file_id = str(remote_file)
+
+print(f"   文件ID: {file_id}")
 
 # 2. 创建分享链接（永久有效，无密码）
 print(f"🔗 正在创建分享链接...")
 share = ali.share_file(
-    file_id=remote_file.file_id,
+    file_id=file_id,
     share_pwd=None,      # 无提取码
     expiration=''        # 空字符串表示永久有效
 )
 
-# 【修改点】直接从返回对象中获取 share_id 来构建链接
-share_id = getattr(share, 'share_id', None)
-if share_id:
+# 获取分享ID构建链接
+share_id = None
+if hasattr(share, 'share_id'):
+    share_id = share.share_id
+elif hasattr(share, 'id'):
+    share_id = share.id
+else:
+    # 如果返回的是字符串
+    share_id = str(share) if share else None
+
+if share_id and share_id != 'None':
     share_url = f"https://www.aliyundrive.com/s/{share_id}"
     print(f"✅ 分享链接创建成功")
     print(f"🔗 链接: {share_url}")
 else:
-    # 如果连 share_id 都获取不到，则打印整个对象以便调试
-    print(f"⚠️ 未能从返回中解析到 share_id，返回对象: {share}")
+    print(f"⚠️ 分享创建失败，返回对象: {share}")
     share_url = None
-
-# ... (后续的通知和退出部分保持不变)
 
 # 3. 输出结果供通知使用
 github_env = os.environ.get('GITHUB_ENV')
-if github_env:
+if github_env and share_url:
     with open(github_env, 'a') as f:
         f.write(f"SHARE_LINK={share_url}\n")
-        f.write(f"REMOTE_FILE_ID={remote_file.file_id}\n")
+        f.write(f"REMOTE_FILE_ID={file_id}\n")
 
 print("=" * 50)
-print(f"✅ 文件 {file_name} 处理完成")
-print(f"🔗 分享链接: {share_url}")
+if share_url:
+    print(f"✅ 文件 {file_name} 处理完成")
+    print(f"🔗 分享链接: {share_url}")
+else:
+    print(f"⚠️ 文件 {file_name} 上传完成，但分享链接创建失败")
 print("=" * 50)
 
 sys.exit(0)
