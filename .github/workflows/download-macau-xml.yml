@@ -4,16 +4,9 @@ on:
   workflow_dispatch:              # 允许手动触发
 
 jobs:
-  # ==================== 任务1: 下载和处理文件 ====================
-  process-files:
+  process-and-upload:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    permissions:
-      contents: write
-    
-    outputs:
-      timestamp: ${{ steps.set-time.outputs.timestamp }}
-      date: ${{ steps.set-time.outputs.date }}
 
     steps:
       - name: 检出仓库
@@ -34,9 +27,7 @@ jobs:
 
       - name: 创建文件夹结构
         run: |
-          mkdir -p HisData
-          mkdir -p docs
-          mkdir -p data
+          mkdir -p HisData docs data
 
       - name: 删除前两天的HisData文件夹
         run: |
@@ -50,7 +41,7 @@ jobs:
               rm -rf "$dirname"
             fi
           done
-      
+
       - name: 删除根目录旧XML文件
         run: find . -maxdepth 1 -name "*.xml" -type f -delete
 
@@ -84,46 +75,34 @@ jobs:
           cp *.xml "$ARCHIVE_DIR/"
           echo "✅ 已复制到 $ARCHIVE_DIR"
 
-      - name: 提交下载更新
+      # =============== Python 分析阶段 ===============
+
+      - name: 安装 Python 3.12 并缓存依赖
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: 安装分析依赖
+        run: |
+          pip install requests==2.32.3 numpy==2.2.4 pandas==2.2.3
+
+      - name: 生成 his_data.js
+        run: python parse_xml.py
+
+      - name: 运行分析脚本
+        run: python bb.py
+
+      - name: 统一提交所有生成文件
         uses: EndBug/add-and-commit@v9
         with:
           author_name: Auto Bot
           author_email: bot@example.com
-          message: "归档 ${{ env.TIMESTAMP }} 并更新最新XML"
-          add: "HisData/ *.xml"
+          message: "备份 ${{ env.TIMESTAMP }}：归档XML、更新静态文件和分析结果 [skip ci]"
+          add: "HisData/ *.xml docs/ data/"
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-
-      - name: Install dependencies for analysis
-        run: pip install requests numpy pandas
-
-      - name: Generate his_data.js
-        run: python parse_xml.py
-
-      - name: 提交静态文件到仓库
-        uses: EndBug/add-and-commit@v9
-        with:
-          author_name: github-actions[bot]
-          author_email: github-actions[bot]@users.noreply.github.com
-          message: "Update static files [skip ci]"
-          add: "docs/his_data.js docs/index.html"
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Run analysis script
-        run: python bb.py
-
-      - name: Commit and push generated files
-        uses: EndBug/add-and-commit@v9
-        with:
-          author_name: github-actions[bot]
-          author_email: github-actions[bot]@users.noreply.github.com
-          message: "Auto update analysis result [skip ci]"
-          add: "data/"
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+      # =============== 打包 & 上传百度网盘 ===============
 
       - name: 打包文件夹
         run: |
@@ -131,60 +110,17 @@ jobs:
           echo "UPLOAD_FILE=backup_${{ env.TIMESTAMP }}.zip" >> $GITHUB_ENV
           echo "✅ 已打包为 backup_${{ env.TIMESTAMP }}.zip"
 
-      - name: 上传打包文件
-        uses: actions/upload-artifact@v4
-        with:
-          name: backup-${{ steps.set-time.outputs.date }}
-          path: ${{ env.UPLOAD_FILE }}
-          retention-days: 1
-
-  # ==================== 任务2: 上传到百度网盘 ====================
-  upload-to-baidu:
-    runs-on: ubuntu-latest
-    needs: process-files
-    timeout-minutes: 10
-    
-    steps:
-      - name: 检出仓库
-        uses: actions/checkout@v4
-      
-      - name: 下载打包文件
-        uses: actions/download-artifact@v4
-        with:
-          name: backup-${{ needs.process-files.outputs.date }}
-          path: ./to_upload
-
-      - name: 安装Python依赖
+      - name: 安装Python依赖（百度上传用）
         run: |
-          sudo apt-get update
-          sudo apt-get install -y python3-pip
-          pip install requests
+          pip install requests==2.32.3
 
       - name: 执行百度网盘上传脚本
         env:
           BAIDU_ACCESS_TOKEN: ${{ secrets.BAIDU_ACCESS_TOKEN }}
         run: |
+          mkdir -p to_upload
+          cp "${{ env.UPLOAD_FILE }}" to_upload/
           python scripts/baidu_upload.py
 
-      - name: 发送微信通知
-        env:
-          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
-        run: |
-          if [ -z "$PUSHPLUS_TOKEN" ]; then
-            echo "未配置 PUSHPLUS_TOKEN，跳过微信通知"
-            exit 0
-          fi
-          
-          CURRENT_TIME=$(date '+%Y-%m-%d %H:%M:%S')
-          MESSAGE="【百度网盘备份通知】
-
-          ✅ 备份成功
-          📅 时间: ${CURRENT_TIME}
-          📦 内容: HisData / docs / data
-          ☁️ 位置: 百度网盘 /apps/autobackup/"
-          
-          curl -s -X POST "http://www.pushplus.plus/send" \
-            -H "Content-Type: application/json" \
-            -d "{\"token\":\"${PUSHPLUS_TOKEN}\",\"title\":\"备份完成\",\"content\":\"${MESSAGE}\"}"
-          
-          echo "✅ 通知已发送"
+      - name: 清理临时文件
+        run: rm -f "${{ env.UPLOAD_FILE }}" && echo "✅ 临时文件已清理"
