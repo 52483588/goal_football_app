@@ -1,4 +1,4 @@
-name: 百度网盘自动备份
+name: 百度网盘自动备份B
 
 on:
   workflow_dispatch:              # 允许手动触发
