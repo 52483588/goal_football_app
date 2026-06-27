@@ -91,7 +91,7 @@ jobs:
         run: python parse_xml.py
 
       - name: 运行分析脚本
-        run: python bb.py
+        run: python bc.py
 
       - name: 统一提交所有生成文件
         uses: EndBug/add-and-commit@v9
