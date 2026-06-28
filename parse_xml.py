@@ -16,9 +16,7 @@ OUTPUT_FILE = os.path.join(OUTPUT_DIR, "his_data.js")
 OC_ATTRS = ['id', 'gt', 'st', 'sh', 'sa']
 NG_ATTRS = ['id', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6']
 OU_ATTRS = ['id', 'oo', 'uo', 'li', 'hi_var']
-WIN_ATTRS = ['id', 'g', 'gg', 'ho', 'ao', 'var']
-# 新增：胜平负赔率
-WDW_ATTRS = ['id', 'ho', 'do', 'ao']  # 注意：windrawwin.xml 中的字段名是 ho, do, ao
+WIN_ATTRS = ['id', 'g', 'gg', 'ho', 'ao', 'var']   # 新增
 
 
 def parse_fixtures(filepath, attrs):
@@ -68,10 +66,9 @@ def main():
         oc = parse_fixtures(os.path.join(fp, 'odds_config.xml'), OC_ATTRS)
         ng = parse_fixtures(os.path.join(fp, 'numberofgoals.xml'), NG_ATTRS)
         ou = parse_fixtures(os.path.join(fp, 'overunder.xml'), OU_ATTRS)
-        win = parse_fixtures(os.path.join(fp, 'winodds.xml'), WIN_ATTRS)
-        wdw = parse_fixtures(os.path.join(fp, 'windrawwin.xml'), WDW_ATTRS)  # 新增
+        win = parse_fixtures(os.path.join(fp, 'winodds.xml'), WIN_ATTRS)   # 新增
 
-        all_ids = set(oc.keys()) | set(ng.keys()) | set(ou.keys()) | set(win.keys()) | set(wdw.keys())
+        all_ids = set(oc.keys()) | set(ng.keys()) | set(ou.keys()) | set(win.keys())
         id_set.update(all_ids)
 
         for fid in all_ids:
@@ -79,8 +76,7 @@ def main():
                 'oc': oc.get(fid, {}),
                 'ng': ng.get(fid, {}),
                 'ou': ou.get(fid, {}),
-                'win': win.get(fid, {}),
-                'wdw': wdw.get(fid, {}),  # 新增
+                'win': win.get(fid, {})      # 新增
             }
 
     # 构建 ID_INDEX (latest non-empty per field)
@@ -88,8 +84,8 @@ def main():
     for folder in reversed(folders):
         for fid, rec in raw_data[folder].items():
             if fid not in idx:
-                idx[fid] = {'oc': {}, 'ng': {}, 'ou': {}, 'win': {}, 'wdw': {}}  # 新增 wdw
-            for key in ('oc', 'ng', 'ou', 'win', 'wdw'):  # 新增 wdw
+                idx[fid] = {'oc': {}, 'ng': {}, 'ou': {}, 'win': {}}
+            for key in ('oc', 'ng', 'ou', 'win'):
                 if rec[key] and not idx[fid][key]:
                     idx[fid][key] = dict(rec[key])
 
