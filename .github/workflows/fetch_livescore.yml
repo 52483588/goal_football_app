@@ -1,4 +1,4 @@
-name: 每日历史赛果抓取
+name: 即时比分抓取
 
 on:
   workflow_dispatch:           # 手动触发
