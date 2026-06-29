@@ -2,7 +2,7 @@ name: 每日历史赛果抓取
 
 on:
   schedule:
-    - cron: '0 5 * * *'        # 每天北京时间 13:00 运行（UTC 5:00）
+    - cron: '30 5 * * *'        # 每天北京时间 13:00 运行（UTC 5:00）
   workflow_dispatch:           # 手动触发
 
 jobs:
