@@ -1,27 +1,31 @@
 name: 自动抓取澳彩比分
 
 on:
-  workflow_dispatch:         # 允许你手动点击按钮运行
+  workflow_dispatch:         # 允许手动触发
 
 jobs:
   fetch:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      
+      - name: 检出代码
+        uses: actions/checkout@v4
+
       - name: 安装 Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-          
-      - name: 安装依赖
-        run: pip install requests
-        
-      - name: 执行抓取脚本
+
+      - name: 安装 Playwright 及其依赖
+        run: |
+          pip install playwright
+          playwright install chromium
+          # 安装浏览器运行所需的系统依赖（自动完成）
+          playwright install-deps
+
+      - name: 运行抓取脚本
         run: python fetch_scores.py
-        env:
-          COOKIE_STRING: ${{ secrets.COOKIE_STRING }}  # 把保险箱的密码注入到环境变量
-          
+
       - name: 提交更新到仓库
         run: |
           git config user.name "github-actions[bot]"
