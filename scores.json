@@ -412,7 +412,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-06-28 16:42:31",
+        "currentPeriodStart": "2026-06-29 19:54:22",
         "uqTournament": {
           "colorCode": "003333",
           "folderName": "",
@@ -438,8 +438,8 @@
         "payout": {
           "fg": "1",
           "ftg": "1",
-          "ht": "2",
-          "ft": "2",
+          "ht": "3",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2069382667881611266"
@@ -477,7 +477,7 @@
         "clock": "--",
         "evId": "944041",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "1161",
         "awayteamId": "822",
         "tournamentId": "33551",
@@ -486,7 +486,7 @@
         "hometeamNameZh": "洛辛堡",
         "sport": "1",
         "matchId": "2069382667881611266",
-        "currentState": "999",
+        "currentState": "73",
         "startDate": "2026-06-28 21:00",
         "uqTournamentId": "853",
         "hometeamName": "洛辛堡",
@@ -1012,5 +1012,5 @@
   "token": null,
   "rspCode": "SUCCESS",
   "rspMsg": "成功",
-  "sysTime": "2026-06-29 19:01:42"
+  "sysTime": "2026-06-29 20:01:40"
 }
