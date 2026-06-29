@@ -238,7 +238,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-06-30 00:52:00",
+        "currentPeriodStart": "2026-06-30 00:52",
         "uqTournament": {
           "colorCode": "00CC33",
           "folderName": "",
@@ -288,10 +288,10 @@
             "id": "405"
           }
         ],
-        "beforeState": "7",
+        "beforeState": "0",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "other": {
           "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
@@ -334,8 +334,8 @@
         "oldMatchId": "",
         "del": "0",
         "importState": "3",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-06-30 00:43:08",
+        "birtiSign": "221",
+        "lastUpdateTime": "2026-06-30 01:00",
         "showTime": "",
         "orderNum": "",
         "autoId": "2222741",
@@ -614,7 +614,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-06-30 01:49:47",
+        "currentPeriodStart": "2026-06-30 02:06:48",
         "uqTournament": {
           "colorCode": "6666FF",
           "folderName": "",
@@ -636,14 +636,14 @@
         "score": {
           "ht": "0:1",
           "matchId": null,
-          "current": "0:1"
+          "current": "2:1"
         },
         "corner": {
           "ft": "0:0",
           "ht": "2:2",
           "otf": "0:0",
           "oth": "0:0",
-          "current": "2:2"
+          "current": "6:2"
         },
         "payout": {
           "fg": "2",
@@ -736,7 +736,7 @@
           "id": "2224290",
           "typeCode": "1"
         },
-        "beforeState": "6",
+        "beforeState": "7",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
@@ -759,10 +759,10 @@
           "del": "0"
         },
         "hasBetInRunOt": "1",
-        "clock": "2700",
+        "clock": "5980",
         "dataAnalysisShow": "1",
         "evId": "943597",
-        "currentState": "31",
+        "currentState": "7",
         "startDate": "2026-06-30 01:00",
         "sport": "1",
         "matchId": "2070318821887901698",
@@ -782,8 +782,8 @@
         "oldMatchId": "",
         "del": "0",
         "importState": "3",
-        "birtiSign": "111",
-        "lastUpdateTime": "2026-06-30 01:00",
+        "birtiSign": "",
+        "lastUpdateTime": "2026-06-30 02:46:51",
         "showTime": "",
         "orderNum": "",
         "autoId": "2240389",
@@ -1082,7 +1082,7 @@
     ]
   },
   "rspMsg": "成功",
-  "sysTime": "2026-06-30 02:01:33",
+  "sysTime": "2026-06-30 03:01:28",
   "rspCode": "SUCCESS",
   "token": null
 }
