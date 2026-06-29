@@ -99,6 +99,10 @@ jobs:
       - name: 抓取 livescore 数据
         run: python fetch_livescore.py
 
+      # =============== 新增：解析 scores.json 生成 scores_now.csv ===============
+      - name: 解析实时比分
+        run: python scores_parser.py --input scores.json --output scores_now.csv
+
       # =============== 统一提交 ===============
       - name: 统一提交所有生成文件
         uses: EndBug/add-and-commit@v9
@@ -106,7 +110,7 @@ jobs:
           author_name: Auto Bot
           author_email: bot@example.com
           message: "综合备份 ${{ env.TIMESTAMP }}：XML归档、分析、livescore [skip ci]"
-          add: "HisData/ *.xml docs/ popeye/ data/ scores.json"
+          add: "HisData/ *.xml docs/ popeye/ data/ scores.json scores_now.csv"   # 新增 scores_now.csv
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       # =============== 打包 & 上传百度网盘 ===============
