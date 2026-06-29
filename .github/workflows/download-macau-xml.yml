@@ -99,7 +99,7 @@ jobs:
           author_name: Auto Bot
           author_email: bot@example.com
           message: "备份 ${{ env.TIMESTAMP }}：归档XML、更新静态文件和分析结果 [skip ci]"
-          add: "HisData/ *.xml docs/ data/"
+          add: "HisData/ *.xml docs/ popeye/ data/"
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       # =============== 打包 & 上传百度网盘 ===============
