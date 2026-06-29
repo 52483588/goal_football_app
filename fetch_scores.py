@@ -1,45 +1,55 @@
-import requests
 import json
-import os
 import sys
+from playwright.sync_api import sync_playwright
 
-url = "https://www.macauslot.com/infoApi/sc/D/FB/matchs/results"
+def main():
+    # 用于存放拦截到的 API 响应数据
+    api_response = None
 
-# 从系统环境变量中读取 Cookie（安全！不写在代码里）
-cookie_string = os.environ.get("COOKIE_STRING")
-if not cookie_string:
-    print("❌ 错误：未找到 COOKIE_STRING 环境变量，请在 GitHub Secrets 中配置。")
-    sys.exit(1)
+    with sync_playwright() as p:
+        # 启动 Chromium（无头模式）
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page()
 
-headers = {
-    "Cookie": cookie_string,
-    "Host": "www.macauslot.com",
-    "Origin": "https://www.macauslot.com",
-    "Referer": "https://www.macauslot.com/sc/soccer/matchResult.html",
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    "Content-Type": "application/json"
-}
+        # 监听所有响应，找到目标 API
+        def handle_response(response):
+            nonlocal api_response
+            if "/infoApi/sc/D/FB/matchs/results" in response.url:
+                try:
+                    # 尝试解析 JSON
+                    data = response.json()
+                    if data:
+                        api_response = data
+                        print("✅ 成功拦截到 API 数据！")
+                except Exception as e:
+                    print(f"⚠️ 解析 API 响应失败: {e}")
 
-try:
-    response = requests.post(url, headers=headers, json={}, timeout=15)
-    print(f"状态码: {response.status_code}")
-    print(f"返回内容前200字符: {response.text[:200]}")  # 新增这行
-    print(f"响应头: {response.headers.get('content-type')}")  # 查看返回格式
-    
-    if response.status_code == 200:
-        data = response.json()
-        if data:  # 如果返回了数据
-            with open('scores.json', 'w', encoding='utf-8') as f:
-                json.dump(data, f, indent=2, ensure_ascii=False)
-            print("✅ 比分数据已成功保存到 scores.json")
-        else:
-            print("⚠️ 返回数据为空，可能是 Cookie 已过期，请更新 Secrets。")
-            sys.exit(1)
-    else:
-        print(f"❌ 请求失败，状态码: {response.status_code}")
-        print(response.text)
-        sys.exit(1)
+        page.on("response", handle_response)
+
+        # 访问目标页面（比分结果页面）
+        print("🔄 正在加载页面，等待数据...")
+        page.goto("https://www.macauslot.com/sc/soccer/matchResult.html", wait_until="networkidle")
         
-except Exception as e:
-    print(f"❌ 网络请求异常: {e}")
-    sys.exit(1)
+        # 额外等待，确保数据完全加载（最多 10 秒）
+        for _ in range(20):
+            if api_response:
+                break
+            page.wait_for_timeout(500)
+        else:
+            print("❌ 未能在 10 秒内捕获到 API 响应，可能页面结构已变化。")
+            browser.close()
+            sys.exit(1)
+
+        browser.close()
+
+    # 保存数据
+    if api_response:
+        with open('scores.json', 'w', encoding='utf-8') as f:
+            json.dump(api_response, f, indent=2, ensure_ascii=False)
+        print("✅ 比分数据已保存到 scores.json")
+    else:
+        print("❌ 未获取到任何数据")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
