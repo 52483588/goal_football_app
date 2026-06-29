@@ -1,16 +1,19 @@
 """
 parse_xml.py - Parse XML files from HisData/ and output his_data.js
-Output: docs/his_data.js  (var RAW_DATA = {...})
+Output: docs/his_data.js  (var RAW_DATA = {...}) and popeye/his_data.js
 """
 import os
 import json
 import time
+import shutil
 import xml.etree.ElementTree as ET
 
 REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
 DATA_SRC = os.path.join(REPO_ROOT, "HisData")
 OUTPUT_DIR = os.path.join(REPO_ROOT, "docs")
 OUTPUT_FILE = os.path.join(OUTPUT_DIR, "his_data.js")
+POPEYE_DIR = os.path.join(REPO_ROOT, "popeye")
+POPEYE_FILE = os.path.join(POPEYE_DIR, "his_data.js")
 
 # 原属性列表
 OC_ATTRS = ['id', 'gt', 'st', 'sh', 'sa']
@@ -89,6 +92,7 @@ def main():
                 if rec[key] and not idx[fid][key]:
                     idx[fid][key] = dict(rec[key])
 
+    # 写入 docs 目录
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
         f.write('var RAW_DATA = ')
@@ -105,6 +109,11 @@ def main():
     elapsed = time.time() - t0
     print(f"[OK] {OUTPUT_FILE} ({len(folders)} folders, {len(id_set)} unique IDs)")
     print(f"[OK] his_data.js: {size_kb:.0f} KB ({elapsed:.1f}s)")
+
+    # 复制到 popeye 目录
+    os.makedirs(POPEYE_DIR, exist_ok=True)
+    shutil.copy(OUTPUT_FILE, POPEYE_FILE)
+    print(f"[OK] Copied to {POPEYE_FILE}")
 
 
 if __name__ == '__main__':
