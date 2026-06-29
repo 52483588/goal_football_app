@@ -23,6 +23,8 @@ headers = {
 try:
     response = requests.post(url, headers=headers, json={}, timeout=15)
     print(f"状态码: {response.status_code}")
+    print(f"返回内容前200字符: {response.text[:200]}")  # 新增这行
+    print(f"响应头: {response.headers.get('content-type')}")  # 查看返回格式
     
     if response.status_code == 200:
         data = response.json()
