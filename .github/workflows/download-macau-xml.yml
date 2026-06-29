@@ -1,4 +1,4 @@
-name: 百度网盘自动备份
+name: 百度网盘自动备份 & 抓取澳彩比分
 
 on:
   workflow_dispatch:              # 允许手动触发
@@ -6,7 +6,7 @@ on:
 jobs:
   process-and-upload:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20           # 适当增加超时（因新增Playwright安装）
 
     steps:
       - name: 检出仓库
@@ -75,7 +75,7 @@ jobs:
           cp *.xml "$ARCHIVE_DIR/"
           echo "✅ 已复制到 $ARCHIVE_DIR"
 
-      # =============== Python 分析阶段 ===============
+      # =============== Python 环境（统一使用3.12） ===============
 
       - name: 安装 Python 3.12 并缓存依赖
         uses: actions/setup-python@v5
@@ -83,9 +83,13 @@ jobs:
           python-version: '3.12'
           cache: 'pip'
 
-      - name: 安装分析依赖
+      - name: 安装分析依赖（含 Playwright 和常用库）
         run: |
-          pip install requests==2.32.3 numpy==2.2.4 pandas==2.2.3
+          pip install requests==2.32.3 numpy==2.2.4 pandas==2.2.3 playwright
+          playwright install chromium
+          playwright install-deps
+
+      # =============== 生成静态文件（原有） ===============
 
       - name: 生成 his_data.js
         run: python parse_xml.py
@@ -93,25 +97,33 @@ jobs:
       - name: 运行分析脚本
         run: python bc.py
 
+      # =============== 抓取澳彩比分（新增） ===============
+
+      - name: 抓取比分数据（Playwright）
+        run: python fetch_scores.py
+
+      # =============== 统一提交所有生成文件 ===============
+
       - name: 统一提交所有生成文件
         uses: EndBug/add-and-commit@v9
         with:
           author_name: Auto Bot
           author_email: bot@example.com
-          message: "备份 ${{ env.TIMESTAMP }}：归档XML、更新静态文件和分析结果 [skip ci]"
-          add: "HisData/ *.xml docs/ popeye/ data/"
+          message: "备份 ${{ env.TIMESTAMP }}：归档XML、更新静态文件、抓取比分 [skip ci]"
+          add: "HisData/ *.xml docs/ popeye/ data/ scores.json"
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       # =============== 打包 & 上传百度网盘 ===============
 
-      - name: 打包文件夹
+      - name: 打包文件夹（包含scores.json）
         run: |
-          zip -r "backup_${{ env.TIMESTAMP }}.zip" HisData docs data
+          zip -r "backup_${{ env.TIMESTAMP }}.zip" HisData docs data scores.json
           echo "UPLOAD_FILE=backup_${{ env.TIMESTAMP }}.zip" >> $GITHUB_ENV
           echo "✅ 已打包为 backup_${{ env.TIMESTAMP }}.zip"
 
-      - name: 安装Python依赖（百度上传用）
+      - name: 安装百度上传依赖（已包含requests）
         run: |
+          # 其实已安装，但为保险再装一次
           pip install requests==2.32.3
 
       - name: 执行百度网盘上传脚本
