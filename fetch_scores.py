@@ -30,7 +30,7 @@ def main():
         # 现场比分 https://www.macauslot.com/infoApi/sc/D/FB/matchs/livescore 
         # 完场比分 https://www.macauslot.com/sc/soccer/matchResult.html
         print("🔄 正在加载页面，等待数据...")
-        page.goto("https://www.macauslot.com/infoApi/sc/D/FB/matchs/livescore", wait_until="networkidle")
+        page.goto("https://www.macauslot.com/sc/soccer/matchResult.html", wait_until="networkidle")
         
         # 额外等待，确保数据完全加载（最多 10 秒）
         for _ in range(20):
