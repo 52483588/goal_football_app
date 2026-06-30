@@ -342,6 +342,255 @@ tr:hover td {
 /* 分析记录选择列 */
 .row-select-col { width: 50px; text-align: center; }
 .row-select-col input[type="radio"] { cursor: pointer; transform: scale(1.2); }
+
+/* === 分析视图左右分栏 === */
+.analysis-split {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+.analysis-left {
+  width: 40%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-right: 2px solid #e0e0e0;
+}
+.analysis-left .table-container {
+  flex: 1;
+  overflow: auto;
+  padding: 0 12px 12px 12px;
+}
+.analysis-left table {
+  min-width: auto;
+  width: 100%;
+  font-size: 13px;
+}
+.analysis-left th,
+.analysis-left td {
+  padding: 6px 4px;
+  font-size: 12px;
+}
+.analysis-right {
+  width: 60%;
+  min-width: 0;
+  overflow-y: auto;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.analysis-right .bingo-placeholder {
+  color: #aaa;
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.analysis-right .bingo-placeholder .icon {
+  font-size: 40px;
+  opacity: 0.4;
+}
+.analysis-right .bingo-card {
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+  padding: 14px 18px;
+  border: 1px solid #e2e8f0;
+}
+.analysis-right .bingo-card .card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0b1a2b;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.analysis-right .bingo-card .card-title .step-badge {
+  display: inline-block;
+  background: #1a3a5e;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 1px 10px;
+  border-radius: 16px;
+}
+.analysis-right .bingo-card .card-title .step-badge.green { background: #1f7b4d; }
+.analysis-right .bingo-card .card-title .step-badge.orange { background: #b45f1b; }
+.analysis-right .bingo-card .card-title .step-badge.purple { background: #6b3f8b; }
+.analysis-right .bingo-card .card-title .step-badge.teal { background: #0d6b7a; }
+.analysis-right .bingo-card .chip {
+  display: inline-block;
+  background: #eef2f6;
+  padding: 1px 10px;
+  border-radius: 14px;
+  font-size: 12px;
+  color: #1a2a3e;
+}
+.analysis-right .bingo-card .tag {
+  display: inline-block;
+  background: #1a3a5e;
+  color: #fff;
+  padding: 0 10px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 20px;
+}
+.analysis-right .bingo-card .tag.green { background: #1f7b4d; }
+.analysis-right .bingo-card .tag.orange { background: #b45f1b; }
+.analysis-right .bingo-card .tag.red { background: #b33636; }
+.analysis-right .bingo-card .grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.analysis-right .bingo-card table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: auto;
+}
+.analysis-right .bingo-card th {
+  text-align: left;
+  padding: 5px 8px;
+  font-weight: 600;
+  color: #1a2a3e;
+  border-bottom: 2px solid #dce2ea;
+  position: static;
+  text-shadow: none;
+}
+.analysis-right .bingo-card td {
+  padding: 4px 8px;
+  border-bottom: 1px solid #eaeef4;
+  text-align: left;
+  white-space: nowrap;
+}
+.analysis-right .bingo-card .divider {
+  border: none;
+  border-top: 1px dashed #dce2ea;
+  margin: 10px 0;
+}
+.analysis-right .bingo-card .result-box {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-top: 8px;
+}
+.analysis-right .bingo-card .result-box.success { background: #e4f5ec; border-left: 4px solid #1f7b4d; }
+.analysis-right .bingo-card .result-box.warning { background: #fcf3e0; border-left: 4px solid #b45f1b; }
+.analysis-right .bingo-card .result-box.danger { background: #fde8e8; border-left: 4px solid #b33636; }
+.analysis-right .bingo-card .result-box.info { background: #e3eef9; border-left: 4px solid #2b6c9e; }
+.analysis-right .bingo-card .conclusion-box {
+  background: #f0f4fb;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-top: 10px;
+  border: 1px solid #d5e0ec;
+}
+.analysis-right .bingo-card .flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.analysis-right .bingo-card .ev-positive { color: #1a7a4a; font-weight: 700; }
+.analysis-right .bingo-card .ev-negative { color: #b33636; font-weight: 700; }
+.analysis-right .bingo-card .ev-neutral { color: #9e6d1b; font-weight: 700; }
+.analysis-right .bingo-card .footnote {
+  font-size: 12px;
+  color: #5a6a7e;
+  margin-top: 4px;
+  border-top: 1px solid #eaeef4;
+  padding-top: 8px;
+}
+.analysis-right .bingo-card .bar-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 2px 0;
+}
+.analysis-right .bingo-card .bar-bg {
+  flex: 1;
+  height: 6px;
+  background: #eaeef4;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.analysis-right .bingo-card .bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.4s;
+}
+.analysis-right .bingo-card .bar-fill.green { background: #1f7b4d; }
+.analysis-right .bingo-card .bar-fill.red { background: #b33636; }
+.analysis-right .bingo-card .bar-fill.gold { background: #b45f1b; }
+.analysis-right .bingo-card .bar-fill.blue { background: #2b6c9e; }
+.analysis-right .bingo-card .bar-label {
+  min-width: 40px;
+  text-align: right;
+  font-weight: 500;
+  font-size: 13px;
+}
+.analysis-right .bingo-card .inline-code {
+  background: #eef2f6;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 12px;
+}
+
+/* === 比赛信息 + 粘贴框左右分栏 === */
+.match-info-split {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+}
+.match-info-left {
+  flex: 1;
+  min-width: 0;
+}
+.match-info-right {
+  flex: 1;
+  min-width: 0;
+}
+.match-info-right textarea {
+  width: 100%;
+  height: 100%;
+  min-height: 80px;
+  padding: 10px 12px;
+  font-size: 13px;
+  font-family: 'Consolas', 'Courier New', monospace;
+  border: 2px solid #d0d8e0;
+  border-radius: 8px;
+  background: #fafcfe;
+  resize: vertical;
+  transition: border-color 0.2s;
+  color: #1a2332;
+  line-height: 1.6;
+}
+.match-info-right textarea:focus {
+  outline: none;
+  border-color: #2563a8;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 168, 0.12);
+}
+
+/* 分析结果区域分段显示控制 */
+#bingoResultArea .bingo-step {
+  display: none;
+}
+#bingoResultArea .bingo-step.visible {
+  display: block;
+}
 </style>
 </head>
 <body>
@@ -368,6 +617,8 @@ tr:hover td {
 
   <button id="btnSearch">查询</button>
   <button id="btnClear" class="clear">清除</button>
+  <button id="btnClearAnalysis" style="background:#888;color:#fff;border:none;border-radius:6px;padding:9px 18px;cursor:pointer;font-family:inherit;font-size:14px;white-space:nowrap;">清空</button>
+  <button id="btnCalcBingo" style="background:#1f7b4d;color:#fff;border:none;border-radius:6px;padding:9px 18px;cursor:pointer;font-family:inherit;font-weight:700;font-size:15px;white-space:nowrap;">⚡ 计算分析</button>
 
   <div class="view-switch" role="tablist">
     <button id="btnAnalysis" class="active" role="tab" aria-selected="true">📊 分析记录</button>
@@ -384,23 +635,30 @@ tr:hover td {
 
 <div class="scrollable-container">
   <div class="match-info" id="matchInfo" hidden>
-    <div class="match-info-row">
-      <span class="info-label">赛事ID</span>
-      <span class="info-value" id="infoId">-</span>
-      <span class="info-label">赛事时间</span>
-      <span class="info-value" id="infoTime">-</span>
-      <span class="info-label">联赛</span>
-      <span class="info-value" id="infoLeague">-</span>
-    </div>
-    <div class="match-info-row">
-      <span class="info-label">主队</span>
-      <span class="info-value oc-home" id="infoHome">-</span>
-      <span class="info-sep">vs</span>
-      <span class="info-label">客队</span>
-      <span class="info-value oc-away" id="infoAway">-</span>
-      <span class="info-label">共</span>
-      <span class="info-value" id="infoCount">0</span>
-      <span class="info-label">个时间点</span>
+    <div class="match-info-split">
+      <div class="match-info-left">
+        <div class="match-info-row">
+          <span class="info-label">赛事ID</span>
+          <span class="info-value" id="infoId">-</span>
+          <span class="info-label">赛事时间</span>
+          <span class="info-value" id="infoTime">-</span>
+          <span class="info-label">联赛</span>
+          <span class="info-value" id="infoLeague">-</span>
+        </div>
+        <div class="match-info-row">
+          <span class="info-label">主队</span>
+          <span class="info-value oc-home" id="infoHome">-</span>
+          <span class="info-sep">vs</span>
+          <span class="info-label">客队</span>
+          <span class="info-value oc-away" id="infoAway">-</span>
+          <span class="info-label">共</span>
+          <span class="info-value" id="infoCount">0</span>
+          <span class="info-label">个时间点</span>
+        </div>
+      </div>
+      <div class="match-info-right">
+        <textarea id="bingoPasteInput" placeholder="粘贴数据（8个概率值 + 大球赔率 + 盘口 + 小球赔率）&#10;留空自动使用最后一条盘口记录的数据计算"></textarea>
+      </div>
     </div>
   </div>
 
@@ -418,7 +676,24 @@ tr:hover td {
   <div class="view-analysis active" id="viewAnalysis" role="tabpanel">
     <div class="no-result" id="noResultAnalysis" hidden>未找到符合条件的比赛</div>
     <div class="hint" id="hintAnalysis">正在加载分析数据...</div>
-    <div class="table-container" id="tableAnalysis"></div>
+    <div class="analysis-split">
+      <div class="analysis-left">
+        <div class="table-container" id="tableAnalysis"></div>
+      </div>
+      <div class="analysis-right" id="analysisRight">
+        <div class="bingo-placeholder" id="bingoPlaceholder">
+          <span class="icon">📋</span>
+          <span>在大小球盘口视图的粘贴框中输入数据，点击「计算分析」查看结果</span>
+          <span style="font-size:13px;color:#bbb;">或直接点击「计算分析」使用最后一条盘口记录的数据</span>
+        </div>
+        <div id="bingoResultArea" style="display:none;">
+          <div class="bingo-card" id="bingoStep1"><div class="card-title"><span class="step-badge">第一步</span> 数据与盘口拆解</div><div id="bingoStep1Content"></div></div>
+          <div class="bingo-card" id="bingoStep2"><div class="card-title"><span class="step-badge green">第二步</span> 精确计算期望价值 (EV)</div><div id="bingoStep2Content"></div></div>
+          <div class="bingo-card" id="bingoStep3"><div class="card-title"><span class="step-badge orange">第三步</span> 价值投注视角</div><div id="bingoStep3Content"></div></div>
+          <div class="bingo-card" id="bingoStep4"><div class="card-title"><span class="step-badge purple">第四步</span> 结论 · 单次下注建议</div><div id="bingoStep4Content"></div></div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- 大小球视图 -->
@@ -440,5 +715,560 @@ tr:hover td {
 <script src="his_data.js"></script>
 <script src="stats.js"></script>
 <script src="app.js"></script>
+
+<!-- ====== 大小球 EV 分析集成（来自 bingo.html）===== -->
+<script>
+(function() {
+  'use strict';
+
+  // ============================================================
+  //  核心工具函数（移植自 bingo.html）
+  // ============================================================
+
+  function parseData(text) {
+    const numRegex = /\d+\.?\d*/g;
+    const numbers = [];
+    let match;
+    while ((match = numRegex.exec(text)) !== null) {
+      numbers.push(parseFloat(match[0]));
+    }
+    if (numbers.length < 21) {
+      throw new Error('提取的数字不足21个，请确认数据格式是否正确。');
+    }
+    const indices = [0, 2, 4, 6, 8, 10, 12, 14, 18, 26, 22];
+    const selected = indices.map(i => numbers[i]);
+    const probs = selected.slice(0, 8).map(v => v / 100);
+    const overOdds = selected[8];
+    const handicap = selected[9];
+    const underOdds = selected[10];
+    const total = probs.reduce((a, b) => a + b, 0);
+    if (Math.abs(total - 1) > 0.01) {
+      console.warn('概率之和不为1，实际为:', total);
+    }
+    return { probs, overOdds, handicap, underOdds };
+  }
+
+  function cumProb(probs, from, to) {
+    if (to === 'inf') {
+      let s = 0;
+      for (let i = from; i < probs.length; i++) s += probs[i];
+      return s;
+    }
+    let s = 0;
+    for (let i = from; i <= to; i++) s += probs[i];
+    return s;
+  }
+
+  function getHandicapInfo(handicap) {
+    const intPart = Math.floor(handicap);
+    const frac = Math.round((handicap - intPart) * 100) / 100;
+    let type = '', description = '', lo = null, hi = null;
+
+    if (Math.abs(frac - 0.5) < 0.01) {
+      type = '半球盘';
+      description = '盘口 ' + handicap.toFixed(1) + ' 属于半球盘，无走水，直接分出胜负。';
+    } else if (Math.abs(frac) < 0.01) {
+      type = '整数盘';
+      description = '盘口 ' + handicap.toFixed(1) + ' 属于整数盘，当进球数 = ' + intPart + ' 时走水（本金退还）。';
+    } else if (Math.abs(frac - 0.25) < 0.01) {
+      type = '四分之一盘';
+      lo = intPart; hi = intPart + 0.5;
+      description = '盘口 ' + handicap.toFixed(2) + ' 属于四分之一盘，拆解为：50% ' + lo.toFixed(1) + '盘 + 50% ' + hi.toFixed(1) + '盘。';
+    } else if (Math.abs(frac - 0.75) < 0.01) {
+      type = '四分之三盘';
+      lo = intPart + 0.5; hi = intPart + 1.0;
+      description = '盘口 ' + handicap.toFixed(2) + ' 属于四分之三盘，拆解为：50% ' + lo.toFixed(1) + '盘 + 50% ' + hi.toFixed(1) + '盘。';
+    } else {
+      if (frac < 0.25) { type = '整数盘(近似)'; description = '盘口 ' + handicap.toFixed(2) + ' 近似为整数盘处理。'; }
+      else if (frac < 0.5) { type = '四分之一盘(近似)'; description = '盘口 ' + handicap.toFixed(2) + ' 近似为四分之一盘处理。'; lo = intPart; hi = intPart + 0.5; }
+      else if (frac < 0.75) { type = '半球盘(近似)'; description = '盘口 ' + handicap.toFixed(2) + ' 近似为半球盘处理。'; }
+      else { type = '四分之三盘(近似)'; description = '盘口 ' + handicap.toFixed(2) + ' 近似为四分之三盘处理。'; lo = intPart + 0.5; hi = intPart + 1.0; }
+    }
+    return { type, description, lo, hi, intPart, frac };
+  }
+
+  function calcSingleEV(probs, handicap, overOdds, underOdds) {
+    const intPart = Math.floor(handicap);
+    const frac = Math.round((handicap - intPart) * 100) / 100;
+    let pOver = 0, pPush = 0, pUnder = 0;
+    let overWinHalf = 0, underWinHalf = 0, overLoseHalf = 0, underLoseHalf = 0;
+    const ranges = [];
+
+    if (Math.abs(frac - 0.5) < 0.01) {
+      const threshold = intPart;
+      const pLow = cumProb(probs, 0, threshold);
+      const pHigh = cumProb(probs, threshold + 1, 'inf');
+      pOver = pHigh; pUnder = pLow;
+      ranges.push({ label: '≤ ' + threshold + ' 球', prob: pLow, type: 'under' });
+      ranges.push({ label: '≥ ' + (threshold + 1) + ' 球', prob: pHigh, type: 'over' });
+    } else if (Math.abs(frac) < 0.01) {
+      const threshold = intPart;
+      const pLow = cumProb(probs, 0, threshold - 1);
+      const pMid = cumProb(probs, threshold, threshold);
+      const pHigh = cumProb(probs, threshold + 1, 'inf');
+      pOver = pHigh; pPush = pMid; pUnder = pLow;
+      ranges.push({ label: '≤ ' + (threshold - 1) + ' 球', prob: pLow, type: 'under' });
+      ranges.push({ label: '= ' + threshold + ' 球', prob: pMid, type: 'push' });
+      ranges.push({ label: '≥ ' + (threshold + 1) + ' 球', prob: pHigh, type: 'over' });
+    } else if (Math.abs(frac - 0.25) < 0.01) {
+      const r1 = calcSingleEV(probs, intPart, overOdds, underOdds);
+      const r2 = calcSingleEV(probs, intPart + 0.5, overOdds, underOdds);
+      const avg = (a, b) => (a + b) / 2;
+      return { pOver: avg(r1.pOver, r2.pOver), pPush: avg(r1.pPush, r2.pPush), pUnder: avg(r1.pUnder, r2.pUnder),
+        overWinHalf: avg(r1.overWinHalf, r2.overWinHalf), underWinHalf: avg(r1.underWinHalf, r2.underWinHalf),
+        overLoseHalf: avg(r1.overLoseHalf, r2.overLoseHalf), underLoseHalf: avg(r1.underLoseHalf, r2.underLoseHalf),
+        ranges: r1.ranges.concat(r2.ranges).map((r, idx) => ({ ...r, prob: (r.prob + (r2.ranges[idx] ? r2.ranges[idx].prob : 0)) / 2 })),
+        isComposite: true, lo: intPart, hi: intPart + 0.5 };
+    } else if (Math.abs(frac - 0.75) < 0.01) {
+      const r1 = calcSingleEV(probs, intPart + 0.5, overOdds, underOdds);
+      const r2 = calcSingleEV(probs, intPart + 1.0, overOdds, underOdds);
+      const avg = (a, b) => (a + b) / 2;
+      return { pOver: avg(r1.pOver, r2.pOver), pPush: avg(r1.pPush, r2.pPush), pUnder: avg(r1.pUnder, r2.pUnder),
+        overWinHalf: avg(r1.overWinHalf, r2.overWinHalf), underWinHalf: avg(r1.underWinHalf, r2.underWinHalf),
+        overLoseHalf: avg(r1.overLoseHalf, r2.overLoseHalf), underLoseHalf: avg(r1.underLoseHalf, r2.underLoseHalf),
+        ranges: r1.ranges.concat(r2.ranges).map((r, idx) => ({ ...r, prob: (r.prob + (r2.ranges[idx] ? r2.ranges[idx].prob : 0)) / 2 })),
+        isComposite: true, lo: intPart + 0.5, hi: intPart + 1.0 };
+    } else {
+      const threshold = Math.round(handicap);
+      const pLow = cumProb(probs, 0, threshold - 1);
+      const pMid = cumProb(probs, threshold, threshold);
+      const pHigh = cumProb(probs, threshold + 1, 'inf');
+      pOver = pHigh; pPush = pMid; pUnder = pLow;
+      ranges.push({ label: '≤ ' + (threshold - 1) + ' 球', prob: pLow, type: 'under' });
+      ranges.push({ label: '= ' + threshold + ' 球', prob: pMid, type: 'push' });
+      ranges.push({ label: '≥ ' + (threshold + 1) + ' 球', prob: pHigh, type: 'over' });
+    }
+    return { pOver, pPush, pUnder, overWinHalf, underWinHalf, overLoseHalf, underLoseHalf, ranges, isComposite: false };
+  }
+
+  function computeEV(probs, overOdds, underOdds, handicap) {
+    const info = getHandicapInfo(handicap);
+    let result = calcSingleEV(probs, handicap, overOdds, underOdds);
+    const intPart = Math.floor(handicap);
+    const frac = Math.round((handicap - intPart) * 100) / 100;
+    let detailOver = [], detailUnder = [];
+    let pOver = result.pOver, pPush = result.pPush || 0, pUnder = result.pUnder;
+    let overWinHalf = result.overWinHalf || 0, underWinHalf = result.underWinHalf || 0;
+    let overLoseHalf = result.overLoseHalf || 0, underLoseHalf = result.underLoseHalf || 0;
+
+    if (Math.abs(frac - 0.25) < 0.01) {
+      const p0_1 = cumProb(probs, 0, 1);
+      const p2 = cumProb(probs, 2, 2);
+      const p3p = cumProb(probs, 3, 'inf');
+      pOver = p3p; pUnder = p0_1; overLoseHalf = p2; underWinHalf = p2;
+      detailOver = [
+        { label: '0 ~ 1 球', prob: p0_1, outcome: '全输', factor: -1 },
+        { label: '2 球', prob: p2, outcome: '输一半', factor: -0.5 },
+        { label: '3 球及以上', prob: p3p, outcome: '全赢', factor: 1 }
+      ];
+      detailUnder = [
+        { label: '0 ~ 1 球', prob: p0_1, outcome: '全赢', factor: 1 },
+        { label: '2 球', prob: p2, outcome: '赢一半', factor: 0.5 },
+        { label: '3 球及以上', prob: p3p, outcome: '全输', factor: -1 }
+      ];
+      pPush = 0;
+    } else if (Math.abs(frac - 0.75) < 0.01) {
+      const p0_2 = cumProb(probs, 0, 2);
+      const p3 = cumProb(probs, 3, 3);
+      const p4p = cumProb(probs, 4, 'inf');
+      pOver = p4p; pUnder = p0_2; overWinHalf = p3; underLoseHalf = p3;
+      detailOver = [
+        { label: '0 ~ 2 球', prob: p0_2, outcome: '全输', factor: -1 },
+        { label: '3 球', prob: p3, outcome: '赢一半', factor: 0.5 },
+        { label: '4 球及以上', prob: p4p, outcome: '全赢', factor: 1 }
+      ];
+      detailUnder = [
+        { label: '0 ~ 2 球', prob: p0_2, outcome: '全赢', factor: 1 },
+        { label: '3 球', prob: p3, outcome: '输一半', factor: -0.5 },
+        { label: '4 球及以上', prob: p4p, outcome: '全输', factor: -1 }
+      ];
+      pPush = 0;
+    } else if (Math.abs(frac - 0.5) < 0.01) {
+      const threshold = intPart;
+      const pLow = cumProb(probs, 0, threshold);
+      const pHigh = cumProb(probs, threshold + 1, 'inf');
+      pOver = pHigh; pUnder = pLow; pPush = 0;
+      detailOver = [
+        { label: '≤ ' + threshold + ' 球', prob: pLow, outcome: '全输', factor: -1 },
+        { label: '≥ ' + (threshold + 1) + ' 球', prob: pHigh, outcome: '全赢', factor: 1 }
+      ];
+      detailUnder = [
+        { label: '≤ ' + threshold + ' 球', prob: pLow, outcome: '全赢', factor: 1 },
+        { label: '≥ ' + (threshold + 1) + ' 球', prob: pHigh, outcome: '全输', factor: -1 }
+      ];
+    } else if (Math.abs(frac) < 0.01) {
+      const threshold = intPart;
+      const pLow = cumProb(probs, 0, threshold - 1);
+      const pMid = cumProb(probs, threshold, threshold);
+      const pHigh = cumProb(probs, threshold + 1, 'inf');
+      pOver = pHigh; pPush = pMid; pUnder = pLow;
+      detailOver = [
+        { label: '≤ ' + (threshold - 1) + ' 球', prob: pLow, outcome: '全输', factor: -1 },
+        { label: '= ' + threshold + ' 球', prob: pMid, outcome: '走水', factor: 0 },
+        { label: '≥ ' + (threshold + 1) + ' 球', prob: pHigh, outcome: '全赢', factor: 1 }
+      ];
+      detailUnder = [
+        { label: '≤ ' + (threshold - 1) + ' 球', prob: pLow, outcome: '全赢', factor: 1 },
+        { label: '= ' + threshold + ' 球', prob: pMid, outcome: '走水', factor: 0 },
+        { label: '≥ ' + (threshold + 1) + ' 球', prob: pHigh, outcome: '全输', factor: -1 }
+      ];
+    } else {
+      const threshold = Math.round(handicap);
+      const pLow = cumProb(probs, 0, threshold - 1);
+      const pMid = cumProb(probs, threshold, threshold);
+      const pHigh = cumProb(probs, threshold + 1, 'inf');
+      pOver = pHigh; pPush = pMid; pUnder = pLow;
+      detailOver = [
+        { label: '≤ ' + (threshold - 1) + ' 球', prob: pLow, outcome: '全输', factor: -1 },
+        { label: '= ' + threshold + ' 球', prob: pMid, outcome: '走水', factor: 0 },
+        { label: '≥ ' + (threshold + 1) + ' 球', prob: pHigh, outcome: '全赢', factor: 1 }
+      ];
+      detailUnder = [
+        { label: '≤ ' + (threshold - 1) + ' 球', prob: pLow, outcome: '全赢', factor: 1 },
+        { label: '= ' + threshold + ' 球', prob: pMid, outcome: '走水', factor: 0 },
+        { label: '≥ ' + (threshold + 1) + ' 球', prob: pHigh, outcome: '全输', factor: -1 }
+      ];
+    }
+
+    const overNet = overOdds - 1;
+    const underNet = underOdds - 1;
+
+    let evOver = 0;
+    for (const d of detailOver) {
+      if (d.factor === 1) evOver += d.prob * overNet;
+      else if (d.factor === -1) evOver += d.prob * (-1);
+      else if (d.factor === -0.5) evOver += d.prob * (-0.5);
+      else if (d.factor === 0.5) evOver += d.prob * (overNet / 2);
+    }
+
+    let evUnder = 0;
+    for (const d of detailUnder) {
+      if (d.factor === 1) evUnder += d.prob * underNet;
+      else if (d.factor === -1) evUnder += d.prob * (-1);
+      else if (d.factor === -0.5) evUnder += d.prob * (-0.5);
+      else if (d.factor === 0.5) evUnder += d.prob * (underNet / 2);
+    }
+
+    const fairOver = (1 / overOdds) / (1 / overOdds + 1 / underOdds);
+    const fairUnder = (1 / underOdds) / (1 / overOdds + 1 / underOdds);
+
+    let overWinFull = 0, overWinHalfP = 0, overLoseFull = 0, overLoseHalfP = 0;
+    let underWinFull = 0, underWinHalfP = 0, underLoseFull = 0, underLoseHalfP = 0;
+    for (const d of detailOver) {
+      if (d.factor === 1) overWinFull += d.prob;
+      else if (d.factor === 0.5) overWinHalfP += d.prob;
+      else if (d.factor === -1) overLoseFull += d.prob;
+      else if (d.factor === -0.5) overLoseHalfP += d.prob;
+    }
+    for (const d of detailUnder) {
+      if (d.factor === 1) underWinFull += d.prob;
+      else if (d.factor === 0.5) underWinHalfP += d.prob;
+      else if (d.factor === -1) underLoseFull += d.prob;
+      else if (d.factor === -0.5) underLoseHalfP += d.prob;
+    }
+
+    const overEffWin = overWinFull + 0.5 * overWinHalfP;
+    const overEffLose = overLoseFull + 0.5 * overLoseHalfP;
+    const underEffWin = underWinFull + 0.5 * underWinHalfP;
+    const underEffLose = underLoseFull + 0.5 * underLoseHalfP;
+    const overEffProb = (overEffWin + overEffLose) > 0 ? overEffWin / (overEffWin + overEffLose) : 0;
+    const underEffProb = (underEffWin + underEffLose) > 0 ? underEffWin / (underEffWin + underEffLose) : 0;
+
+    return {
+      handicap, info, overOdds, underOdds, overNet, underNet,
+      pOver, pPush, pUnder, detailOver, detailUnder,
+      evOver, evUnder, fairOver, fairUnder,
+      overEffProb, underEffProb,
+      overWinFull, overWinHalfP, overLoseFull, overLoseHalfP,
+      underWinFull, underWinHalfP, underLoseFull, underLoseHalfP,
+      probs
+    };
+  }
+
+  // ============================================================
+  //  渲染函数
+  // ============================================================
+
+  function fmtP(v) { return (v * 100).toFixed(2) + '%'; }
+  function fmtNum(v, d) { return Number(v).toFixed(d || 4); }
+  function fmtOdds(v) { return v.toFixed(2); }
+
+  function $(id) { return document.getElementById(id); }
+
+  function renderStep1(data) {
+    const { probs, overOdds, underOdds, handicap, info } = data;
+    let html = '';
+    html += '<div class="flex-between mb-8"><span style="font-weight:600;">📊 进球概率分布</span>';
+    html += '<span class="chip">总和 ' + (probs.reduce((a,b)=>a+b,0)*100).toFixed(2) + '%</span></div>';
+    html += '<div style="display:flex;flex-wrap:wrap;gap:4px 10px;margin-bottom:10px;">';
+    const labels = ['0球','1球','2球','3球','4球','5球','6球','7+球'];
+    for (let i = 0; i < probs.length; i++) {
+      const pct = (probs[i] * 100).toFixed(2);
+      html += '<span style="background:#eef2f6;padding:1px 10px;border-radius:16px;font-size:13px;"><strong>' + labels[i] + '</strong> ' + pct + '%</span>';
+    }
+    html += '</div>';
+    html += '<hr class="divider">';
+    html += '<div style="display:flex;flex-wrap:wrap;gap:14px 24px;font-size:14px;">';
+    html += '<div><span class="chip">盘口</span> <strong>' + handicap.toFixed(2) + '</strong></div>';
+    html += '<div><span class="chip">大球赔率</span> <strong>' + overOdds.toFixed(2) + '</strong></div>';
+    html += '<div><span class="chip">小球赔率</span> <strong>' + underOdds.toFixed(2) + '</strong></div>';
+    html += '</div>';
+    html += '<div class="mt-8" style="background:#f2f5f9;padding:8px 14px;border-radius:6px;font-size:13px;">';
+    html += '<span class="tag" style="font-size:11px;">' + info.type + '</span> ' + info.description;
+    if (info.lo !== null && info.hi !== null) {
+      html += '<br><span style="color:#4a5a6e;font-size:12px;">拆解底层：' + info.lo.toFixed(1) + ' 盘 + ' + info.hi.toFixed(1) + ' 盘（各 50%）</span>';
+    }
+    html += '</div>';
+    const fi = Math.round((handicap - Math.floor(handicap)) * 100) / 100;
+    if (Math.abs(fi - 0.25) < 0.01 || Math.abs(fi - 0.75) < 0.01) {
+      html += '<div class="mt-8" style="background:#f0f4fb;padding:8px 14px;border-radius:6px;font-size:13px;border:1px dashed #b8c8da;">';
+      html += '<span style="font-weight:600;">🔍 等效结算规则</span><br>';
+      if (Math.abs(fi - 0.25) < 0.01) {
+        html += '• 大球：0~' + (Math.floor(handicap)-1) + '球全输，' + Math.floor(handicap) + '球输一半，≥' + (Math.floor(handicap)+1) + '球全赢<br>';
+        html += '• 小球：0~' + (Math.floor(handicap)-1) + '球全赢，' + Math.floor(handicap) + '球赢一半，≥' + (Math.floor(handicap)+1) + '球全输';
+      } else {
+        html += '• 大球：0~' + Math.floor(handicap) + '球全输，' + (Math.floor(handicap)+1) + '球赢一半，≥' + (Math.floor(handicap)+2) + '球全赢<br>';
+        html += '• 小球：0~' + Math.floor(handicap) + '球全赢，' + (Math.floor(handicap)+1) + '球输一半，≥' + (Math.floor(handicap)+2) + '球全输';
+      }
+      html += '</div>';
+    }
+    $('bingoStep1Content').innerHTML = html;
+  }
+
+  function renderStep2(result) {
+    const { detailOver, detailUnder, evOver, evUnder, overOdds, underOdds, overNet, underNet, handicap } = result;
+    let html = '<div class="grid-2">';
+    // 大球
+    html += '<div><div style="font-weight:600;color:#1a3a5e;margin-bottom:4px;font-size:14px;">🔴 大球 (Over ' + handicap.toFixed(2) + ') 赔率 ' + overOdds.toFixed(2) + '</div>';
+    html += '<table><thead><tr><th>赛果</th><th>概率</th><th>盈亏</th><th>贡献</th></tr></thead><tbody>';
+    let overTotal = 0;
+    for (const d of detailOver) {
+      let factorStr = '';
+      if (d.factor === 1) factorStr = '+' + overNet.toFixed(2);
+      else if (d.factor === -1) factorStr = '-1.00';
+      else if (d.factor === -0.5) factorStr = '-0.50';
+      else if (d.factor === 0.5) factorStr = '+' + (overNet/2).toFixed(2);
+      else factorStr = '0.00';
+      const contrib = d.prob * (d.factor === 1 ? overNet : d.factor === -1 ? -1 : d.factor === -0.5 ? -0.5 : d.factor === 0.5 ? overNet / 2 : 0);
+      overTotal += contrib;
+      const color = contrib > 0.001 ? '#1a7a4a' : contrib < -0.001 ? '#b33636' : '#6a7a8e';
+      html += '<tr><td>' + d.label + '</td><td>' + fmtP(d.prob) + '</td><td>' + factorStr + '</td>';
+      html += '<td style="color:' + color + ';font-weight:500;">' + (contrib >= 0 ? '+' : '') + contrib.toFixed(4) + '</td></tr>';
+    }
+    html += '<tr style="border-top:2px solid #1a3a5e;font-weight:700;"><td colspan="3">期望价值 (EV)</td><td style="color:' + (evOver >= 0 ? '#1a7a4a' : '#b33636') + ';">' + (evOver >= 0 ? '+' : '') + (evOver*100).toFixed(2) + '%</td></tr>';
+    html += '</tbody></table></div>';
+    // 小球
+    html += '<div><div style="font-weight:600;color:#1a3a5e;margin-bottom:4px;font-size:14px;">🔵 小球 (Under ' + handicap.toFixed(2) + ') 赔率 ' + underOdds.toFixed(2) + '</div>';
+    html += '<table><thead><tr><th>赛果</th><th>概率</th><th>盈亏</th><th>贡献</th></tr></thead><tbody>';
+    let underTotal = 0;
+    for (const d of detailUnder) {
+      let factorStr = '';
+      if (d.factor === 1) factorStr = '+' + underNet.toFixed(2);
+      else if (d.factor === -1) factorStr = '-1.00';
+      else if (d.factor === -0.5) factorStr = '-0.50';
+      else if (d.factor === 0.5) factorStr = '+' + (underNet/2).toFixed(2);
+      else factorStr = '0.00';
+      const contrib = d.prob * (d.factor === 1 ? underNet : d.factor === -1 ? -1 : d.factor === -0.5 ? -0.5 : d.factor === 0.5 ? underNet / 2 : 0);
+      underTotal += contrib;
+      const color = contrib > 0.001 ? '#1a7a4a' : contrib < -0.001 ? '#b33636' : '#6a7a8e';
+      html += '<tr><td>' + d.label + '</td><td>' + fmtP(d.prob) + '</td><td>' + factorStr + '</td>';
+      html += '<td style="color:' + color + ';font-weight:500;">' + (contrib >= 0 ? '+' : '') + contrib.toFixed(4) + '</td></tr>';
+    }
+    html += '<tr style="border-top:2px solid #1a3a5e;font-weight:700;"><td colspan="3">期望价值 (EV)</td><td style="color:' + (evUnder >= 0 ? '#1a7a4a' : '#b33636') + ';">' + (evUnder >= 0 ? '+' : '') + (evUnder*100).toFixed(2) + '%</td></tr>';
+    html += '</tbody></table></div></div>';
+    // 总结
+    html += '<div class="result-box ' + (evOver < 0 && evUnder < 0 ? 'danger' : evOver > 0 || evUnder > 0 ? 'success' : 'warning') + '" style="margin-top:10px;">';
+    html += '<strong>📌 EV 解读</strong><br>';
+    html += '大球 EV = <strong style="color:' + (evOver >= 0 ? '#1a7a4a' : '#b33636') + ';">' + (evOver*100).toFixed(2) + '%</strong> &nbsp;|&nbsp; 小球 EV = <strong style="color:' + (evUnder >= 0 ? '#1a7a4a' : '#b33636') + ';">' + (evUnder*100).toFixed(2) + '%</strong><br>';
+    if (evOver < 0 && evUnder < 0) html += '⚠️ 两边均为负期望，庄家优势明显。长期投注将导致亏损。';
+    else if (evOver > 0 && evUnder > 0) html += '✅ 两边均为正期望，存在套利机会！（罕见）';
+    else if (evOver > 0) html += '✅ 大球具有正期望值，值得关注。';
+    else if (evUnder > 0) html += '✅ 小球具有正期望值，值得关注。';
+    else html += '⚖️ 两边期望接近零，近乎公平博弈。';
+    html += '</div>';
+    $('bingoStep2Content').innerHTML = html;
+  }
+
+  function renderStep3(result) {
+    const { fairOver, fairUnder, overEffProb, underEffProb, evOver, evUnder,
+      overWinFull, overWinHalfP, overLoseFull, overLoseHalfP,
+      underWinFull, underWinHalfP, underLoseFull, underLoseHalfP, handicap } = result;
+    let html = '<div class="grid-2">';
+    // 大球
+    html += '<div><div style="font-weight:600;color:#1a3a5e;margin-bottom:4px;font-size:14px;">🔴 大球 (Over ' + handicap.toFixed(2) + ')</div>';
+    html += '<table><thead><tr><th>项目</th><th>概率</th></tr></thead><tbody>';
+    html += '<tr><td>全赢</td><td>' + fmtP(overWinFull) + '</td></tr>';
+    if (overWinHalfP > 0.0001) html += '<tr><td>赢一半</td><td>' + fmtP(overWinHalfP) + '</td></tr>';
+    if (overLoseHalfP > 0.0001) html += '<tr><td>输一半</td><td>' + fmtP(overLoseHalfP) + '</td></tr>';
+    html += '<tr><td>全输</td><td>' + fmtP(overLoseFull) + '</td></tr>';
+    html += '<tr style="border-top:2px solid #dce2ea;font-weight:600;"><td>等效真实胜率</td><td style="color:' + (overEffProb > fairOver ? '#1a7a4a' : '#b33636') + ';">' + fmtP(overEffProb) + '</td></tr>';
+    html += '<tr><td>公平概率 (赔率隐含)</td><td style="color:#2b6c9e;">' + fmtP(fairOver) + '</td></tr>';
+    const diffOver = overEffProb - fairOver;
+    html += '<tr style="border-top:2px solid #1a3a5e;font-weight:700;"><td>差值</td><td style="color:' + (diffOver > 0.005 ? '#1a7a4a' : diffOver < -0.005 ? '#b33636' : '#9e6d1b') + ';">' + (diffOver >= 0 ? '+' : '') + (diffOver*100).toFixed(2) + '%</td></tr>';
+    html += '</tbody></table>';
+    if (diffOver > 0.005) html += '<div class="result-box success" style="margin-top:6px;font-size:13px;">✅ 真实胜率高于公平概率，具有正价值</div>';
+    else if (diffOver < -0.005) html += '<div class="result-box danger" style="margin-top:6px;font-size:13px;">❌ 真实胜率低于公平概率，价值为负</div>';
+    else html += '<div class="result-box warning" style="margin-top:6px;font-size:13px;">⚖️ 真实胜率与公平概率接近，价值中性</div>';
+    html += '</div>';
+    // 小球
+    html += '<div><div style="font-weight:600;color:#1a3a5e;margin-bottom:4px;font-size:14px;">🔵 小球 (Under ' + handicap.toFixed(2) + ')</div>';
+    html += '<table><thead><tr><th>项目</th><th>概率</th></tr></thead><tbody>';
+    html += '<tr><td>全赢</td><td>' + fmtP(underWinFull) + '</td></tr>';
+    if (underWinHalfP > 0.0001) html += '<tr><td>赢一半</td><td>' + fmtP(underWinHalfP) + '</td></tr>';
+    if (underLoseHalfP > 0.0001) html += '<tr><td>输一半</td><td>' + fmtP(underLoseHalfP) + '</td></tr>';
+    html += '<tr><td>全输</td><td>' + fmtP(underLoseFull) + '</td></tr>';
+    html += '<tr style="border-top:2px solid #dce2ea;font-weight:600;"><td>等效真实胜率</td><td style="color:' + (underEffProb > fairUnder ? '#1a7a4a' : '#b33636') + ';">' + fmtP(underEffProb) + '</td></tr>';
+    html += '<tr><td>公平概率 (赔率隐含)</td><td style="color:#2b6c9e;">' + fmtP(fairUnder) + '</td></tr>';
+    const diffUnder = underEffProb - fairUnder;
+    html += '<tr style="border-top:2px solid #1a3a5e;font-weight:700;"><td>差值</td><td style="color:' + (diffUnder > 0.005 ? '#1a7a4a' : diffUnder < -0.005 ? '#b33636' : '#9e6d1b') + ';">' + (diffUnder >= 0 ? '+' : '') + (diffUnder*100).toFixed(2) + '%</td></tr>';
+    html += '</tbody></table>';
+    if (diffUnder > 0.005) html += '<div class="result-box success" style="margin-top:6px;font-size:13px;">✅ 真实胜率高于公平概率，具有正价值</div>';
+    else if (diffUnder < -0.005) html += '<div class="result-box danger" style="margin-top:6px;font-size:13px;">❌ 真实胜率低于公平概率，价值为负</div>';
+    else html += '<div class="result-box warning" style="margin-top:6px;font-size:13px;">⚖️ 真实胜率与公平概率接近，价值中性</div>';
+    html += '</div></div>';
+    html += '<div class="footnote">* 等效真实胜率 = (全赢概率 + 0.5×赢半概率) / (全赢 + 0.5×赢半 + 全输 + 0.5×输半)，剔除走水/半输影响后与公平概率对比。</div>';
+    $('bingoStep3Content').innerHTML = html;
+  }
+
+  function renderStep4(result) {
+    const { evOver, evUnder, overOdds, underOdds, handicap, overEffProb, underEffProb, fairOver, fairUnder } = result;
+    let html = '<div style="overflow-x:auto;">';
+    html += '<table><thead><tr><th style="min-width:120px;">指标</th><th style="text-align:center;">🔴 大球</th><th style="text-align:center;">🔵 小球</th><th style="text-align:center;min-width:70px;">优势方</th></tr></thead><tbody>';
+
+    const rows = [
+      { label: '赔率', over: overOdds.toFixed(2), under: underOdds.toFixed(2), winner: overOdds > underOdds ? '大球' : overOdds < underOdds ? '小球' : '平' },
+      { label: '等效真实胜率', over: fmtP(overEffProb), under: fmtP(underEffProb), winner: overEffProb > underEffProb ? '大球' : overEffProb < underEffProb ? '小球' : '平' },
+      { label: '公平概率 (隐含)', over: fmtP(fairOver), under: fmtP(fairUnder), winner: '—' },
+      { label: '期望价值 (EV)', over: (evOver * 100).toFixed(2) + '%', under: (evUnder * 100).toFixed(2) + '%', winner: evOver > evUnder ? '大球' : evOver < evUnder ? '小球' : '平' }
+    ];
+
+    for (const r of rows) {
+      const overColor = r.label === '期望价值 (EV)' ? (evOver >= 0 ? '#1a7a4a' : '#b33636') : '';
+      const underColor = r.label === '期望价值 (EV)' ? (evUnder >= 0 ? '#1a7a4a' : '#b33636') : '';
+      html += '<tr><td><strong>' + r.label + '</strong></td>';
+      html += '<td style="text-align:center;font-weight:500;color:' + overColor + ';">' + r.over + '</td>';
+      html += '<td style="text-align:center;font-weight:500;color:' + underColor + ';">' + r.under + '</td>';
+      html += '<td style="text-align:center;font-weight:600;font-size:13px;">';
+      html += (r.winner === '大球' ? '🔴' : r.winner === '小球' ? '🔵' : '⚖️') + ' ';
+      html += (r.winner !== '—' ? r.winner : '') + '</td></tr>';
+    }
+
+    html += '<tr><td><strong>全赢概率</strong></td><td style="text-align:center;">' + fmtP(result.overWinFull) + '</td>';
+    html += '<td style="text-align:center;">' + fmtP(result.underWinFull) + '</td>';
+    html += '<td style="text-align:center;">' + (result.overWinFull > result.underWinFull ? '🔴 大球' : result.overWinFull < result.underWinFull ? '🔵 小球' : '⚖️ 平') + '</td></tr>';
+
+    html += '<tr><td><strong>全输概率</strong></td><td style="text-align:center;">' + fmtP(result.overLoseFull) + '</td>';
+    html += '<td style="text-align:center;">' + fmtP(result.underLoseFull) + '</td>';
+    html += '<td style="text-align:center;">' + (result.overLoseFull < result.underLoseFull ? '🔴 大球 (更低)' : result.overLoseFull > result.underLoseFull ? '🔵 小球 (更低)' : '⚖️ 平') + '</td></tr>';
+
+    html += '</tbody></table></div>';
+
+    // 结论
+    html += '<div class="conclusion-box">';
+    html += '<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;">';
+    html += '<div><span style="font-size:16px;font-weight:700;">🏆 单次下注建议</span></div>';
+
+    let recommendation = '', recColor = '', recDetail = '';
+    const betterEV = evOver > evUnder ? 'over' : (evUnder > evOver ? 'under' : 'tie');
+
+    if (betterEV === 'over' && evOver > 0) { recommendation = '下注 大球 (Over)'; recColor = '#1a7a4a'; recDetail = '大球具有正期望值，是价值投注的绝佳机会。'; }
+    else if (betterEV === 'under' && evUnder > 0) { recommendation = '下注 小球 (Under)'; recColor = '#1a7a4a'; recDetail = '小球具有正期望值，是价值投注的绝佳机会。'; }
+    else if (betterEV === 'over' && evOver < 0 && evUnder < 0) { recommendation = '建议不下注 (如必须下，选大球)'; recColor = '#b45f1b'; recDetail = '虽然两边均为负EV，但大球 (' + (evOver*100).toFixed(2) + '%) 比小球 (' + (evUnder*100).toFixed(2) + '%) 亏损更少。'; }
+    else if (betterEV === 'under' && evOver < 0 && evUnder < 0) { recommendation = '建议不下注 (如必须下，选小球)'; recColor = '#b45f1b'; recDetail = '虽然两边均为负EV，但小球 (' + (evUnder*100).toFixed(2) + '%) 比大球 (' + (evOver*100).toFixed(2) + '%) 亏损更少。'; }
+    else if (betterEV === 'over') { recommendation = '下注 大球 (Over)'; recColor = '#1a7a4a'; recDetail = '大球 EV 为 ' + (evOver*100).toFixed(2) + '%，高于小球的 ' + (evUnder*100).toFixed(2) + '%，是更优选择。'; }
+    else if (betterEV === 'under') { recommendation = '下注 小球 (Under)'; recColor = '#1a7a4a'; recDetail = '小球 EV 为 ' + (evUnder*100).toFixed(2) + '%，高于大球的 ' + (evOver*100).toFixed(2) + '%，是更优选择。'; }
+    else { recommendation = '两边 EV 相等，无差异'; recColor = '#6a7a8e'; recDetail = '大球和小球的期望价值相同。'; }
+
+    if (evOver < 0 && evUnder < 0) {
+      html += '<div style="font-size:18px;font-weight:700;color:' + recColor + ';">' + recommendation + '</div></div>';
+      html += '<div style="margin-top:8px;padding:8px 14px;background:#fcf3e0;border-radius:6px;border-left:4px solid #b45f1b;font-size:14px;">';
+      html += '⚠️ <strong>最优决策：不下注</strong> — 两边均为负期望，长期必亏。<br><span style="font-size:12px;color:#5a6a7e;">' + recDetail + '</span></div>';
+    } else if (evOver > 0 && evUnder > 0) {
+      html += '<div style="font-size:18px;font-weight:700;color:' + recColor + ';">' + recommendation + '</div></div>';
+      html += '<div style="margin-top:8px;padding:8px 14px;background:#e4f5ec;border-radius:6px;border-left:4px solid #1f7b4d;font-size:14px;">';
+      html += '✅ <strong>正期望机会！</strong> ' + recDetail + '</div>';
+    } else {
+      html += '<div style="font-size:18px;font-weight:700;color:' + recColor + ';">' + recommendation + '</div></div>';
+      html += '<div style="margin-top:8px;padding:8px 14px;background:#e3eef9;border-radius:6px;border-left:4px solid #2b6c9e;font-size:14px;">';
+      html += '📊 ' + recDetail + '</div>';
+    }
+
+    html += '</div>';
+    html += '<div style="margin-top:8px;font-size:12px;color:#5a6a7e;background:#f2f5f9;padding:6px 14px;border-radius:6px;">';
+    html += '💡 单次下注存在波动风险，EV 为正不代表单次必胜。建议结合自身资金管理和风险偏好决策。';
+    html += '</div>';
+    $('bingoStep4Content').innerHTML = html;
+  }
+
+  // ============================================================
+  //  主控
+  // ============================================================
+
+  function runAnalysis(pasteVal, lastRecord) {
+    try {
+      let data;
+      if (pasteVal && pasteVal.trim()) {
+        data = parseData(pasteVal.trim());
+      } else if (lastRecord) {
+        data = {
+          probs: lastRecord.probs,
+          overOdds: lastRecord.overOdds,
+          handicap: lastRecord.handicap,
+          underOdds: lastRecord.underOdds,
+        };
+      } else {
+        alert('粘贴框为空，且未找到可用的最后一条盘口记录数据。请先在"大小球盘口"视图查询比赛。');
+        return;
+      }
+
+      const result = computeEV(data.probs, data.overOdds, data.underOdds, data.handicap);
+
+      if (window.switchView) window.switchView('analysis');
+
+      $('bingoPlaceholder').style.display = 'none';
+      $('bingoResultArea').style.display = 'block';
+
+      renderStep1(result);
+      renderStep2(result);
+      renderStep3(result);
+      renderStep4(result);
+
+      setTimeout(function() {
+        var el = $('bingoResultArea');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 200);
+    } catch (err) {
+      alert('❌ 解析错误：' + err.message + '\n\n请检查数据格式是否正确。\n格式：8个概率值 + 大球赔率 + 盘口 + 小球赔率\n示例：0.094 0.222 0.263 0.207 0.122 0.058 0.023 0.011 1.86 2.25 1.94');
+      console.error(err);
+    }
+  }
+
+  function clearAnalysis() {
+    $('bingoStep1Content').innerHTML = '';
+    $('bingoStep2Content').innerHTML = '';
+    $('bingoStep3Content').innerHTML = '';
+    $('bingoStep4Content').innerHTML = '';
+    $('bingoResultArea').style.display = 'none';
+    $('bingoPlaceholder').style.display = '';
+    var pasteInput = $('bingoPasteInput');
+    if (pasteInput) pasteInput.value = '';
+  }
+
+  window.runBingoAnalysis = runAnalysis;
+  window.clearBingoAnalysis = clearAnalysis;
+
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      var active = document.activeElement;
+      if (active && active.id === 'bingoPasteInput') {
+        e.preventDefault();
+        var pasteVal = active.value;
+        var lastRec = window.getLastOuRecord ? window.getLastOuRecord() : null;
+        runAnalysis(pasteVal, lastRec);
+      }
+    }
+  });
+})();
+</script>
 </body>
 </html>

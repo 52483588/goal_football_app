@@ -75,8 +75,9 @@
     btnOu: $('btnOu'),
     btnWin: $('btnWin'),
     btnOuReport: $('btnOuReport'),
-    btnExportOu: null,
-    btnExportWin: null,
+    btnClearAnalysis: $('btnClearAnalysis'),
+    btnCalcBingo: $('btnCalcBingo'),
+    bingoPasteInput: $('bingoPasteInput'),
     loading: null,
   };
 
@@ -142,7 +143,6 @@
     // 分析视图不清空，但搜索只影响 OU/Win
     els.statusTip.textContent = '';
     hide(els.btnOuReport);
-    hideExportButtons();
 
     if (!selVal) {
       state.currentIdIndex = {};
@@ -281,10 +281,8 @@ function doSearch(id, skipLeagueCheck) {
 
   if (count > 0) {
     show(els.btnOuReport);
-    showExportButtons(true);
   } else {
     hide(els.btnOuReport);
-    showExportButtons(false);
   }
 }
 
@@ -671,7 +669,6 @@ function buildWinTable() {
     // 分析视图保留
     els.statusTip.textContent = '';
     hide(els.btnOuReport);
-    hideExportButtons();
     if (els.leagueSelect) {
       els.leagueSelect.value = '';
       onLeagueChange();
@@ -717,168 +714,7 @@ function switchView(view) {
   }
 }
 
-  // ===== 8. CSV 导出 =====
-  function csvEscape(s) {
-    if (s === null || s === undefined) return '';
-    const str = String(s);
-    if (/[",\n]/.test(str)) return '"' + str.replace(/"/g, '""') + '"';
-    return str;
-  }
-
-  function exportCsv(type) {
-    if (!state.precomputed.length) {
-      alert('暂无数据，请先查询一个比赛ID');
-      return;
-    }
-    const isOu = type === 'ou';
-    const headers = ['时间戳', '赛前/赛后', ...NG_COLS.map((k) => k.toUpperCase())];
-    if (isOu) {
-      for (const l of TG_LABELS) headers.push(l + '%');
-      headers.push('λ', 'SSE');
-      for (const i of [0, 1, 2]) {
-        const tag = i === 0 ? '基础' : ('HV' + i);
-        headers.push(tag + '大/主', tag + '公平P_大/主', tag + 'EV_大/主', tag + '偏差_大/主');
-        headers.push(tag + '小/客', tag + '公平P_小/客', tag + 'EV_小/客', tag + '偏差_小/客');
-        headers.push(tag + '盘口');
-      }
-    } else {
-      for (const l of GD_LABELS) headers.push(l + '%');
-      headers.push('λ₁', 'λ₂', 'SSE');
-      for (const i of [0, 1, 2]) {
-        const tag = i === 0 ? '基础' : ('HV' + i);
-        headers.push(tag + '主', tag + '公平P_主', tag + 'EV_主', tag + '偏差_主');
-        headers.push(tag + '客', tag + '公平P_客', tag + 'EV_客', tag + '偏差_客');
-        headers.push(tag + '盘口');
-      }
-    }
-
-    const rows = [headers.map(csvEscape).join(',')];
-    for (const item of state.precomputed) {
-      const { folder, rec, analysis } = item;
-      if (!rec) continue;
-      const matchGt = rec.oc && rec.oc.gt ? rec.oc.gt : null;
-      const ts = Stats.getTimeStatus(folder, matchGt);
-      const ng = rec.ng || {};
-      const row = [folder, ts || ''];
-      for (const k of NG_COLS) row.push(ng[k] || '');
-      if (isOu) {
-        const poissonTg = analysis.ouTg;
-        for (let i = 0; i < 8; i++) {
-          row.push(poissonTg ? (poissonTg[i] * 100).toFixed(2) : '');
-        }
-        row.push(analysis.ouLam !== null ? analysis.ouLam.toFixed(4) : '');
-        row.push(analysis.ouSse !== null ? analysis.ouSse.toExponential(4) : '');
-      } else {
-        const winGd = analysis.winGd;
-        for (let i = 0; i < 9; i++) {
-          const origIdx = 8 - i;
-          row.push(winGd ? (winGd[origIdx] * 100).toFixed(2) : '');
-        }
-        row.push(analysis.winLamH !== null ? analysis.winLamH.toFixed(4) : '');
-        row.push(analysis.winLamA !== null ? analysis.winLamA.toFixed(4) : '');
-        row.push(analysis.winSse !== null ? analysis.winSse.toExponential(4) : '');
-      }
-      // 盘口行
-      const ou = rec.ou || {}, win = rec.win || {};
-      if (isOu) {
-        const hivGroups = analysis.ouGroups;
-        const lines = [
-          { over: ou.oo || '', under: ou.uo || '', hcap: ou.li ? (parseFloat(ou.li) / 4).toFixed(2) : '' },
-          hivGroups[0] || { over: '', under: '', hcap: '' },
-          hivGroups[1] || { over: '', under: '', hcap: '' },
-        ];
-        for (const line of lines) {
-          const ov = parseFloat(line.over) || 0, un = parseFloat(line.under) || 0, hc = parseFloat(line.hcap) || 0;
-          const poissonTg = analysis.ouTg;
-          if (poissonTg && ov > 0 && un > 0 && !isNaN(hc)) {
-            try {
-              const res = Stats.calcAsianEV(hc, ov, un, poissonTg);
-              const dev = (analysis.ouDevs[line.hcap] || {});
-              row.push(line.over, (res.fairOver * 100).toFixed(2), res.evOver.toFixed(4),
-                dev.over !== undefined ? dev.over.toFixed(2) : '');
-              row.push(line.under, (res.fairUnder * 100).toFixed(2), res.evUnder.toFixed(4),
-                dev.under !== undefined ? dev.under.toFixed(2) : '');
-            } catch (e) {
-              row.push(line.over, '', '', '', line.under, '', '', '');
-            }
-          } else {
-            row.push(line.over, '', '', '', line.under, '', '', '');
-          }
-          row.push(line.hcap);
-        }
-      } else {
-        let baseH = '', baseA = '', baseHc = '';
-        if (win.g && win.gg && win.ho && win.ao) {
-          const ggVal = parseFloat(win.gg);
-          const hcapRaw = (ggVal - 1) / 4;
-          const handicap = (win.g === 'H') ? -hcapRaw : hcapRaw;
-          baseHc = handicap.toFixed(2);
-          baseH = win.ho; baseA = win.ao;
-        }
-        const vg = analysis.winGroups;
-        const lines = [
-          { over: baseH, under: baseA, hcap: baseHc },
-          vg[0] || { over: '', under: '', hcap: '' },
-          vg[1] || { over: '', under: '', hcap: '' },
-        ];
-        for (const line of lines) {
-          const ov = parseFloat(line.over) || 0, un = parseFloat(line.under) || 0, hc = parseFloat(line.hcap) || 0;
-          const winGd = analysis.winGd;
-          if (winGd && ov > 0 && un > 0 && !isNaN(hc)) {
-            try {
-              const res = Stats.calcAsianEVForGD(hc, ov, un, winGd);
-              const dev = (analysis.winDevs[line.hcap] || {});
-              row.push(line.over, (res.fairHome * 100).toFixed(2), res.evHome.toFixed(4),
-                dev.home !== undefined ? dev.home.toFixed(2) : '');
-              row.push(line.under, (res.fairAway * 100).toFixed(2), res.evAway.toFixed(4),
-                dev.away !== undefined ? dev.away.toFixed(2) : '');
-            } catch (e) {
-              row.push(line.over, '', '', '', line.under, '', '', '');
-            }
-          } else {
-            row.push(line.over, '', '', '', line.under, '', '', '');
-          }
-          row.push(line.hcap);
-        }
-      }
-      rows.push(row.map(csvEscape).join(','));
-    }
-
-    const bom = '\uFEFF';
-    const csv = bom + rows.join('\n');
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${state.currentMatchId}_${type}_${new Date().toISOString().slice(0, 10)}.csv`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-  }
-
-  function showExportButtons(show) {
-    if (!els.btnExportOu) {
-      els.btnExportOu = document.createElement('button');
-      els.btnExportOu.textContent = '导出 CSV';
-      els.btnExportOu.style.cssText = 'background:#27ae60;color:#fff;border:none;border-radius:6px;padding:9px 18px;cursor:pointer;font-family:inherit;font-weight:600;font-size:14px;white-space:nowrap;';
-      els.btnExportOu.addEventListener('click', () => exportCsv('ou'));
-      els.btnExportWin = document.createElement('button');
-      els.btnExportWin.textContent = '导出 CSV';
-      els.btnExportWin.style.cssText = els.btnExportOu.style.cssText;
-      els.btnExportWin.addEventListener('click', () => exportCsv('win'));
-      els.btnOu.parentElement.appendChild(els.btnExportOu);
-      els.btnWin.parentElement.appendChild(els.btnExportWin);
-    }
-    els.btnExportOu.style.display = show ? 'inline-block' : 'none';
-    els.btnExportWin.style.display = show ? 'inline-block' : 'none';
-  }
-  function hideExportButtons() {
-    if (els.btnExportOu) els.btnExportOu.style.display = 'none';
-    if (els.btnExportWin) els.btnExportWin.style.display = 'none';
-  }
-
-  // ===== 9. OU 报告 =====
+  // ===== 8. OU 报告 =====
   function generateOuReport() {
     if (!state.precomputed.length) {
       alert('暂无数据，请先查询一个比赛ID');
@@ -956,7 +792,7 @@ function switchView(view) {
     } catch (e) { /* ignore */ }
   }
 
-  // ===== 10. 跨窗口接收 =====
+  // ===== 9. 跨窗口接收 =====
   window.addEventListener('message', (e) => {
     if (location.origin && e.origin && e.origin !== 'null' && e.origin !== location.origin) return;
     if (!e.data || e.data.type !== 'FAIRPLAY_FILL') return;
@@ -982,7 +818,7 @@ function switchView(view) {
     }, 200);
   });
 
-  // ===== 11. Loading 隐藏 =====
+  // ===== 10. Loading 隐藏 =====
   function ensureLoading() {
     if (els.loading) return els.loading;
     els.loading = document.getElementById('appLoading');
@@ -994,7 +830,7 @@ function switchView(view) {
     els.loading = null;
   }
 
-  // ===== 12. 分析记录相关函数 =====
+  // ===== 11. 分析记录相关函数 =====
 function getBeijingTime() {
   return new Date(); // 系统时区为北京时间则直接使用
 }
@@ -1177,7 +1013,29 @@ function renderAnalysis() {
     }
   }
 
-  // ===== 13. 初始化 =====
+  // ===== 获取最后一条OU记录（供bingo集成使用）=====
+  function getLastOuRecord() {
+    const validItems = state.precomputed.filter(item => item.rec !== null);
+    if (!validItems.length) return null;
+    const last = validItems[validItems.length - 1];
+    const analysis = last.analysis || {};
+    const ou = last.rec.ou || {};
+    // 使用 ngTgProbs（上面一行，从进球分布NG拟合）优先，ouTg（下面一行，从大小球OU优化）作为后备
+    const probs = analysis.ngTgProbs || analysis.ouTg;
+    if (!probs) return null;
+    const overOdds = parseFloat(ou.oo);
+    const underOdds = parseFloat(ou.uo);
+    const li = parseFloat(ou.li);
+    if (isNaN(overOdds) || isNaN(underOdds) || isNaN(li)) return null;
+    const handicap = li / 4;
+    return { probs, overOdds, underOdds, handicap, folder: last.folder };
+  }
+
+  // 暴露给外部 bingo 脚本
+  window.getLastOuRecord = getLastOuRecord;
+  window.__appState = state;
+
+  // ===== 12. 初始化 =====
   function init() {
     buildLeagueIndex();
     populateLeagues();
@@ -1188,6 +1046,16 @@ function renderAnalysis() {
     els.btnOu.addEventListener('click', () => switchView('ou'));
     els.btnWin.addEventListener('click', () => switchView('win'));
     if (els.btnOuReport) els.btnOuReport.addEventListener('click', generateOuReport);
+    if (els.btnClearAnalysis) els.btnClearAnalysis.addEventListener('click', () => {
+      if (window.clearBingoAnalysis) window.clearBingoAnalysis();
+    });
+    if (els.btnCalcBingo) els.btnCalcBingo.addEventListener('click', () => {
+      if (window.runBingoAnalysis) {
+        const pasteVal = els.bingoPasteInput ? els.bingoPasteInput.value : '';
+        const lastRecord = getLastOuRecord();
+        window.runBingoAnalysis(pasteVal, lastRecord);
+      }
+    });
 
     // 默认切换到分析视图
     switchView('analysis');
