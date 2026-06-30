@@ -681,219 +681,200 @@
 
         // ---------- 计算 EV 并返回详细结果 ----------
         function computeEV(probs, overOdds, underOdds, handicap) {
-            const info = getHandicapInfo(handicap);
+    const intPart = Math.floor(handicap);
+    const frac = Math.round((handicap - intPart) * 100) / 100;
+    const overNet = overOdds - 1;
+    const underNet = underOdds - 1;
 
-            // 使用 calcSingleEV 获得概率
-            let result = calcSingleEV(probs, handicap, overOdds, underOdds);
+    // ---- 根据盘口类型生成区间列表 ----
+    let detailOver = [];
+    let detailUnder = [];
+    let pOver = 0, pPush = 0, pUnder = 0;
+    let overWinFull = 0, overWinHalfP = 0, overLoseFull = 0, overLoseHalfP = 0;
+    let underWinFull = 0, underWinHalfP = 0, underLoseFull = 0, underLoseHalfP = 0;
 
-            // 如果 result 是复合盘口（0.25/0.75），已通过递归计算了概率，但 ranges 可能不准确
-            // 我们重新构建精确的区间描述
-            const intPart = Math.floor(handicap);
-            const frac = Math.round((handicap - intPart) * 100) / 100;
+    // 判断盘口类型
+    const isQuarter = Math.abs(frac - 0.25) < 0.01;
+    const isThreeQuarter = Math.abs(frac - 0.75) < 0.01;
+    const isHalf = Math.abs(frac - 0.5) < 0.01;
+    const isInteger = Math.abs(frac) < 0.01;
 
-            let detailOver = [];
-            let detailUnder = [];
+    if (isQuarter) {
+        // 2.25 盘：0~1全输/赢，2输/赢一半，3+全赢/输
+        const p0_1 = cumProb(probs, 0, 1);
+        const p2 = cumProb(probs, 2, 2);
+        const p3p = cumProb(probs, 3, 'inf');
+        pOver = p3p;
+        pUnder = p0_1;
+        pPush = 0;
+        overWinFull = p3p;
+        overLoseHalfP = p2;
+        overLoseFull = p0_1;
+        underWinFull = p0_1;
+        underWinHalfP = p2;
+        underLoseFull = p3p;
+        detailOver = [
+            { label: `0 ~ ${intPart-1} 球`, prob: p0_1, factor: -1 },
+            { label: `${intPart} 球`, prob: p2, factor: -0.5 },
+            { label: `${intPart+1} 球及以上`, prob: p3p, factor: 1 }
+        ];
+        detailUnder = [
+            { label: `0 ~ ${intPart-1} 球`, prob: p0_1, factor: 1 },
+            { label: `${intPart} 球`, prob: p2, factor: 0.5 },
+            { label: `${intPart+1} 球及以上`, prob: p3p, factor: -1 }
+        ];
+    } else if (isThreeQuarter) {
+        // 2.75 盘：0~2全输/赢，3赢/输一半，4+全赢/输
+        const p0_2 = cumProb(probs, 0, intPart);
+        const p3 = cumProb(probs, intPart+1, intPart+1);
+        const p4p = cumProb(probs, intPart+2, 'inf');
+        pOver = p4p;
+        pUnder = p0_2;
+        pPush = 0;
+        overWinFull = p4p;
+        overWinHalfP = p3;
+        overLoseFull = p0_2;
+        underWinFull = p0_2;
+        underLoseHalfP = p3;
+        underLoseFull = p4p;
+        detailOver = [
+            { label: `0 ~ ${intPart} 球`, prob: p0_2, factor: -1 },
+            { label: `${intPart+1} 球`, prob: p3, factor: 0.5 },
+            { label: `${intPart+2} 球及以上`, prob: p4p, factor: 1 }
+        ];
+        detailUnder = [
+            { label: `0 ~ ${intPart} 球`, prob: p0_2, factor: 1 },
+            { label: `${intPart+1} 球`, prob: p3, factor: -0.5 },
+            { label: `${intPart+2} 球及以上`, prob: p4p, factor: -1 }
+        ];
+    } else if (isHalf) {
+        // 2.5 盘：≤2全输/赢，≥3全赢/输
+        const threshold = intPart;
+        const pLow = cumProb(probs, 0, threshold);
+        const pHigh = cumProb(probs, threshold+1, 'inf');
+        pOver = pHigh;
+        pUnder = pLow;
+        pPush = 0;
+        overWinFull = pHigh;
+        overLoseFull = pLow;
+        underWinFull = pLow;
+        underLoseFull = pHigh;
+        detailOver = [
+            { label: `≤ ${threshold} 球`, prob: pLow, factor: -1 },
+            { label: `≥ ${threshold+1} 球`, prob: pHigh, factor: 1 }
+        ];
+        detailUnder = [
+            { label: `≤ ${threshold} 球`, prob: pLow, factor: 1 },
+            { label: `≥ ${threshold+1} 球`, prob: pHigh, factor: -1 }
+        ];
+    } else if (isInteger) {
+        // 2.0 盘：≤1全输/赢，=2走水，≥3全赢/输
+        const threshold = intPart;
+        const pLow = cumProb(probs, 0, threshold-1);
+        const pMid = cumProb(probs, threshold, threshold);
+        const pHigh = cumProb(probs, threshold+1, 'inf');
+        pOver = pHigh;
+        pPush = pMid;
+        pUnder = pLow;
+        overWinFull = pHigh;
+        overLoseFull = pLow;
+        underWinFull = pLow;
+        underLoseFull = pHigh;
+        detailOver = [
+            { label: `≤ ${threshold-1} 球`, prob: pLow, factor: -1 },
+            { label: `= ${threshold} 球`, prob: pMid, factor: 0 },
+            { label: `≥ ${threshold+1} 球`, prob: pHigh, factor: 1 }
+        ];
+        detailUnder = [
+            { label: `≤ ${threshold-1} 球`, prob: pLow, factor: 1 },
+            { label: `= ${threshold} 球`, prob: pMid, factor: 0 },
+            { label: `≥ ${threshold+1} 球`, prob: pHigh, factor: -1 }
+        ];
+    } else {
+        // 其他盘口（如2.1, 2.4等）按最近整数盘处理（兜底）
+        const threshold = Math.round(handicap);
+        const pLow = cumProb(probs, 0, threshold-1);
+        const pMid = cumProb(probs, threshold, threshold);
+        const pHigh = cumProb(probs, threshold+1, 'inf');
+        pOver = pHigh;
+        pPush = pMid;
+        pUnder = pLow;
+        overWinFull = pHigh;
+        overLoseFull = pLow;
+        underWinFull = pLow;
+        underLoseFull = pHigh;
+        detailOver = [
+            { label: `≤ ${threshold-1} 球`, prob: pLow, factor: -1 },
+            { label: `= ${threshold} 球`, prob: pMid, factor: 0 },
+            { label: `≥ ${threshold+1} 球`, prob: pHigh, factor: 1 }
+        ];
+        detailUnder = [
+            { label: `≤ ${threshold-1} 球`, prob: pLow, factor: 1 },
+            { label: `= ${threshold} 球`, prob: pMid, factor: 0 },
+            { label: `≥ ${threshold+1} 球`, prob: pHigh, factor: -1 }
+        ];
+    }
 
-            let pOver = result.pOver;
-            let pPush = result.pPush || 0;
-            let pUnder = result.pUnder;
+    // ---- 计算 EV ----
+    let evOver = 0, evUnder = 0;
+    for (const d of detailOver) {
+        if (d.factor === 1) evOver += d.prob * overNet;
+        else if (d.factor === -1) evOver += d.prob * (-1);
+        else if (d.factor === -0.5) evOver += d.prob * (-0.5);
+        else if (d.factor === 0.5) evOver += d.prob * (overNet / 2);
+        // factor === 0 无贡献
+    }
+    for (const d of detailUnder) {
+        if (d.factor === 1) evUnder += d.prob * underNet;
+        else if (d.factor === -1) evUnder += d.prob * (-1);
+        else if (d.factor === -0.5) evUnder += d.prob * (-0.5);
+        else if (d.factor === 0.5) evUnder += d.prob * (underNet / 2);
+    }
 
-            let overWinHalf = result.overWinHalf || 0;
-            let underWinHalf = result.underWinHalf || 0;
-            let overLoseHalf = result.overLoseHalf || 0;
-            let underLoseHalf = result.underLoseHalf || 0;
+    // ---- 公平概率 ----
+    const fairOver = (1 / overOdds) / (1 / overOdds + 1 / underOdds);
+    const fairUnder = (1 / underOdds) / (1 / overOdds + 1 / underOdds);
 
-            // 对于复合盘口，重新构建精确的区间描述
-            if (Math.abs(frac - 0.25) < 0.01) {
-                // 2.25 盘：0-1全输，2输半，3+全赢
-                const p0_1 = cumProb(probs, 0, 1);
-                const p2 = cumProb(probs, 2, 2);
-                const p3p = cumProb(probs, 3, 'inf');
-                pOver = p3p;
-                pUnder = p0_1;
-                overLoseHalf = p2;
-                underWinHalf = p2;
-                detailOver = [
-                    { label: '0 ~ 1 球', prob: p0_1, outcome: '全输', factor: -1 },
-                    { label: '2 球', prob: p2, outcome: '输一半', factor: -0.5 },
-                    { label: '3 球及以上', prob: p3p, outcome: '全赢', factor: 1 }
-                ];
-                detailUnder = [
-                    { label: '0 ~ 1 球', prob: p0_1, outcome: '全赢', factor: 1 },
-                    { label: '2 球', prob: p2, outcome: '赢一半', factor: 0.5 },
-                    { label: '3 球及以上', prob: p3p, outcome: '全输', factor: -1 }
-                ];
-                // 修正 pPush
-                pPush = 0;
-            } else if (Math.abs(frac - 0.75) < 0.01) {
-                // 2.75 盘：0-2全输，3赢一半，4+全赢
-                const p0_2 = cumProb(probs, 0, 2);
-                const p3 = cumProb(probs, 3, 3);
-                const p4p = cumProb(probs, 4, 'inf');
-                pOver = p4p;
-                pUnder = p0_2;
-                overWinHalf = p3;
-                underLoseHalf = p3;
-                detailOver = [
-                    { label: '0 ~ 2 球', prob: p0_2, outcome: '全输', factor: -1 },
-                    { label: '3 球', prob: p3, outcome: '赢一半', factor: 0.5 },
-                    { label: '4 球及以上', prob: p4p, outcome: '全赢', factor: 1 }
-                ];
-                detailUnder = [
-                    { label: '0 ~ 2 球', prob: p0_2, outcome: '全赢', factor: 1 },
-                    { label: '3 球', prob: p3, outcome: '输一半', factor: -0.5 },
-                    { label: '4 球及以上', prob: p4p, outcome: '全输', factor: -1 }
-                ];
-                pPush = 0;
-            } else if (Math.abs(frac - 0.5) < 0.01) {
-                // 半球盘
-                const threshold = intPart;
-                const pLow = cumProb(probs, 0, threshold);
-                const pHigh = cumProb(probs, threshold + 1, 'inf');
-                pOver = pHigh;
-                pUnder = pLow;
-                pPush = 0;
-                detailOver = [
-                    { label: `≤ ${threshold} 球`, prob: pLow, outcome: '全输', factor: -1 },
-                    { label: `≥ ${threshold + 1} 球`, prob: pHigh, outcome: '全赢', factor: 1 }
-                ];
-                detailUnder = [
-                    { label: `≤ ${threshold} 球`, prob: pLow, outcome: '全赢', factor: 1 },
-                    { label: `≥ ${threshold + 1} 球`, prob: pHigh, outcome: '全输', factor: -1 }
-                ];
-            } else if (Math.abs(frac) < 0.01) {
-                // 整数盘
-                const threshold = intPart;
-                const pLow = cumProb(probs, 0, threshold - 1);
-                const pMid = cumProb(probs, threshold, threshold);
-                const pHigh = cumProb(probs, threshold + 1, 'inf');
-                pOver = pHigh;
-                pPush = pMid;
-                pUnder = pLow;
-                detailOver = [
-                    { label: `≤ ${threshold - 1} 球`, prob: pLow, outcome: '全输', factor: -1 },
-                    { label: `= ${threshold} 球`, prob: pMid, outcome: '走水', factor: 0 },
-                    { label: `≥ ${threshold + 1} 球`, prob: pHigh, outcome: '全赢', factor: 1 }
-                ];
-                detailUnder = [
-                    { label: `≤ ${threshold - 1} 球`, prob: pLow, outcome: '全赢', factor: 1 },
-                    { label: `= ${threshold} 球`, prob: pMid, outcome: '走水', factor: 0 },
-                    { label: `≥ ${threshold + 1} 球`, prob: pHigh, outcome: '全输', factor: -1 }
-                ];
-            } else {
-                // fallback
-                const threshold = Math.round(handicap);
-                const pLow = cumProb(probs, 0, threshold - 1);
-                const pMid = cumProb(probs, threshold, threshold);
-                const pHigh = cumProb(probs, threshold + 1, 'inf');
-                pOver = pHigh;
-                pPush = pMid;
-                pUnder = pLow;
-                detailOver = [
-                    { label: `≤ ${threshold - 1} 球`, prob: pLow, outcome: '全输', factor: -1 },
-                    { label: `= ${threshold} 球`, prob: pMid, outcome: '走水', factor: 0 },
-                    { label: `≥ ${threshold + 1} 球`, prob: pHigh, outcome: '全赢', factor: 1 }
-                ];
-                detailUnder = [
-                    { label: `≤ ${threshold - 1} 球`, prob: pLow, outcome: '全赢', factor: 1 },
-                    { label: `= ${threshold} 球`, prob: pMid, outcome: '走水', factor: 0 },
-                    { label: `≥ ${threshold + 1} 球`, prob: pHigh, outcome: '全输', factor: -1 }
-                ];
-            }
+    // ---- 等效真实胜率（剔除走水/半输） ----
+    const overEffWin = overWinFull + 0.5 * overWinHalfP;
+    const overEffLose = overLoseFull + 0.5 * overLoseHalfP;
+    const underEffWin = underWinFull + 0.5 * underWinHalfP;
+    const underEffLose = underLoseFull + 0.5 * underLoseHalfP;
+    const overEffProb = (overEffWin + overEffLose) > 0 ? overEffWin / (overEffWin + overEffLose) : 0;
+    const underEffProb = (underEffWin + underEffLose) > 0 ? underEffWin / (underEffWin + underEffLose) : 0;
 
-            // 计算 EV
-            const overNet = overOdds - 1;
-            const underNet = underOdds - 1;
+    // ---- 盘口信息（用于第一步展示） ----
+    const info = getHandicapInfo(handicap);
 
-            // 大球 EV：根据详细区间计算
-            let evOver = 0;
-            for (const d of detailOver) {
-                if (d.factor === 1) evOver += d.prob * overNet;
-                else if (d.factor === -1) evOver += d.prob * (-1);
-                else if (d.factor === -0.5) evOver += d.prob * (-0.5);
-                else if (d.factor === 0.5) evOver += d.prob * (overNet / 2);
-                // factor === 0 无贡献
-            }
-
-            let evUnder = 0;
-            for (const d of detailUnder) {
-                if (d.factor === 1) evUnder += d.prob * underNet;
-                else if (d.factor === -1) evUnder += d.prob * (-1);
-                else if (d.factor === -0.5) evUnder += d.prob * (-0.5);
-                else if (d.factor === 0.5) evUnder += d.prob * (underNet / 2);
-            }
-
-            // 公平概率
-            const fairOver = (1 / overOdds) / (1 / overOdds + 1 / underOdds);
-            const fairUnder = (1 / underOdds) / (1 / overOdds + 1 / underOdds);
-
-            // 等效真实概率（剔除走水 / 半输影响）
-            // 对于大球：等效胜率 = (全赢概率 + 0.5*赢半概率) / (全赢 + 0.5*赢半 + 全输 + 0.5*输半)
-            // 对于小球：等效胜率 = (全赢概率 + 0.5*赢半概率) / (全赢 + 0.5*赢半 + 全输 + 0.5*输半)
-            let overWinFull = 0,
-                overWinHalfP = 0,
-                overLoseFull = 0,
-                overLoseHalfP = 0;
-            let underWinFull = 0,
-                underWinHalfP = 0,
-                underLoseFull = 0,
-                underLoseHalfP = 0;
-
-            for (const d of detailOver) {
-                if (d.factor === 1) overWinFull += d.prob;
-                else if (d.factor === 0.5) overWinHalfP += d.prob;
-                else if (d.factor === -1) overLoseFull += d.prob;
-                else if (d.factor === -0.5) overLoseHalfP += d.prob;
-            }
-            for (const d of detailUnder) {
-                if (d.factor === 1) underWinFull += d.prob;
-                else if (d.factor === 0.5) underWinHalfP += d.prob;
-                else if (d.factor === -1) underLoseFull += d.prob;
-                else if (d.factor === -0.5) underLoseHalfP += d.prob;
-            }
-
-            const overEffWin = overWinFull + 0.5 * overWinHalfP;
-            const overEffLose = overLoseFull + 0.5 * overLoseHalfP;
-            const underEffWin = underWinFull + 0.5 * underWinHalfP;
-            const underEffLose = underLoseFull + 0.5 * underLoseHalfP;
-
-            const overEffProb = (overEffWin + overEffLose) > 0 ? overEffWin / (overEffWin + overEffLose) : 0;
-            const underEffProb = (underEffWin + underEffLose) > 0 ? underEffWin / (underEffWin + underEffLose) : 0;
-
-            // 如果全是走水，处理
-            const overEffProbFinal = isNaN(overEffProb) ? 0 : overEffProb;
-            const underEffProbFinal = isNaN(underEffProb) ? 0 : underEffProb;
-
-            return {
-                handicap,
-                info,
-                overOdds,
-                underOdds,
-                overNet,
-                underNet,
-                pOver,
-                pPush,
-                pUnder,
-                detailOver,
-                detailUnder,
-                evOver,
-                evUnder,
-                fairOver,
-                fairUnder,
-                overEffProb: overEffProbFinal,
-                underEffProb: underEffProbFinal,
-                overWinFull,
-                overWinHalfP,
-                overLoseFull,
-                overLoseHalfP,
-                underWinFull,
-                underWinHalfP,
-                underLoseFull,
-                underLoseHalfP,
-                // 保存原始概率用于展示
-                probs
-            };
-        }
+    return {
+        handicap,
+        info,
+        overOdds,
+        underOdds,
+        overNet,
+        underNet,
+        pOver,
+        pPush,
+        pUnder,
+        detailOver,
+        detailUnder,
+        evOver,
+        evUnder,
+        fairOver,
+        fairUnder,
+        overEffProb,
+        underEffProb,
+        overWinFull,
+        overWinHalfP,
+        overLoseFull,
+        overLoseHalfP,
+        underWinFull,
+        underWinHalfP,
+        underLoseFull,
+        underLoseHalfP,
+        probs
+    };
+}
 
         // ============================================================
         //  渲染函数
