@@ -9,9 +9,9 @@ def extract_match_data(item):
     home_team = item.get('hometeamName', '') or item.get('hometeamNameZh', '')
     away_team = item.get('awayteamName', '') or item.get('awayteamNameZh', '')
 
-    # 即时比分优先取 current，若无则取 ft（完场）
+    # 即时比分优先取 ft（完场），若无则取 current
     score_obj = item.get('score', {})
-    score_str = score_obj.get('current', '') or score_obj.get('ft', '')
+    score_str = score_obj.get('ft', '') or score_obj.get('current', '')
 
     total_goals = None
     goal_diff = None
