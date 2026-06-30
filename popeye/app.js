@@ -869,7 +869,7 @@ function loadAnalysisData() {
   const latestFolder = state.FOLDERS[state.FOLDERS.length - 1];
   const folderData = state.DATA[latestFolder] || {};
   const now = getBeijingTime();
-  const pastCutoff = new Date(now.getTime() - 12 * 3600 * 1000);
+  const pastCutoff = new Date(now.getTime() - 24 * 3600 * 1000);
   const futureCutoff = new Date(now.getTime() + 24 * 3600 * 1000);
 
   const records = [];
