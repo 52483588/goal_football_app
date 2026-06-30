@@ -32,7 +32,7 @@ XML_FILES = [
 ]
 
 # 时间范围常量（小时）
-PAST_HOURS = 12     # 过去12小时的比赛仍然处理
+PAST_HOURS = 24     # 过去12小时的比赛仍然处理
 FUTURE_HOURS = 24   # 未来24小时的比赛全部处理
 
 
