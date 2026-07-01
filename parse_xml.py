@@ -10,7 +10,7 @@ import xml.etree.ElementTree as ET
 
 REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
 DATA_SRC = os.path.join(REPO_ROOT, "HisData")
-OUTPUT_DIR = os.path.join(REPO_ROOT, "docs")
+OUTPUT_DIR = os.path.join(REPO_ROOT, "scripts", "docs")
 OUTPUT_FILE = os.path.join(OUTPUT_DIR, "his_data.js")
 POPEYE_DIR = os.path.join(REPO_ROOT, "popeye")
 POPEYE_FILE = os.path.join(POPEYE_DIR, "his_data.js")
