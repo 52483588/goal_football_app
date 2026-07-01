@@ -185,8 +185,8 @@
         "oldMatchId": "",
         "del": "0",
         "importState": "0",
-        "birtiSign": "112",
-        "lastUpdateTime": "2026-07-01 13:15",
+        "birtiSign": "111",
+        "lastUpdateTime": "2026-07-02 04:05:31",
         "showTime": "",
         "orderNum": "",
         "autoId": "2197855",
@@ -1108,7 +1108,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-02 04:55:48",
         "uqTournament": {
           "colorCode": "C43411",
           "folderName": "",
@@ -1126,6 +1126,12 @@
           "logoPath": "flag-145.png",
           "name": "厄甲",
           "id": "240"
+        },
+        "score": {
+          "ht": "0:0",
+          "ft": "0:0",
+          "matchId": null,
+          "current": "0:0"
         },
         "payout": {
           "fg": "1",
@@ -1147,11 +1153,29 @@
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "redcard": {
+          "current": "0:0"
+        },
+        "other": {},
+        "hcap": {
+          "ftHandicap": "0",
+          "ftOverUnder": "2",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2022776598481264642",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
         "clock": "--",
         "sport": "1",
         "matchId": "2022776598481264642",
-        "currentState": "0",
+        "currentState": "73",
         "startDate": "2026-07-02 04:00",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -1170,9 +1194,9 @@
         "dataAnalysisShow": "1",
         "oldMatchId": "",
         "del": "0",
-        "importState": "0",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-07-02 00:25:12",
+        "importState": "1",
+        "birtiSign": "222",
+        "lastUpdateTime": "2026-07-02 04:51",
         "showTime": "",
         "orderNum": "",
         "autoId": "2197862",
@@ -1186,7 +1210,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-02 03:48:49",
+        "currentPeriodStart": "2026-07-02 03:00:54",
         "uqTournament": {
           "colorCode": "4B0082",
           "folderName": "",
@@ -1207,8 +1231,9 @@
         },
         "score": {
           "ht": "0:0",
+          "ft": "0:1",
           "matchId": null,
-          "current": "0:0"
+          "current": "0:1"
         },
         "payout": {
           "fg": "1",
@@ -1226,12 +1251,30 @@
           "matchId": ""
         },
         "broadcast": [],
-        "beforeState": "6",
+        "firstTeam": {
+          "clock": "66",
+          "matchId": "",
+          "currentState": "7",
+          "playerName": "待定",
+          "playerNameZh": "",
+          "playerNameZht": "",
+          "teamPlayerState": "",
+          "teamId": "7029",
+          "createDate": "",
+          "playerId": "0",
+          "del": "",
+          "importState": "",
+          "autoId": "",
+          "teamOther": "",
+          "id": "2224952",
+          "typeCode": "1"
+        },
+        "beforeState": "7",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
         "other": {
-          "goalCardSwitchFt": "off",
+          "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
         },
         "hcap": {
@@ -1249,10 +1292,10 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "2700",
+        "clock": "5400",
         "sport": "1",
         "matchId": "2066258213370527745",
-        "currentState": "31",
+        "currentState": "100",
         "startDate": "2026-07-02 03:00",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -1365,7 +1408,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-02 03:47:18",
+        "currentPeriodStart": "2026-07-02 04:56:27",
         "uqTournament": {
           "colorCode": "00CC33",
           "folderName": "",
@@ -1386,8 +1429,9 @@
         },
         "score": {
           "ht": "0:2",
+          "ft": "0:4",
           "matchId": null,
-          "current": "0:2"
+          "current": "0:4"
         },
         "payout": {
           "fg": "1",
@@ -1414,7 +1458,7 @@
             "id": "405"
           }
         ],
-        "beforeState": "6",
+        "beforeState": "7",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
@@ -1437,10 +1481,10 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "2700",
+        "clock": "5400",
         "sport": "1",
         "matchId": "2048871653478170626",
-        "currentState": "31",
+        "currentState": "100",
         "startDate": "2026-07-02 03:00",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -1460,8 +1504,8 @@
         "oldMatchId": "",
         "del": "0",
         "importState": "3",
-        "birtiSign": "111",
-        "lastUpdateTime": "2026-07-02 03:02",
+        "birtiSign": "",
+        "lastUpdateTime": "2026-07-02 04:43:43",
         "showTime": "",
         "orderNum": "",
         "autoId": "2222744",
@@ -1856,7 +1900,7 @@
         "preLineUpShow": "1"
       },
       {
-        "currentPeriodStart": "2026-07-02 04:00:33",
+        "currentPeriodStart": "2026-07-02 04:51:22",
         "uqTournament": {
           "colorCode": "6666FF",
           "folderName": "",
@@ -1876,27 +1920,28 @@
           "id": "16"
         },
         "score": {
+          "ht": "0:1",
           "matchId": null,
-          "current": "0:0"
+          "current": "0:1"
         },
         "corner": {
           "ft": "0:0",
-          "ht": "0:0",
+          "ht": "2:1",
           "otf": "0:0",
           "oth": "0:0",
-          "current": "0:0"
+          "current": "2:1"
         },
         "payout": {
           "fg": "2",
           "ftg": "2",
-          "ht": "2",
+          "ht": "3",
           "ft": "2",
           "ot": "2",
           "ap": "2",
           "matchId": "2071104093793746945"
         },
         "cornerPayout": {
-          "ht": "2",
+          "ht": "3",
           "ft": "2",
           "ot": "2",
           "matchId": ""
@@ -1951,11 +1996,32 @@
             "id": "524"
           }
         ],
+        "firstTeam": {
+          "clock": "24",
+          "matchId": "",
+          "currentState": "6",
+          "playerName": "哈比.迪亚拉",
+          "playerNameZh": "哈比.迪亚拉",
+          "playerNameZht": "哈比.迪亞拉",
+          "teamPlayerState": "",
+          "teamId": "4739",
+          "createDate": "",
+          "playerId": "2202982",
+          "del": "",
+          "importState": "",
+          "autoId": "",
+          "teamOther": "",
+          "id": "2224951",
+          "typeCode": "1"
+        },
         "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
-        "other": {},
+        "other": {
+          "goalCardSwitchFt": "on",
+          "goalCardSwitchOt": "off"
+        },
         "hcap": {
           "ftHandicap": "-0.5",
           "ftOverUnder": "2.5/3",
@@ -1971,13 +2037,13 @@
           "del": "0"
         },
         "hasBetInRunOt": "1",
-        "clock": "64",
+        "clock": "2700",
         "sport": "1",
         "matchId": "2071104093793746945",
-        "currentState": "6",
+        "currentState": "31",
         "startDate": "2026-07-02 04:00",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "2",
         "hometeamId": "4717",
         "awayteamId": "4739",
         "tournamentId": "34094",
@@ -2225,6 +2291,6 @@
   },
   "token": null,
   "rspMsg": "成功",
-  "sysTime": "2026-07-02 04:01:37",
+  "sysTime": "2026-07-02 05:01:29",
   "rspCode": "SUCCESS"
 }
