@@ -110,7 +110,7 @@ jobs:
           author_name: Auto Bot
           author_email: bot@example.com
           message: "综合备份 ${{ env.TIMESTAMP }}：XML归档、分析、livescore [skip ci]"
-          add: "HisData/ *.xml scripts/ popeye/ data/ scores.json scores_now.csv"   # 新增 scores_now.csv
+          add: "HisData/ *.xml data/ scripts/docs/his_data.js popeye/his_data.js scores.json scores_now.csv"   # 新增 scores_now.csv
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       # =============== 打包 & 上传百度网盘 ===============
