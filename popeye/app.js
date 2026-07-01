@@ -953,16 +953,9 @@ function renderAnalysis() {
     '时间': v => v, 'ID': v => v, '赛事': v => v, '主队': v => v, '客队': v => v,
   };
 
-  // 保留原来的完整表头结构，后面的列留空备用
-  const extraHeaders = ['胜概率','平概率','负概率','主进球','客进球','胜赔付','平赔付','负赔付','平均赔付','记录时间'];
-
   let html = '<table><thead><tr>';
   html += '<th class="row-select-col">选择</th>';
   cols.forEach(c => html += `<th class="analysis-th">${c}</th>`);
-  // 保留列空间，表头置空
-  for (let i = 0; i < extraHeaders.length; i++) {
-    html += `<th class="analysis-th" style="color:#999;font-weight:400;"></th>`;
-  }
   html += '</tr></thead><tbody>';
   state.analysisRecords.forEach((rec, idx) => {
     const selected = (state.selectedMatchId === rec.id) ? ' checked' : '';
@@ -974,10 +967,6 @@ function renderAnalysis() {
       if (format[c]) val = format[c](val);
       html += `<td>${val}</td>`;
     });
-    // 空列占位
-    for (let i = 0; i < extraHeaders.length; i++) {
-      html += `<td></td>`;
-    }
     html += '</tr>';
   });
   html += '</tbody></table>';
@@ -1007,6 +996,16 @@ function renderAnalysis() {
   function selectAnalysisMatch(id) {
     state.selectedMatchId = id;
     renderAnalysis();
+    // 更新右窗格头部信息
+    const rec = state.analysisRecords.find(r => r.id === id);
+    const hHome = document.getElementById('headerTeamHome');
+    const hAway = document.getElementById('headerTeamAway');
+    const hId = document.getElementById('headerMatchId');
+    if (rec && hHome && hAway && hId) {
+      hHome.textContent = rec.home || '-';
+      hAway.textContent = rec.away || '-';
+      hId.textContent = '#' + (rec.id || '');
+    }
     // 如果当前在 OU/Win 视图，刷新内容
     if (state.currentView === 'ou' || state.currentView === 'win') {
       doSearch(id);
