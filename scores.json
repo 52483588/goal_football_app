@@ -607,7 +607,7 @@
         "preLineUpShow": "1"
       },
       {
-        "currentPeriodStart": "2026-07-01 10:51:22",
+        "currentPeriodStart": "2026-07-01 11:07:21",
         "uqTournament": {
           "colorCode": "6666FF",
           "folderName": "",
@@ -636,7 +636,7 @@
           "ht": "1:5",
           "otf": "0:0",
           "oth": "0:0",
-          "current": "1:5"
+          "current": "3:8"
         },
         "payout": {
           "fg": "2",
@@ -721,10 +721,13 @@
           "id": "2224608",
           "typeCode": "1"
         },
-        "beforeState": "6",
+        "beforeState": "7",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "redcard": {
+          "current": "0:1"
+        },
         "other": {
           "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
@@ -744,7 +747,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "1",
-        "clock": "2700",
+        "clock": "5950",
         "evId": "943985",
         "warsituationShow": "1",
         "payoutState": "2",
@@ -756,7 +759,7 @@
         "hometeamNameZh": "墨西哥",
         "sport": "1",
         "matchId": "2071051249766039553",
-        "currentState": "31",
+        "currentState": "7",
         "startDate": "2026-07-01 10:00",
         "uqTournamentId": "16",
         "hometeamName": "墨西哥",
@@ -768,8 +771,8 @@
         "del": "0",
         "autoId": "2240935",
         "importState": "3",
-        "birtiSign": "111",
-        "lastUpdateTime": "2026-07-01 10:00",
+        "birtiSign": "",
+        "lastUpdateTime": "2026-07-01 11:47:28",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "14",
@@ -920,9 +923,9 @@
         },
         "payout": {
           "fg": "1",
-          "ftg": "2",
-          "ht": "2",
-          "ft": "2",
+          "ftg": "3",
+          "ht": "3",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2066258211415982082"
@@ -978,7 +981,7 @@
         "clock": "5400",
         "evId": "944092",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "3151",
         "awayteamId": "5032",
         "tournamentId": "128239",
@@ -1658,5 +1661,5 @@
   "token": null,
   "rspCode": "SUCCESS",
   "rspMsg": "成功",
-  "sysTime": "2026-07-01 11:01:27"
+  "sysTime": "2026-07-01 12:01:31"
 }
