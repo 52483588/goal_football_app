@@ -334,7 +334,7 @@
         "preLineUpShow": "1"
       },
       {
-        "currentPeriodStart": "2026-07-02 21:46:49",
+        "currentPeriodStart": "2026-07-02 22:50:11",
         "uqTournament": {
           "colorCode": "00CC33",
           "folderName": "",
@@ -355,6 +355,7 @@
         },
         "score": {
           "ht": "0:0",
+          "ft": "0:0",
           "current": "0:0",
           "matchId": null
         },
@@ -383,7 +384,7 @@
             "id": "405"
           }
         ],
-        "beforeState": "6",
+        "beforeState": "7",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
@@ -406,7 +407,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "2700",
+        "clock": "5400",
         "evId": "944304",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -418,7 +419,7 @@
         "hometeamNameZh": "克罗地亚U19",
         "sport": "1",
         "matchId": "2048871653901795330",
-        "currentState": "31",
+        "currentState": "100",
         "startDate": "2026-07-02 21:00",
         "uqTournamentId": "258",
         "hometeamName": "克罗地亚U19",
@@ -430,8 +431,8 @@
         "del": "0",
         "autoId": "2222745",
         "importState": "3",
-        "birtiSign": "111",
-        "lastUpdateTime": "2026-07-02 21:02",
+        "birtiSign": "",
+        "lastUpdateTime": "2026-07-02 22:42:00",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "--",
@@ -1327,5 +1328,5 @@
   "token": null,
   "rspCode": "SUCCESS",
   "rspMsg": "成功",
-  "sysTime": "2026-07-02 22:02:02"
+  "sysTime": "2026-07-02 23:01:55"
 }
