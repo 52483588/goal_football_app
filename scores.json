@@ -419,7 +419,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-03 23:59:21",
         "uqTournament": {
           "colorCode": "304D45",
           "folderName": "",
@@ -438,6 +438,10 @@
           "name": "挪甲",
           "id": "22"
         },
+        "score": {
+          "current": "0:0",
+          "matchId": null
+        },
         "payout": {
           "fg": "1",
           "ftg": "1",
@@ -454,12 +458,27 @@
           "matchId": ""
         },
         "broadcast": [],
-        "beforeState": "0",
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {},
+        "hcap": {
+          "ftHandicap": "0",
+          "ftOverUnder": "3",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2004053543756161025",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "134",
         "evId": "944202",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -471,7 +490,7 @@
         "hometeamNameZh": "罗科斯",
         "sport": "1",
         "matchId": "2004053543756161025",
-        "currentState": "0",
+        "currentState": "6",
         "startDate": "2026-07-03 23:59",
         "uqTournamentId": "22",
         "hometeamName": "罗科斯",
@@ -484,7 +503,7 @@
         "autoId": "2178242",
         "importState": "0",
         "birtiSign": "112",
-        "lastUpdateTime": "2026-06-30 04:00",
+        "lastUpdateTime": "2026-07-04 00:00",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "--",
@@ -798,7 +817,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-03 19:06:02",
+        "currentPeriodStart": "2026-07-03 19:06",
         "uqTournament": {
           "colorCode": "F88964",
           "folderName": "",
@@ -827,7 +846,7 @@
           "fg": "1",
           "ftg": "1",
           "ht": "1",
-          "ft": "2",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2024226177722540033"
@@ -851,7 +870,7 @@
         "beforeState": "7",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "other": {
           "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
@@ -874,7 +893,7 @@
         "clock": "5400",
         "evId": "944465",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "90870",
         "awayteamId": "90878",
         "tournamentId": "33890",
@@ -895,8 +914,8 @@
         "del": "0",
         "autoId": "2201075",
         "importState": "0",
-        "birtiSign": "112",
-        "lastUpdateTime": "2026-07-03 19:06",
+        "birtiSign": "122",
+        "lastUpdateTime": "2026-07-03 23:13",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "--",
@@ -1740,7 +1759,7 @@
         "preLineUpShow": "1"
       },
       {
-        "currentPeriodStart": "2026-07-03 17:32:15",
+        "currentPeriodStart": "2026-07-03 17:32",
         "uqTournament": {
           "colorCode": "F88964",
           "folderName": "",
@@ -1793,7 +1812,7 @@
         "beforeState": "7",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "other": {
           "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
@@ -1837,8 +1856,8 @@
         "del": "0",
         "autoId": "2194338",
         "importState": "0",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-07-03 21:37:31",
+        "birtiSign": "122",
+        "lastUpdateTime": "2026-07-03 22:20",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "--",
@@ -2205,7 +2224,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-03 23:50:17",
         "uqTournament": {
           "colorCode": "FF2E97",
           "folderName": "",
@@ -2224,6 +2243,11 @@
           "name": "女19欧国",
           "id": "695"
         },
+        "score": {
+          "ht": "1:0",
+          "current": "1:0",
+          "matchId": null
+        },
         "payout": {
           "fg": "1",
           "ftg": "1",
@@ -2237,7 +2261,7 @@
           "ht": "1",
           "ft": "1",
           "ot": "1",
-          "matchId": "2048871687053574146"
+          "matchId": ""
         },
         "broadcast": [
           {
@@ -2249,12 +2273,30 @@
             "id": "405"
           }
         ],
-        "beforeState": "0",
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {
+          "goalCardSwitchFt": "on",
+          "goalCardSwitchOt": "off"
+        },
+        "hcap": {
+          "ftHandicap": "-0.5/-1",
+          "ftOverUnder": "2.5/3",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2048871687053574146",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "2700",
         "evId": "944477",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -2266,7 +2308,7 @@
         "hometeamNameZh": "德国女足U19",
         "sport": "1",
         "matchId": "2048871687053574146",
-        "currentState": "0",
+        "currentState": "31",
         "startDate": "2026-07-03 23:00",
         "uqTournamentId": "695",
         "hometeamName": "德国女足U19",
@@ -2279,7 +2321,7 @@
         "autoId": "2222771",
         "importState": "3",
         "birtiSign": "111",
-        "lastUpdateTime": "2026-07-03 15:53:43",
+        "lastUpdateTime": "2026-07-03 23:01",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "--",
@@ -2457,7 +2499,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-03 19:25:06",
+        "currentPeriodStart": "2026-07-03 19:25",
         "uqTournament": {
           "colorCode": "F88964",
           "folderName": "",
@@ -2507,10 +2549,10 @@
             "id": "20"
           }
         ],
-        "beforeState": "7",
+        "beforeState": "0",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "other": {
           "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
@@ -2554,8 +2596,8 @@
         "del": "0",
         "autoId": "2194337",
         "importState": "3",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-07-03 19:15:46",
+        "birtiSign": "221",
+        "lastUpdateTime": "2026-07-03 21:31",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "--",
@@ -2646,7 +2688,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-03 23:32:24",
         "uqTournament": {
           "colorCode": "A04FB0",
           "folderName": "",
@@ -2665,6 +2707,10 @@
           "name": "芬甲",
           "id": "55"
         },
+        "score": {
+          "current": "0:2",
+          "matchId": null
+        },
         "payout": {
           "fg": "1",
           "ftg": "1",
@@ -2681,12 +2727,30 @@
           "matchId": ""
         },
         "broadcast": [],
-        "beforeState": "0",
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {
+          "goalCardSwitchFt": "on",
+          "goalCardSwitchOt": "off"
+        },
+        "hcap": {
+          "ftHandicap": "-0.5",
+          "ftOverUnder": "2/2.5",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2037635549618294785",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "1751",
         "evId": "944199",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -2698,7 +2762,7 @@
         "hometeamNameZh": "哥特卡",
         "sport": "1",
         "matchId": "2037635549618294785",
-        "currentState": "0",
+        "currentState": "6",
         "startDate": "2026-07-03 23:30",
         "uqTournamentId": "55",
         "hometeamName": "哥特卡",
@@ -2711,7 +2775,7 @@
         "autoId": "2216260",
         "importState": "0",
         "birtiSign": "112",
-        "lastUpdateTime": "2026-07-03 12:43",
+        "lastUpdateTime": "2026-07-03 23:32",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "--",
@@ -3459,7 +3523,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-03 23:47:35",
         "uqTournament": {
           "colorCode": "FF2E97",
           "folderName": "",
@@ -3478,6 +3542,11 @@
           "name": "女19欧国",
           "id": "695"
         },
+        "score": {
+          "ht": "3:0",
+          "current": "3:0",
+          "matchId": null
+        },
         "payout": {
           "fg": "1",
           "ftg": "1",
@@ -3491,7 +3560,7 @@
           "ht": "1",
           "ft": "1",
           "ot": "1",
-          "matchId": "2048871687510753282"
+          "matchId": ""
         },
         "broadcast": [
           {
@@ -3503,12 +3572,30 @@
             "id": "405"
           }
         ],
-        "beforeState": "0",
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {
+          "goalCardSwitchFt": "on",
+          "goalCardSwitchOt": "off"
+        },
+        "hcap": {
+          "ftHandicap": "-4/-4.5",
+          "ftOverUnder": "5",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2048871687510753282",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "2700",
         "evId": "944478",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -3520,7 +3607,7 @@
         "hometeamNameZh": "波兰女足U19",
         "sport": "1",
         "matchId": "2048871687510753282",
-        "currentState": "0",
+        "currentState": "31",
         "startDate": "2026-07-03 23:00",
         "uqTournamentId": "695",
         "hometeamName": "波兰女足U19",
@@ -3533,7 +3620,7 @@
         "autoId": "2222772",
         "importState": "3",
         "birtiSign": "111",
-        "lastUpdateTime": "2026-07-03 15:55:09",
+        "lastUpdateTime": "2026-07-03 23:06",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "--",
@@ -3862,8 +3949,8 @@
         "del": "0",
         "autoId": "2193816",
         "importState": "0",
-        "birtiSign": "112",
-        "lastUpdateTime": "2026-07-03 04:32",
+        "birtiSign": "111",
+        "lastUpdateTime": "2026-07-03 23:03:08",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "--",
@@ -3876,7 +3963,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-03 23:32:08",
         "uqTournament": {
           "colorCode": "A04FB0",
           "folderName": "",
@@ -3895,6 +3982,10 @@
           "name": "芬甲",
           "id": "55"
         },
+        "score": {
+          "current": "0:0",
+          "matchId": null
+        },
         "payout": {
           "fg": "1",
           "ftg": "1",
@@ -3911,12 +4002,27 @@
           "matchId": ""
         },
         "broadcast": [],
-        "beforeState": "0",
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {},
+        "hcap": {
+          "ftHandicap": "-0.5",
+          "ftOverUnder": "3",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2037635549047869441",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "1767",
         "evId": "944198",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -3928,7 +4034,7 @@
         "hometeamNameZh": "查比斯",
         "sport": "1",
         "matchId": "2037635549047869441",
-        "currentState": "0",
+        "currentState": "6",
         "startDate": "2026-07-03 23:30",
         "uqTournamentId": "55",
         "hometeamName": "查比斯",
@@ -3941,7 +4047,7 @@
         "autoId": "2216259",
         "importState": "0",
         "birtiSign": "112",
-        "lastUpdateTime": "2026-07-03 12:43",
+        "lastUpdateTime": "2026-07-03 23:32",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "--",
@@ -3954,7 +4060,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-03 17:31:05",
+        "currentPeriodStart": "2026-07-03 17:31",
         "uqTournament": {
           "colorCode": "F88964",
           "folderName": "",
@@ -4007,7 +4113,7 @@
         "beforeState": "7",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "other": {
           "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
@@ -4051,8 +4157,8 @@
         "del": "0",
         "autoId": "2196364",
         "importState": "0",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-07-03 21:28:00",
+        "birtiSign": "122",
+        "lastUpdateTime": "2026-07-03 22:26",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "--",
@@ -4308,7 +4414,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-03 22:06:33",
+        "currentPeriodStart": "2026-07-03 22:06",
         "uqTournament": {
           "colorCode": "6699FF",
           "folderName": "Chinese_Football_Super_League",
@@ -4335,9 +4441,9 @@
         },
         "payout": {
           "fg": "1",
-          "ftg": "2",
-          "ht": "2",
-          "ft": "2",
+          "ftg": "3",
+          "ht": "3",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2024225546664337410"
@@ -4367,10 +4473,10 @@
           "id": "2225324",
           "typeCode": "1"
         },
-        "beforeState": "7",
+        "beforeState": "0",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "other": {
           "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
@@ -4393,7 +4499,7 @@
         "clock": "5400",
         "evId": "944196",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "1009011",
         "awayteamId": "34692",
         "tournamentId": "31907",
@@ -4414,8 +4520,8 @@
         "del": "0",
         "autoId": "2200237",
         "importState": "3",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-07-03 21:53:26",
+        "birtiSign": "221",
+        "lastUpdateTime": "2026-07-03 23:12",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "5",
@@ -5050,5 +5156,5 @@
   "token": null,
   "rspCode": "SUCCESS",
   "rspMsg": "成功",
-  "sysTime": "2026-07-03 23:01:51"
+  "sysTime": "2026-07-04 00:01:35"
 }
