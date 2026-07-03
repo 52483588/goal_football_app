@@ -116,7 +116,7 @@ jobs:
       # =============== 打包 & 上传百度网盘 ===============
       - name: 打包文件夹（含scores.json）
         run: |
-          zip -r "backup_${{ env.TIMESTAMP }}.zip" HisData docs data 
+          zip -r "backup_${{ env.TIMESTAMP }}.zip" HisData scripts/docs data 
           echo "UPLOAD_FILE=backup_${{ env.TIMESTAMP }}.zip" >> $GITHUB_ENV
           echo "✅ 已打包"
 
