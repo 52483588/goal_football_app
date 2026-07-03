@@ -3093,7 +3093,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-03 21:09:31",
+        "currentPeriodStart": "2026-07-03 21:28:01",
         "uqTournament": {
           "colorCode": "003333",
           "folderName": "-",
@@ -3114,7 +3114,8 @@
         },
         "score": {
           "ht": "0:1",
-          "current": "0:1",
+          "ft": "1:2",
+          "current": "1:2",
           "matchId": null
         },
         "payout": {
@@ -3151,7 +3152,7 @@
           "id": "2225340",
           "typeCode": "1"
         },
-        "beforeState": "6",
+        "beforeState": "7",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
@@ -3177,7 +3178,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "2700",
+        "clock": "5400",
         "evId": "944618",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -3189,7 +3190,7 @@
         "hometeamNameZh": "白兰恩",
         "sport": "1",
         "matchId": "2071904304606674945",
-        "currentState": "31",
+        "currentState": "100",
         "startDate": "2026-07-03 21:00",
         "uqTournamentId": "853",
         "hometeamName": "白兰恩",
@@ -4307,7 +4308,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-03 21:13:22",
+        "currentPeriodStart": "2026-07-03 22:06:33",
         "uqTournament": {
           "colorCode": "6699FF",
           "folderName": "Chinese_Football_Super_League",
@@ -4328,6 +4329,7 @@
         },
         "score": {
           "ht": "0:1",
+          "ft": "2:1",
           "current": "2:1",
           "matchId": null
         },
@@ -4388,7 +4390,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "5610",
+        "clock": "5400",
         "evId": "944196",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -4400,7 +4402,7 @@
         "hometeamNameZh": "云南玉昆",
         "sport": "1",
         "matchId": "2024225546664337410",
-        "currentState": "7",
+        "currentState": "100",
         "startDate": "2026-07-03 20:00",
         "uqTournamentId": "649",
         "hometeamName": "云南玉昆",
@@ -4952,8 +4954,8 @@
         "del": "0",
         "autoId": "2208970",
         "importState": "3",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-07-03 21:53:09",
+        "birtiSign": "111",
+        "lastUpdateTime": "2026-07-03 22:05:18",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "--",
@@ -5048,5 +5050,5 @@
   "token": null,
   "rspCode": "SUCCESS",
   "rspMsg": "成功",
-  "sysTime": "2026-07-03 22:01:52"
+  "sysTime": "2026-07-03 23:01:51"
 }
