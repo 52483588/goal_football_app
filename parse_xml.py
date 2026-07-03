@@ -12,8 +12,8 @@ REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
 DATA_SRC = os.path.join(REPO_ROOT, "HisData")
 OUTPUT_DIR = os.path.join(REPO_ROOT, "scripts", "docs")
 OUTPUT_FILE = os.path.join(OUTPUT_DIR, "his_data.js")
-POPEYE_DIR = os.path.join(REPO_ROOT, "popeye")
-POPEYE_FILE = os.path.join(POPEYE_DIR, "his_data.js")
+# POPEYE_DIR = os.path.join(REPO_ROOT, "popeye")
+# POPEYE_FILE = os.path.join(POPEYE_DIR, "his_data.js")
 
 # 原属性列表
 OC_ATTRS = ['id', 'gt', 'st', 'sh', 'sa']
@@ -111,9 +111,9 @@ def main():
     print(f"[OK] his_data.js: {size_kb:.0f} KB ({elapsed:.1f}s)")
 
     # 复制到 popeye 目录
-    os.makedirs(POPEYE_DIR, exist_ok=True)
-    shutil.copy(OUTPUT_FILE, POPEYE_FILE)
-    print(f"[OK] Copied to {POPEYE_FILE}")
+    # os.makedirs(POPEYE_DIR, exist_ok=True)
+    # shutil.copy(OUTPUT_FILE, POPEYE_FILE)
+    # print(f"[OK] Copied to {POPEYE_FILE}")
 
 
 if __name__ == '__main__':
