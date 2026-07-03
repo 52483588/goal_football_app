@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚽ 足球大小盘分析器 — 泊松分布 + 亚洲盘口</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg:#0f172a; --card:#1e293b; --border:#334155;
+  --text:#f1f5f9; --text2:#94a3b8;
+  --primary:#3b82f6; --plight:#1e3a5f;
+  --red:#ef4444; --green:#22c55e; --gold:#f59e0b; --purple:#a855f7;
+  --radius:10px; --shadow:0 2px 8px rgba(0,0,0,0.3);
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  background:var(--bg); color:var(--text); padding:16px; line-height:1.5;
+}
+.container { max-width:1100px; margin:0 auto; }
+h1 { font-size:1.3rem; display:flex; align-items:center; gap:8px; }
+h1 small { font-size:0.7rem; color:var(--text2); font-weight:400; }
+.subtitle { color:var(--text2); margin-bottom:14px; font-size:0.8rem; }
+
+.card { background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:14px; border:1px solid var(--border); }
+.card-title { font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--text2); margin-bottom:8px; }
+
+.btn {
+  display:inline-flex; align-items:center; gap:5px;
+  padding:6px 12px; border:none; border-radius:6px;
+  font-size:0.8rem; font-weight:500; cursor:pointer; transition:all 0.15s;
+}
+.btn-primary { background:var(--primary); color:#fff; }
+.btn-primary:hover { background:#2563eb; }
+.btn-outline { background:transparent; border:1px solid var(--border); color:var(--text); }
+.btn-outline:hover { background:#1e293b; }
+.btn-green { background:var(--green); color:#fff; }
+.btn-green:hover { background:#16a34a; }
+
+.flex { display:flex; align-items:center; } .flex-wrap { flex-wrap:wrap; }
+.gap-6 { gap:6px; } .gap-8 { gap:8px; } .gap-12 { gap:12px; }
+.mt-8 { margin-top:8px; } .mt-12 { margin-top:12px; } .mb-8 { margin-bottom:8px; } .mb-12 { margin-bottom:12px; }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+
+/* 赔率输入 */
+.odds-section { display:flex; gap:14px; }
+.odds-team { flex:1; }
+.odds-team h3 { font-size:0.85rem; margin-bottom:5px; display:flex; align-items:center; gap:5px; }
+.odds-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:5px; }
+.odds-cell { text-align:center; }
+.odds-cell .gl { font-size:0.68rem; color:var(--text2); margin-bottom:1px; }
+.odds-cell input {
+  width:100%; padding:4px 1px; border:1px solid var(--border);
+  border-radius:4px; font-size:0.78rem; text-align:center; outline:none;
+  font-weight:600; transition:border-color 0.15s; background:#0f172a; color:var(--text);
+}
+.odds-cell input:focus { border-color:var(--primary); box-shadow:0 0 0 2px var(--plight); }
+
+/* λ 卡片 */
+.lam-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.lam-card { text-align:center; padding:10px 8px; }
+.lam-val { font-size:1.6rem; font-weight:800; color:var(--primary); line-height:1.2; }
+.lam-label { font-size:0.7rem; color:var(--text2); margin-top:2px; }
+.lam-sse { font-size:0.65rem; color:var(--text2); }
+
+/* 表格 */
+table { width:100%; border-collapse:collapse; font-size:0.75rem; }
+th { text-align:center; padding:5px 3px; font-weight:600; color:var(--text2); border-bottom:2px solid var(--border); font-size:0.65rem; }
+td { text-align:center; padding:4px 2px; border-bottom:1px solid rgba(255,255,255,0.05); }
+td:first-child, th:first-child { text-align:left; }
+.text-left { text-align:left !important; }
+
+/* 盘口结果卡片 */
+.ou-card { 
+  background:linear-gradient(135deg,rgba(59,130,246,0.08),rgba(139,92,246,0.08));
+  border:1px solid rgba(59,130,246,0.2); border-radius:8px; padding:10px 12px;
+}
+.ou-line { font-size:1.2rem; font-weight:800; color:var(--gold); }
+.ou-type { font-size:0.6rem; color:var(--text2); }
+.ou-bar { display:flex; height:14px; border-radius:7px; overflow:hidden; margin:6px 0; }
+.ou-over { background:linear-gradient(90deg,rgba(239,68,68,0.8),rgba(239,68,68,0.5)); }
+.ou-under { background:linear-gradient(90deg,rgba(34,197,94,0.5),rgba(34,197,94,0.8)); }
+.ou-push { background:rgba(245,158,11,0.5); }
+.ou-pct { font-size:0.85rem; font-weight:600; }
+.ou-pct .over { color:var(--red); } .ou-pct .under { color:var(--green); } .ou-pct .push { color:var(--gold); }
+.ou-badge { display:inline-block; padding:1px 6px; border-radius:4px; font-size:0.65rem; font-weight:600; }
+.badge-balance { background:rgba(34,197,94,0.2); color:var(--green); }
+.badge-norm { background:rgba(59,130,246,0.2); color:var(--primary); }
+
+/* 图表 */
+.chart-box { position:relative; height:180px; width:100%; }
+
+/* 粘贴区 */
+.paste-area { 
+  width:100%; min-height:48px; padding:8px; border:1px solid var(--border); 
+  border-radius:6px; font-family:monospace; font-size:0.78rem; resize:vertical; 
+  outline:none; background:#0f172a; color:var(--text);
+}
+.paste-area:focus { border-color:var(--primary); }
+.parse-status { font-size:0.7rem; color:var(--text2); }
+
+@media(max-width:768px) {
+  .grid-2,.grid-3,.lam-grid { grid-template-columns:1fr; }
+  .odds-section { flex-direction:column; }
+  .odds-grid { grid-template-columns:repeat(3,1fr); }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- 标题 -->
+<h1>⚽ 足球大小盘分析器 <small>泊松分布 × 亚洲盘口</small></h1>
+<p class="subtitle">输入主客队精确进球赔率（0~5+球）→ 自动反推 λ → 计算概率分布 → 精选最平衡的3个大小盘</p>
+
+<!-- 粘贴区 -->
+<div class="card mb-12">
+  <div class="card-title">📋 粘贴赔率（前6主队，后6客队）</div>
+  <div class="flex gap-8 flex-wrap">
+    <textarea class="paste-area" id="pasteArea" placeholder="示例：1.56 2.6 8.6 35 100 350 13 4.75 3.5 3.85 5.6 6&#10;顺序：主0球~5+球 ｜ 客0球~5+球" style="flex:1;min-height:46px"></textarea>
+  </div>
+  <div class="flex gap-6 mt-8 flex-wrap">
+    <button class="btn btn-primary" onclick="parseAndFill()">🔍 解析并填充</button>
+    <button class="btn btn-outline" onclick="document.getElementById('pasteArea').value='';document.getElementById('parseStatus').textContent=''">清空</button>
+    <button class="btn btn-green" onclick="loadPreset()">↩ 示例数据</button>
+    <span class="parse-status" id="parseStatus"></span>
+  </div>
+</div>
+
+<!-- 赔率输入 -->
+<div class="card mb-12">
+  <div class="card-title">📊 进球数赔率</div>
+  <div class="odds-section">
+    <div class="odds-team">
+      <h3><span style="color:var(--red)">●</span> 主队</h3>
+      <div class="odds-grid" id="homeOddsGrid"></div>
+    </div>
+    <div class="odds-team">
+      <h3><span style="color:var(--green)">●</span> 客队</h3>
+      <div class="odds-grid" id="awayOddsGrid"></div>
+    </div>
+  </div>
+  <div class="flex gap-6 mt-8">
+    <button class="btn btn-primary" onclick="recalculate()">⟳ 计算</button>
+  </div>
+</div>
+
+<!-- λ 结果 -->
+<div class="lam-grid mb-12">
+  <div class="card lam-card"><div class="lam-val" id="lamHDisplay">—</div><div class="lam-label">λ<sub>主</sub></div><div class="lam-sse" id="sseHDisplay"></div></div>
+  <div class="card lam-card"><div class="lam-val" id="lamADisplay">—</div><div class="lam-label">λ<sub>客</sub></div><div class="lam-sse" id="sseADisplay"></div></div>
+  <div class="card lam-card"><div class="lam-val" id="lamTDisplay">—</div><div class="lam-label">λ<sub>总</sub></div><div class="lam-sse" id="sseTDisplay"></div></div>
+</div>
+
+<!-- 概率分布 -->
+<div class="mb-12">
+  <div class="card-title" style="padding:0 4px;margin-bottom:6px">📈 概率分布</div>
+  <div class="grid-3">
+    <div class="card" style="padding:10px">
+      <div class="card-title">🔴 主队进球</div>
+      <table><thead><tr><th>进球</th><th>概率</th><th>可视化</th></tr></thead>
+      <tbody id="homeDistBody"></tbody></table>
+    </div>
+    <div class="card" style="padding:10px">
+      <div class="card-title">🟢 客队进球</div>
+      <table><thead><tr><th>进球</th><th>概率</th><th>可视化</th></tr></thead>
+      <tbody id="awayDistBody"></tbody></table>
+    </div>
+    <div class="card" style="padding:10px">
+      <div class="card-title">⚪ 总进球</div>
+      <table><thead><tr><th>总进球</th><th>概率</th><th>可视化</th></tr></thead>
+      <tbody id="totalDistBody"></tbody></table>
+    </div>
+  </div>
+</div>
+
+<!-- 大小盘分析 -->
+<div class="mb-12">
+  <div class="card-title" style="padding:0 4px;margin-bottom:8px">🎯 大小盘推荐（上下盘概率最接近的3个）</div>
+  <div class="grid-3" id="ouResultsGrid">
+    <div class="card" style="padding:12px">
+      <div class="card-title" style="margin-bottom:6px">🔴 主队</div>
+      <div id="homeOUResults"></div>
+    </div>
+    <div class="card" style="padding:12px">
+      <div class="card-title" style="margin-bottom:6px">🟢 客队</div>
+      <div id="awayOUResults"></div>
+    </div>
+    <div class="card" style="padding:12px">
+      <div class="card-title" style="margin-bottom:6px">⚪ 总进球</div>
+      <div id="totalOUResults"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 图表 -->
+<div class="grid-2 mb-12">
+  <div class="card"><div class="card-title">🔴🟢 主客队进球分布</div>
+    <div class="chart-box"><canvas id="teamChart"></canvas></div>
+  </div>
+  <div class="card"><div class="card-title">⚪ 总进球分布</div>
+    <div class="chart-box"><canvas id="totalChart"></canvas></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">📐 算法说明</div>
+  <div style="font-size:0.75rem;line-height:1.6;color:var(--text2)">
+    <p><b>① 优化λ：</b> 用精确进球赔率（0~5+球）网格搜索+Brent法反推 λ = argmin Σ(P<sub>模型</sub>−P<sub>公平</sub>)²</p>
+    <p><b>② 概率分布：</b> X~Poisson(λ)，总进球 P(t)=ΣP<sub>主</sub>(i)·P<sub>客</sub>(t−i)（卷积）</p>
+    <p><b>③ 亚洲盘口：</b> x.5半数盘｜x.0整数盘（含走水）｜x.25 = ½x.0 + ½x.5 ｜ x.75 = ½x.5 + ½(x+1).0</p>
+    <p><b>④ 筛选：</b> 遍历所有标准盘口，取归一化后 |P<sub>大</sub> − 50%| 最小的3个</p>
+  </div>
+</div>
+
+</div>
+
+<script>
+// ===== 泊松函数 =====
+function pmf(lam,k) {
+  if(lam<=0) return k===0?1:0;
+  let lp=-lam+k*Math.log(lam);
+  for(let i=2;i<=k;i++) lp-=Math.log(i);
+  return Math.exp(lp);
+}
+function cdf(lam,k){let s=0;for(let i=0;i<=k;i++)s+=pmf(lam,i);return s;}
+
+// ===== 预设 =====
+const GOAL_LABELS=['0球','1球','2球','3球','4球','5+球'];
+const MAX_G=25;
+const ALL_LINES=[0.5,0.75,1,1.25,1.5,1.75,2,2.25,2.5,2.75,3,3.25,3.5,3.75,4];
+
+const PRESET_HOME=[1.56,2.6,8.6,35,100,350];
+const PRESET_AWAY=[13,4.75,3.5,3.85,5.6,6];
+
+// ===== 渲染赔率
+function renderOdds(hOdds,aOdds) {
+  const hg=document.getElementById('homeOddsGrid');
+  const ag=document.getElementById('awayOddsGrid');
+  hg.innerHTML=GOAL_LABELS.map((lab,i)=>`
+    <div class="odds-cell"><div class="gl">${lab}</div>
+    <input type="number" step="0.01" min="1.01" max="10000" value="${hOdds[i]}" class="h-odds" data-idx="${i}"></div>
+  `).join('');
+  ag.innerHTML=GOAL_LABELS.map((lab,i)=>`
+    <div class="odds-cell"><div class="gl">${lab}</div>
+    <input type="number" step="0.01" min="1.01" max="10000" value="${aOdds[i]}" class="a-odds" data-idx="${i}"></div>
+  `).join('');
+}
+
+function getOdds(){
+  const h=Array.from(document.querySelectorAll('.h-odds')).map(i=>parseFloat(i.value)||1.01);
+  const a=Array.from(document.querySelectorAll('.a-odds')).map(i=>parseFloat(i.value)||1.01);
+  return [h,a];
+}
+
+function loadPreset(){renderOdds(PRESET_HOME,PRESET_AWAY);recalculate();}
+
+// ===== 优化λ
+function fairProbs(odds){
+  const imp=odds.map(o=>1/o);
+  const m=imp.reduce((a,b)=>a+b,0);
+  return imp.map(p=>p/m);
+}
+function modelProbs(lam){
+  return [pmf(lam,0),pmf(lam,1),pmf(lam,2),pmf(lam,3),pmf(lam,4),1-cdf(lam,4)];
+}
+function objFn(lam,odds){
+  const fp=fairProbs(odds),mp=modelProbs(lam);
+  let t=0;for(let i=0;i<fp.length;i++) t+=(mp[i]-fp[i])**2;
+  return t;
+}
+function optimize(odds){
+  let best=1.0,bv=Infinity;
+  for(let lam=0.05;lam<=6.0;lam+=0.01){
+    const v=objFn(lam,odds);
+    if(v<bv){bv=v;best=lam;}
+  }
+  let a=Math.max(0.05,best-0.5),b=best+0.5;
+  const phi=(Math.sqrt(5)-1)/2;
+  let c=b-phi*(b-a),d=a+phi*(b-a);
+  let fc=objFn(c,odds),fd=objFn(d,odds);
+  for(let i=0;i<50;i++){
+    if(Math.abs(b-a)<1e-10)break;
+    if(fc<fd){b=d;d=c;fd=fc;c=b-phi*(b-a);fc=objFn(c,odds);}
+    else{a=c;c=d;fc=fd;d=a+phi*(b-a);fd=objFn(d,odds);}
+  }
+  const lam=(a+b)/2;
+  return{lam,sse:objFn(lam,odds)};
+}
+
+// ===== 卷积
+function totalGoals(probsH,probsA,maxG=MAX_G){
+  const tg=[];
+  for(let t=0;t<=maxG;t++){
+    let p=0;
+    for(let i=0;i<=t;i++) p+=(probsH[i]||0)*(probsA[t-i]||0);
+    tg.push(p);
+  }
+  return tg;
+}
+
+// ===== 亚洲盘口大小盘计算
+function calcOU(probs, line){
+  const q=line%1, base=Math.floor(line);
+  if(Math.abs(q-0.5)<0.01){
+    const over=probs.slice(base+1).reduce((a,b)=>a+b,0);
+    const under=probs.slice(0,base+1).reduce((a,b)=>a+b,0);
+    return{over,under,push:0};
+  }
+  if(Math.abs(q-0.0)<0.01&&line>0){
+    const over=probs.slice(base+1).reduce((a,b)=>a+b,0);
+    const under=probs.slice(0,base).reduce((a,b)=>a+b,0);
+    return{over,under,push:probs[base]||0};
+  }
+  if(Math.abs(q-0.25)<0.01){
+    const o0=probs.slice(base+1).reduce((a,b)=>a+b,0);
+    const u0=probs.slice(0,base).reduce((a,b)=>a+b,0);
+    const p0=probs[base]||0;
+    const o5=probs.slice(base+1).reduce((a,b)=>a+b,0);
+    const u5=probs.slice(0,base+1).reduce((a,b)=>a+b,0);
+    return{over:(o0+o5)/2,under:(u0+u5)/2,push:p0/2};
+  }
+  if(Math.abs(q-0.75)<0.01){
+    const o5=probs.slice(base+1).reduce((a,b)=>a+b,0);
+    const u5=probs.slice(0,base+1).reduce((a,b)=>a+b,0);
+    const b0=base+1;
+    const o0=probs.slice(b0+1).reduce((a,b)=>a+b,0);
+    const u0=probs.slice(0,b0).reduce((a,b)=>a+b,0);
+    const p0=probs[b0]||0;
+    return{over:(o5+o0)/2,under:(u5+u0)/2,push:p0/2};
+  }
+  return{over:0,under:0,push:0};
+}
+
+function findTop3(probs){
+  const res=[];
+  for(const line of ALL_LINES){
+    const r=calcOU(probs,line);
+    const total=r.over+r.under;
+    if(total<0.001) continue;
+    const on=r.over/total, un=r.under/total;
+    const bal=Math.abs(on-0.5);
+    res.push({line,bal,...r,on,un});
+  }
+  res.sort((a,b)=>a.bal-b.bal);
+  return res.slice(0,3);
+}
+
+function lineType(line){
+  const q=line%1;
+  if(Math.abs(q-0.5)<0.01) return '半数盘';
+  if(Math.abs(q-0.0)<0.01) return '整数盘';
+  if(Math.abs(q-0.25)<0.01) return '三/四盘';
+  if(Math.abs(q-0.75)<0.01) return '三/四盘';
+  return '';
+}
+
+// ===== 图表
+let teamChart,totalChart;
+
+function recalculate(){
+  const[hOdds,aOdds]=getOdds();
+  const rH=optimize(hOdds),rA=optimize(aOdds);
+  const lamH=rH.lam,lamA=rA.lam,lamT=lamH+lamA;
+
+  document.getElementById('lamHDisplay').textContent=lamH.toFixed(4);
+  document.getElementById('lamADisplay').textContent=lamA.toFixed(4);
+  document.getElementById('lamTDisplay').textContent=lamT.toFixed(4);
+  document.getElementById('sseHDisplay').textContent='SSE='+rH.sse.toFixed(6);
+  document.getElementById('sseADisplay').textContent='SSE='+rA.sse.toFixed(6);
+  document.getElementById('sseTDisplay').textContent='';
+
+  // 完整概率
+  const probsH=[],probsA=[];
+  for(let k=0;k<=MAX_G;k++){probsH.push(pmf(lamH,k));probsA.push(pmf(lamA,k));}
+  const ph5=modelProbs(lamH),pa5=modelProbs(lamA);
+
+  // 主队
+  const hdb=document.getElementById('homeDistBody');
+  const hcolors=['#ef4444','#f97316','#eab308','#22c55e','#3b82f6','#a855f7'];
+  hdb.innerHTML=ph5.map((p,i)=>{
+    const l=i<5?i+'球':'5+球';
+    return `<tr><td>${l}</td><td>${(p*100).toFixed(2)}%</td>
+    <td class="text-left"><span class="pb" style="display:inline-block;width:40px;height:6px;background:rgba(255,255,255,0.1);border-radius:3px;vertical-align:middle">
+    <span class="pf" style="display:block;height:100%;width:${Math.min(p*100,100)}%;background:${hcolors[i]};border-radius:3px"></span></span>
+    ${(p*100).toFixed(1)}%</td></tr>`;
+  }).join('');
+
+  // 客队
+  const adb=document.getElementById('awayDistBody');
+  const acolors=['#22c55e','#16a34a','#15803d','#166534','#14532d','#4ade80'];
+  adb.innerHTML=pa5.map((p,i)=>{
+    const l=i<5?i+'球':'5+球';
+    return `<tr><td>${l}</td><td>${(p*100).toFixed(2)}%</td>
+    <td class="text-left"><span class="pb" style="display:inline-block;width:40px;height:6px;background:rgba(255,255,255,0.1);border-radius:3px;vertical-align:middle">
+    <span class="pf" style="display:block;height:100%;width:${Math.min(p*100,100)}%;background:${acolors[i]};border-radius:3px"></span></span>
+    ${(p*100).toFixed(1)}%</td></tr>`;
+  }).join('');
+
+  // 总进球
+  const tg=totalGoals(probsH,probsA);
+  const tdb=document.getElementById('totalDistBody');
+  const tglabels=['0球','1球','2球','3球','4球','5球','6球','7+球'];
+  const tgcolors=['#94a3b8','#64748b','#475569','#334155','#1e293b','#0f172a','#020617','#000'];
+  const tail7=1-tg.slice(0,7).reduce((a,b)=>a+b,0);
+  tdb.innerHTML='';
+  for(let i=0;i<7;i++){
+    tdb.innerHTML+=`<tr><td>${tglabels[i]}</td><td>${(tg[i]*100).toFixed(2)}%</td>
+    <td class="text-left"><span class="pb" style="display:inline-block;width:40px;height:6px;background:rgba(255,255,255,0.1);border-radius:3px;vertical-align:middle">
+    <span class="pf" style="display:block;height:100%;width:${Math.min(tg[i]*100,100)}%;background:${tgcolors[i]};border-radius:3px"></span></span>
+    ${(tg[i]*100).toFixed(1)}%</td></tr>`;
+  }
+  tdb.innerHTML+=`<tr><td><strong>7+球</strong></td><td><strong>${(tail7*100).toFixed(2)}%</strong></td>
+  <td class="text-left"><span class="pb" style="display:inline-block;width:40px;height:6px;background:rgba(255,255,255,0.1);border-radius:3px;vertical-align:middle">
+  <span class="pf" style="display:block;height:100%;width:${Math.min(tail7*100,100)}%;background:#000;border-radius:3px"></span></span>
+  ${(tail7*100).toFixed(1)}%</td></tr>`;
+
+  // ===== 大小盘结果 =====
+  function renderOU(probs,containerId,label){
+    const top3=findTop3(probs);
+    const el=document.getElementById(containerId);
+    el.innerHTML=top3.map((r,i)=>{
+      const total=r.over+r.under;
+      const overPct=(r.over/total*100);
+      const underPct=(r.under/total*100);
+      const pushPct=r.push*100;
+      const barW=Math.max(total*100,30);
+      const oW=(r.over/barW*100);
+      const uW=(r.under/barW*100);
+      let pushHtml='';
+      let normHtml=`<div style="margin-top:4px;font-size:0.65rem;color:var(--text2)">归一化 → <span class="over">大 ${overPct.toFixed(1)}%</span> · <span class="under">小 ${underPct.toFixed(1)}%</span> <span class="badge-norm" style="display:inline-block;padding:0 4px;border-radius:3px;font-size:0.6rem">偏差 ${r.bal*100>.5?'<span style="color:var(--gold)">':'<span style="color:var(--green)">'}${(r.bal*100).toFixed(2)}%</span></span></div>`;
+      if(r.push>0.001){
+        pushHtml=`<div class="ou-pct"><span class="push">走水 ${pushPct.toFixed(2)}%</span></div>`;
+      }
+      return `<div class="ou-card" style="margin-bottom:${i<2?'8px':'0'}">
+        <div class="flex" style="justify-content:space-between">
+          <div><span class="ou-line">${r.line}</span> <span class="ou-type">${lineType(r.line)}</span></div>
+          <span class="badge-balance" style="display:inline-block;padding:1px 6px;border-radius:4px;font-size:0.65rem;font-weight:600">#${i+1}</span>
+        </div>
+        <div class="ou-bar" style="display:flex;height:12px;border-radius:6px;overflow:hidden;margin:5px 0">
+          <div style="height:100%;width:${oW}%;background:linear-gradient(90deg,rgba(239,68,68,0.8),rgba(239,68,68,0.5))"></div>
+          ${r.push>0.001?`<div style="height:100%;width:${r.push/barW*100}%;background:rgba(245,158,11,0.5)"></div>`:''}
+          <div style="height:100%;width:${uW}%;background:linear-gradient(90deg,rgba(34,197,94,0.5),rgba(34,197,94,0.8))"></div>
+        </div>
+        <div class="flex" style="justify-content:space-between;font-size:0.8rem;font-weight:600">
+          <span class="over">大 ${(r.over*100).toFixed(2)}%</span>
+          ${r.push>0.001?`<span class="push">走 ${(r.push*100).toFixed(2)}%</span>`:''}
+          <span class="under">小 ${(r.under*100).toFixed(2)}%</span>
+        </div>
+        ${normHtml}
+      </div>`;
+    }).join('');
+  }
+
+  renderOU(probsH,'homeOUResults');
+  renderOU(probsA,'awayOUResults');
+  renderOU(totalGoals(probsH,probsA),'totalOUResults');
+
+  // ===== 图表 =====
+  const tLabels=Array.from({length:11},(_,i)=>i+'球');
+  const hFull=Array.from({length:11},(_,i)=>pmf(lamH,i));
+  const aFull=Array.from({length:11},(_,i)=>pmf(lamA,i));
+  if(teamChart) teamChart.destroy();
+  teamChart=new Chart(document.getElementById('teamChart'),{
+    type:'bar',
+    data:{
+      labels:tLabels,
+      datasets:[
+        {label:'主队',data:hFull,backgroundColor:'rgba(239,68,68,0.6)',borderColor:'#ef4444',borderWidth:1,borderRadius:2},
+        {label:'客队',data:aFull,backgroundColor:'rgba(34,197,94,0.6)',borderColor:'#22c55e',borderWidth:1,borderRadius:2}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'top',labels:{boxWidth:10,font:{size:9,color:'#94a3b8'}}},
+        tooltip:{callbacks:{label:ctx=>ctx.dataset.label+': '+(ctx.parsed.y*100).toFixed(2)+'%'}}
+      },
+      scales:{y:{beginAtZero:true,grid:{color:'rgba(255,255,255,0.05)'},ticks:{callback:v=>(v*100).toFixed(0)+'%',color:'#94a3b8'}},x:{grid:{display:false},ticks:{color:'#94a3b8'}}}
+    }
+  });
+
+  const tgLabels=['0球','1球','2球','3球','4球','5球','6球','7+球'];
+  const tgData=[...tg.slice(0,7),tail7];
+  const tgBgs=['rgba(148,163,184,0.7)','rgba(100,116,139,0.7)','rgba(71,85,105,0.7)','rgba(51,65,85,0.7)','rgba(30,41,59,0.7)','rgba(15,23,42,0.7)','rgba(2,6,23,0.7)','rgba(0,0,0,0.7)'];
+  if(totalChart) totalChart.destroy();
+  totalChart=new Chart(document.getElementById('totalChart'),{
+    type:'bar',
+    data:{labels:tgLabels,datasets:[{label:'总进球',data:tgData,backgroundColor:tgBgs,borderColor:tgBgs,borderWidth:1,borderRadius:3}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},
+        tooltip:{callbacks:{label:ctx=>(ctx.parsed.y*100).toFixed(2)+'%'}}
+      },
+      scales:{y:{beginAtZero:true,grid:{color:'rgba(255,255,255,0.05)'},ticks:{callback:v=>(v*100).toFixed(0)+'%',color:'#94a3b8'}},x:{grid:{display:false},ticks:{color:'#94a3b8'}}}
+    }
+  });
+}
+
+// ===== 粘贴解析
+function parseAndFill(){
+  const text=document.getElementById('pasteArea').value.trim();
+  const st=document.getElementById('parseStatus');
+  if(!text){st.textContent='⚠️ 请粘贴数据';return;}
+  const nums=text.split(/[\s,;\t\n\r]+/).map(s=>parseFloat(s)).filter(n=>isFinite(n)&&n>0);
+  if(nums.length<12){st.textContent='⚠️ 需要12个赔率，当前'+nums.length+'个';return;}
+  const h=nums.slice(0,6),a=nums.slice(6,12);
+  document.querySelectorAll('.h-odds').forEach((inp,i)=>{inp.value=h[i].toFixed(2);});
+  document.querySelectorAll('.a-odds').forEach((inp,i)=>{inp.value=a[i].toFixed(2);});
+  st.textContent='✅ 已解析 主'+h.length+' · 客'+a.length+' 赔率';
+  recalculate();
+}
+
+// 初始化
+renderOdds(PRESET_HOME,PRESET_AWAY);
+recalculate();
+</script>
+</body>
+</html>
