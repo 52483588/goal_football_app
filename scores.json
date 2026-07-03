@@ -29,9 +29,9 @@
         },
         "payout": {
           "fg": "1",
-          "ftg": "2",
-          "ht": "2",
-          "ft": "2",
+          "ftg": "3",
+          "ht": "3",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2020963777728667650"
@@ -89,7 +89,7 @@
         "hometeamName": "科泰尼沙",
         "awayteamName": "邦迪比达",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "2020",
         "awayteamId": "1969",
         "tournamentId": "126869",
@@ -107,9 +107,9 @@
         "dataAnalysisShow": "1",
         "del": "0",
         "importState": "0",
-        "birtiSign": "112",
+        "birtiSign": "",
         "showTime": "",
-        "lastUpdateTime": "2026-07-03 07:59",
+        "lastUpdateTime": "2026-07-03 10:17:27",
         "orderNum": "",
         "autoId": "2194647",
         "homeRankingValue": "--",
@@ -122,7 +122,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-03 10:59:40",
         "uqTournament": {
           "colorCode": "6666FF",
           "folderName": "",
@@ -140,6 +140,17 @@
           "orderNum": "10",
           "name": "世界盃",
           "id": "16"
+        },
+        "score": {
+          "current": "0:0",
+          "matchId": null
+        },
+        "corner": {
+          "ft": "0:0",
+          "ht": "0:0",
+          "otf": "0:0",
+          "oth": "0:0",
+          "current": "0:0"
         },
         "payout": {
           "fg": "2",
@@ -206,12 +217,27 @@
             "id": "524"
           }
         ],
-        "beforeState": "0",
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {},
+        "hcap": {
+          "ftHandicap": "-0.5",
+          "ftOverUnder": "2/2.5",
+          "ftHandicapCorner": "-1",
+          "ftOverUnderCorner": "+9",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2071104094750048258",
+          "del": "0"
+        },
         "hasBetInRunOt": "1",
-        "clock": "--",
+        "clock": "135",
         "uqTournamentId": "16",
         "hometeamName": "瑞士",
         "awayteamName": "阿尔及利亚",
@@ -228,7 +254,7 @@
         "oldMatchId": "",
         "sport": "1",
         "matchId": "2071104094750048258",
-        "currentState": "0",
+        "currentState": "6",
         "startDate": "2026-07-03 11:00",
         "evId": "944038",
         "dataAnalysisShow": "1",
@@ -236,7 +262,7 @@
         "importState": "3",
         "birtiSign": "111",
         "showTime": "",
-        "lastUpdateTime": "2026-07-03 09:38:58",
+        "lastUpdateTime": "2026-07-03 11:00",
         "orderNum": "",
         "autoId": "2240944",
         "homeRankingValue": "19",
@@ -536,7 +562,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-03 09:35:02",
+        "currentPeriodStart": "2026-07-03 08:30:27",
         "uqTournament": {
           "colorCode": "4B0082",
           "folderName": "",
@@ -557,14 +583,15 @@
         },
         "score": {
           "ht": "2:0",
-          "current": "3:0",
+          "ft": "4:1",
+          "current": "4:1",
           "matchId": null
         },
         "payout": {
           "fg": "1",
-          "ftg": "2",
-          "ht": "2",
-          "ft": "2",
+          "ftg": "3",
+          "ht": "3",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2066258214901448706"
@@ -594,7 +621,7 @@
           "id": "2225249",
           "typeCode": "1"
         },
-        "beforeState": "31",
+        "beforeState": "7",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
@@ -617,12 +644,12 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "4303",
+        "clock": "5400",
         "uqTournamentId": "1221",
         "hometeamName": "奥希金斯",
         "awayteamName": "高路高路",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "3163",
         "awayteamId": "3155",
         "tournamentId": "128239",
@@ -634,15 +661,15 @@
         "oldMatchId": "",
         "sport": "1",
         "matchId": "2066258214901448706",
-        "currentState": "7",
+        "currentState": "100",
         "startDate": "2026-07-03 08:30",
         "evId": "944309",
         "dataAnalysisShow": "1",
         "del": "0",
         "importState": "0",
-        "birtiSign": "112",
+        "birtiSign": "",
         "showTime": "",
-        "lastUpdateTime": "2026-07-03 08:30",
+        "lastUpdateTime": "2026-07-03 10:47:30",
         "orderNum": "",
         "autoId": "2231767",
         "homeRankingValue": "10",
@@ -997,7 +1024,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-03 09:13:45",
+        "currentPeriodStart": "2026-07-03 08:06:30",
         "uqTournament": {
           "colorCode": "9C0350",
           "folderName": "",
@@ -1018,14 +1045,15 @@
         },
         "score": {
           "ht": "1:1",
+          "ft": "1:2",
           "current": "1:2",
           "matchId": null
         },
         "payout": {
           "fg": "1",
-          "ftg": "2",
-          "ht": "2",
-          "ft": "2",
+          "ftg": "3",
+          "ht": "3",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2027850898980659202"
@@ -1064,7 +1092,7 @@
           "id": "2225242",
           "typeCode": "1"
         },
-        "beforeState": "31",
+        "beforeState": "7",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
@@ -1087,12 +1115,12 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "5580",
+        "clock": "5400",
         "uqTournamentId": "28163",
         "hometeamName": "伯明翰军团",
         "awayteamName": "底特律城",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "538325",
         "awayteamId": "437402",
         "tournamentId": "91501",
@@ -1104,15 +1132,15 @@
         "oldMatchId": "",
         "sport": "1",
         "matchId": "2027850898980659202",
-        "currentState": "7",
+        "currentState": "100",
         "startDate": "2026-07-03 08:00",
         "evId": "944193",
         "dataAnalysisShow": "1",
         "del": "0",
         "importState": "0",
-        "birtiSign": "112",
+        "birtiSign": "",
         "showTime": "",
-        "lastUpdateTime": "2026-07-03 08:06",
+        "lastUpdateTime": "2026-07-03 10:17:27",
         "orderNum": "",
         "autoId": "2207646",
         "homeRankingValue": "--",
@@ -1631,5 +1659,5 @@
   "token": null,
   "rspCode": "SUCCESS",
   "rspMsg": "成功",
-  "sysTime": "2026-07-03 10:01:45"
+  "sysTime": "2026-07-03 11:01:55"
 }
