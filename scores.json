@@ -158,7 +158,7 @@
         "awayteamNameZht": "智利大學"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-05 18:30:31",
         "uqTournament": {
           "colorCode": "AA0000",
           "folderName": "Korean_K_League_Challenge",
@@ -177,6 +177,10 @@
           "name": "韩乙",
           "id": "777"
         },
+        "score": {
+          "matchId": null,
+          "current": "0:0"
+        },
         "payout": {
           "fg": "1",
           "ftg": "2",
@@ -193,12 +197,27 @@
           "matchId": ""
         },
         "broadcast": [],
-        "beforeState": "0",
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {},
+        "hcap": {
+          "ftHandicap": "-0.5/-1",
+          "ftOverUnder": "2.5",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2013715705713844226",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "1871",
         "uqTournamentId": "777",
         "hometeamName": "金浦FC",
         "awayteamName": "忠南牙山",
@@ -208,7 +227,7 @@
         "del": "0",
         "importState": "0",
         "birtiSign": "112",
-        "lastUpdateTime": "2026-07-05 12:57",
+        "lastUpdateTime": "2026-07-05 18:30",
         "showTime": "",
         "orderNum": "",
         "autoId": "2186997",
@@ -225,7 +244,7 @@
         "hometeamId": "202341",
         "awayteamId": "676363",
         "tournamentId": "34393",
-        "currentState": "0",
+        "currentState": "6",
         "startDate": "2026-07-05 18:30",
         "evId": "944249",
         "dataAnalysisShow": "1",
@@ -236,7 +255,7 @@
         "awayteamNameZht": "忠南牙山"
       },
       {
-        "currentPeriodStart": "2026-07-05 15:25:39",
+        "currentPeriodStart": "2026-07-05 15:25",
         "uqTournament": {
           "colorCode": "F88964",
           "folderName": "",
@@ -286,10 +305,10 @@
             "id": "20"
           }
         ],
-        "beforeState": "7",
+        "beforeState": "0",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "other": {
           "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
@@ -318,8 +337,8 @@
         "matchId": "2020239282646736898",
         "del": "0",
         "importState": "3",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-07-05 15:10:56",
+        "birtiSign": "221",
+        "lastUpdateTime": "2026-07-05 17:29",
         "showTime": "",
         "orderNum": "",
         "autoId": "2194343",
@@ -347,7 +366,7 @@
         "awayteamNameZht": "丹德農雷霆"
       },
       {
-        "currentPeriodStart": "2026-07-05 17:49:28",
+        "currentPeriodStart": "2026-07-05 18:59:50",
         "uqTournament": {
           "colorCode": "0099FF",
           "folderName": "",
@@ -368,8 +387,9 @@
         },
         "score": {
           "ht": "2:0",
+          "ft": "3:1",
           "matchId": null,
-          "current": "2:0"
+          "current": "3:1"
         },
         "payout": {
           "fg": "1",
@@ -414,7 +434,7 @@
           "id": "2226970",
           "typeCode": "1"
         },
-        "beforeState": "6",
+        "beforeState": "7",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
@@ -437,7 +457,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "2700",
+        "clock": "5400",
         "uqTournamentId": "615",
         "hometeamName": "南阳州FC",
         "awayteamName": "首尔中浪",
@@ -446,8 +466,8 @@
         "matchId": "2066628708536352770",
         "del": "0",
         "importState": "3",
-        "birtiSign": "111",
-        "lastUpdateTime": "2026-07-05 17:05",
+        "birtiSign": "",
+        "lastUpdateTime": "2026-07-05 18:46:44",
         "showTime": "",
         "orderNum": "",
         "autoId": "2232324",
@@ -464,7 +484,7 @@
         "hometeamId": "1762579657883729922",
         "awayteamId": "151968",
         "tournamentId": "126697",
-        "currentState": "31",
+        "currentState": "100",
         "startDate": "2026-07-05 17:00",
         "evId": "944868",
         "dataAnalysisShow": "1",
@@ -865,7 +885,7 @@
         "awayteamNameZht": "佛山南獅"
       },
       {
-        "currentPeriodStart": "2026-07-05 17:58:49",
+        "currentPeriodStart": "2026-07-05 19:00:23",
         "uqTournament": {
           "colorCode": "0099FF",
           "folderName": "",
@@ -885,8 +905,9 @@
           "id": "615"
         },
         "score": {
+          "ht": "3:0",
           "matchId": null,
-          "current": "0:0"
+          "current": "3:0"
         },
         "payout": {
           "fg": "1",
@@ -913,11 +934,32 @@
             "id": "634"
           }
         ],
-        "beforeState": "6",
+        "firstTeam": {
+          "clock": "2",
+          "matchId": "",
+          "teamOther": "",
+          "del": "",
+          "importState": "",
+          "autoId": "",
+          "createDate": "",
+          "currentState": "6",
+          "playerId": "0",
+          "playerName": "待定",
+          "playerNameZh": "",
+          "playerNameZht": "",
+          "teamPlayerState": "",
+          "teamId": "41257",
+          "id": "2226988",
+          "typeCode": "1"
+        },
+        "beforeState": "31",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
-        "other": {},
+        "other": {
+          "goalCardSwitchFt": "on",
+          "goalCardSwitchOt": "off"
+        },
         "hcap": {
           "ftHandicap": "-2",
           "ftOverUnder": "3.5",
@@ -933,7 +975,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "184",
+        "clock": "2779",
         "uqTournamentId": "615",
         "hometeamName": "庆州水利",
         "awayteamName": "瑞山先锋",
@@ -960,7 +1002,7 @@
         "hometeamId": "41257",
         "awayteamId": "2066623536087105537",
         "tournamentId": "126697",
-        "currentState": "6",
+        "currentState": "7",
         "startDate": "2026-07-05 18:00",
         "evId": "944873",
         "dataAnalysisShow": "1",
@@ -1049,7 +1091,7 @@
         "awayteamNameZht": "長春亞泰"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-05 18:30:16",
         "uqTournament": {
           "colorCode": "FF0000",
           "folderName": "",
@@ -1067,6 +1109,10 @@
           "logoPath": "kor.png",
           "name": "韩职",
           "id": "410"
+        },
+        "score": {
+          "matchId": null,
+          "current": "0:0"
         },
         "payout": {
           "fg": "1",
@@ -1109,12 +1155,27 @@
             "id": "15"
           }
         ],
-        "beforeState": "0",
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {},
+        "hcap": {
+          "ftHandicap": "-0.5",
+          "ftOverUnder": "2.5",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2011541614789582849",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "1886",
         "uqTournamentId": "410",
         "hometeamName": "FC首尔",
         "awayteamName": "仁川联",
@@ -1124,7 +1185,7 @@
         "del": "0",
         "importState": "3",
         "birtiSign": "111",
-        "lastUpdateTime": "2026-06-28 05:13",
+        "lastUpdateTime": "2026-07-05 18:33",
         "showTime": "",
         "orderNum": "",
         "autoId": "2184608",
@@ -1141,7 +1202,7 @@
         "hometeamId": "7646",
         "awayteamId": "7648",
         "tournamentId": "32851",
-        "currentState": "0",
+        "currentState": "6",
         "startDate": "2026-07-05 18:30",
         "evId": "944108",
         "dataAnalysisShow": "1",
@@ -1239,7 +1300,7 @@
         "awayteamNameZht": "克羅地亞U19"
       },
       {
-        "currentPeriodStart": "2026-07-05 14:23:48",
+        "currentPeriodStart": "2026-07-05 14:23",
         "uqTournament": {
           "colorCode": "F88964",
           "folderName": "",
@@ -1289,10 +1350,10 @@
             "id": "20"
           }
         ],
-        "beforeState": "7",
+        "beforeState": "0",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "other": {
           "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
@@ -1321,8 +1382,8 @@
         "matchId": "2024226325798248449",
         "del": "0",
         "importState": "3",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-07-05 14:14:01",
+        "birtiSign": "221",
+        "lastUpdateTime": "2026-07-05 17:02",
         "showTime": "",
         "orderNum": "",
         "autoId": "2201312",
@@ -2114,7 +2175,7 @@
         "awayteamNameZht": "魔術聯"
       },
       {
-        "currentPeriodStart": "2026-07-05 17:08:20",
+        "currentPeriodStart": "2026-07-05 17:24:04",
         "uqTournament": {
           "colorCode": "0099FF",
           "folderName": "",
@@ -2135,8 +2196,9 @@
         },
         "score": {
           "ht": "1:0",
+          "ft": "4:0",
           "matchId": null,
-          "current": "1:0"
+          "current": "4:0"
         },
         "payout": {
           "fg": "1",
@@ -2181,7 +2243,7 @@
           "id": "2226975",
           "typeCode": "1"
         },
-        "beforeState": "6",
+        "beforeState": "7",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
@@ -2207,7 +2269,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "2700",
+        "clock": "5400",
         "uqTournamentId": "615",
         "hometeamName": "巨济市民",
         "awayteamName": "仁川西区",
@@ -2234,7 +2296,7 @@
         "hometeamId": "848763",
         "awayteamId": "2066513841070473218",
         "tournamentId": "126697",
-        "currentState": "31",
+        "currentState": "100",
         "startDate": "2026-07-05 17:00",
         "evId": "944869",
         "dataAnalysisShow": "1",
@@ -2245,7 +2307,7 @@
         "awayteamNameZht": "仁川西區"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-05 19:00:14",
         "uqTournament": {
           "colorCode": "6699FF",
           "folderName": "Chinese_Football_Super_League",
@@ -2264,6 +2326,10 @@
           "name": "中超",
           "id": "649"
         },
+        "score": {
+          "matchId": null,
+          "current": "0:0"
+        },
         "payout": {
           "fg": "1",
           "ftg": "2",
@@ -2280,12 +2346,27 @@
           "matchId": ""
         },
         "broadcast": [],
-        "beforeState": "0",
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {},
+        "hcap": {
+          "ftHandicap": "+1",
+          "ftOverUnder": "3",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2024225550275633153",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "88",
         "uqTournamentId": "649",
         "hometeamName": "青岛海牛",
         "awayteamName": "成都蓉城",
@@ -2295,7 +2376,7 @@
         "del": "0",
         "importState": "3",
         "birtiSign": "111",
-        "lastUpdateTime": "2026-06-30 05:30",
+        "lastUpdateTime": "2026-07-05 19:01",
         "showTime": "",
         "orderNum": "",
         "autoId": "2200243",
@@ -2312,7 +2393,7 @@
         "hometeamId": "34695",
         "awayteamId": "252167",
         "tournamentId": "31907",
-        "currentState": "0",
+        "currentState": "6",
         "startDate": "2026-07-05 19:00",
         "evId": "944253",
         "dataAnalysisShow": "1",
@@ -2800,7 +2881,7 @@
         "awayteamNameZht": "馬瑟韋爾"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-05 18:31:08",
         "uqTournament": {
           "colorCode": "FF0000",
           "folderName": "",
@@ -2819,6 +2900,10 @@
           "name": "韩职",
           "id": "410"
         },
+        "score": {
+          "matchId": null,
+          "current": "0:0"
+        },
         "payout": {
           "fg": "1",
           "ftg": "2",
@@ -2835,12 +2920,27 @@
           "matchId": ""
         },
         "broadcast": [],
-        "beforeState": "0",
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {},
+        "hcap": {
+          "ftHandicap": "0/-0.5",
+          "ftOverUnder": "2.5",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2011541613720035330",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "1834",
         "uqTournamentId": "410",
         "hometeamName": "金泉尚武",
         "awayteamName": "济州SK",
@@ -2849,8 +2949,8 @@
         "matchId": "2011541613720035330",
         "del": "0",
         "importState": "0",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-07-05 17:44:52",
+        "birtiSign": "112",
+        "lastUpdateTime": "2026-07-05 18:31",
         "showTime": "",
         "orderNum": "",
         "autoId": "2184606",
@@ -2867,7 +2967,7 @@
         "hometeamId": "7647",
         "awayteamId": "7649",
         "tournamentId": "32851",
-        "currentState": "0",
+        "currentState": "6",
         "startDate": "2026-07-05 18:30",
         "evId": "944106",
         "dataAnalysisShow": "1",
@@ -3034,7 +3134,7 @@
         "awayteamNameZht": "安圖法加斯達"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-05 18:30:47",
         "uqTournament": {
           "colorCode": "AA0000",
           "folderName": "Korean_K_League_Challenge",
@@ -3053,6 +3153,10 @@
           "name": "韩乙",
           "id": "777"
         },
+        "score": {
+          "matchId": null,
+          "current": "0:0"
+        },
         "payout": {
           "fg": "1",
           "ftg": "2",
@@ -3069,12 +3173,27 @@
           "matchId": ""
         },
         "broadcast": [],
-        "beforeState": "0",
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {},
+        "hcap": {
+          "ftHandicap": "+1",
+          "ftOverUnder": "2.5/3",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2013715705118253058",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "1855",
         "uqTournamentId": "777",
         "hometeamName": "金海FC",
         "awayteamName": "首尔衣恋",
@@ -3084,7 +3203,7 @@
         "del": "0",
         "importState": "0",
         "birtiSign": "112",
-        "lastUpdateTime": "2026-07-05 12:57",
+        "lastUpdateTime": "2026-07-05 18:31",
         "showTime": "",
         "orderNum": "",
         "autoId": "2186996",
@@ -3101,7 +3220,7 @@
         "hometeamId": "41260",
         "awayteamId": "191070",
         "tournamentId": "34393",
-        "currentState": "0",
+        "currentState": "6",
         "startDate": "2026-07-05 18:30",
         "evId": "944247",
         "dataAnalysisShow": "1",
@@ -3647,7 +3766,7 @@
         "awayteamNameZht": "聖馬高斯"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-05 18:34:10",
         "uqTournament": {
           "colorCode": "AA0000",
           "folderName": "Korean_K_League_Challenge",
@@ -3666,6 +3785,10 @@
           "name": "韩乙",
           "id": "777"
         },
+        "score": {
+          "matchId": null,
+          "current": "1:0"
+        },
         "payout": {
           "fg": "1",
           "ftg": "2",
@@ -3682,12 +3805,48 @@
           "matchId": ""
         },
         "broadcast": [],
-        "beforeState": "0",
+        "firstTeam": {
+          "clock": "16",
+          "matchId": "",
+          "teamOther": "",
+          "del": "",
+          "importState": "",
+          "autoId": "",
+          "createDate": "",
+          "currentState": "6",
+          "playerId": "0",
+          "playerName": "待定",
+          "playerNameZh": "",
+          "playerNameZht": "",
+          "teamPlayerState": "",
+          "teamId": "7643",
+          "id": "2227002",
+          "typeCode": "1"
+        },
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {
+          "goalCardSwitchFt": "on",
+          "goalCardSwitchOt": "off"
+        },
+        "hcap": {
+          "ftHandicap": "0/+0.5",
+          "ftOverUnder": "2.5/3",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2013715706858889218",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "1652",
         "uqTournamentId": "777",
         "hometeamName": "全南天龙",
         "awayteamName": "釜山偶像",
@@ -3697,7 +3856,7 @@
         "del": "0",
         "importState": "0",
         "birtiSign": "112",
-        "lastUpdateTime": "2026-07-05 12:57",
+        "lastUpdateTime": "2026-07-05 18:34",
         "showTime": "",
         "orderNum": "",
         "autoId": "2186999",
@@ -3714,7 +3873,7 @@
         "hometeamId": "7643",
         "awayteamId": "7642",
         "tournamentId": "34393",
-        "currentState": "0",
+        "currentState": "6",
         "startDate": "2026-07-05 18:30",
         "evId": "944252",
         "dataAnalysisShow": "1",
@@ -4472,7 +4631,7 @@
         "awayteamNameZht": "利加大學"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-05 18:30:04",
         "uqTournament": {
           "colorCode": "FF0000",
           "folderName": "",
@@ -4490,6 +4649,10 @@
           "logoPath": "kor.png",
           "name": "韩职",
           "id": "410"
+        },
+        "score": {
+          "matchId": null,
+          "current": "0:0"
         },
         "payout": {
           "fg": "1",
@@ -4516,12 +4679,27 @@
             "id": "19"
           }
         ],
-        "beforeState": "0",
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {},
+        "hcap": {
+          "ftHandicap": "+1",
+          "ftOverUnder": "2.5",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2011541614244323330",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "1898",
         "uqTournamentId": "410",
         "hometeamName": "FC光州",
         "awayteamName": "蔚山HD",
@@ -4531,7 +4709,7 @@
         "del": "0",
         "importState": "3",
         "birtiSign": "111",
-        "lastUpdateTime": "2026-06-28 00:00",
+        "lastUpdateTime": "2026-07-05 18:32",
         "showTime": "",
         "orderNum": "",
         "autoId": "2184607",
@@ -4548,7 +4726,7 @@
         "hometeamId": "48912",
         "awayteamId": "7653",
         "tournamentId": "32851",
-        "currentState": "0",
+        "currentState": "6",
         "startDate": "2026-07-05 18:30",
         "evId": "944107",
         "dataAnalysisShow": "1",
@@ -4991,7 +5169,7 @@
         "awayteamNameZht": "意大利U19"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-05 18:50:29",
         "uqTournament": {
           "colorCode": "0099FF",
           "folderName": "",
@@ -5009,6 +5187,11 @@
           "logoPath": "kor.png",
           "name": "南韩杯",
           "id": "615"
+        },
+        "score": {
+          "ht": "1:3",
+          "matchId": null,
+          "current": "1:3"
         },
         "payout": {
           "fg": "1",
@@ -5035,12 +5218,48 @@
             "id": "634"
           }
         ],
-        "beforeState": "0",
+        "firstTeam": {
+          "clock": "21",
+          "matchId": "",
+          "teamOther": "",
+          "del": "",
+          "importState": "",
+          "autoId": "",
+          "createDate": "",
+          "currentState": "6",
+          "playerId": "0",
+          "playerName": "待定",
+          "playerNameZh": "",
+          "playerNameZht": "",
+          "teamPlayerState": "",
+          "teamId": "322945",
+          "id": "2226990",
+          "typeCode": "1"
+        },
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {
+          "goalCardSwitchFt": "on",
+          "goalCardSwitchOt": "off"
+        },
+        "hcap": {
+          "ftHandicap": "+1",
+          "ftOverUnder": "2.5/3",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2066628710067273729",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "2700",
         "uqTournamentId": "615",
         "hometeamName": "平澤市民",
         "awayteamName": "骊州FC",
@@ -5050,7 +5269,7 @@
         "del": "0",
         "importState": "0",
         "birtiSign": "112",
-        "lastUpdateTime": "2026-07-05 12:51",
+        "lastUpdateTime": "2026-07-05 18:02",
         "showTime": "",
         "orderNum": "",
         "autoId": "2232327",
@@ -5067,7 +5286,7 @@
         "hometeamId": "322945",
         "awayteamId": "708353",
         "tournamentId": "126697",
-        "currentState": "0",
+        "currentState": "31",
         "startDate": "2026-07-05 18:00",
         "evId": "944874",
         "dataAnalysisShow": "1",
@@ -5189,7 +5408,7 @@
         "awayteamNameZht": "布里斯本獅吼青年隊"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-05 18:48:48",
         "uqTournament": {
           "colorCode": "0099FF",
           "folderName": "",
@@ -5207,6 +5426,11 @@
           "logoPath": "kor.png",
           "name": "南韩杯",
           "id": "615"
+        },
+        "score": {
+          "ht": "2:1",
+          "matchId": null,
+          "current": "2:1"
         },
         "payout": {
           "fg": "1",
@@ -5233,12 +5457,48 @@
             "id": "634"
           }
         ],
-        "beforeState": "0",
+        "firstTeam": {
+          "clock": "31",
+          "matchId": "",
+          "teamOther": "",
+          "del": "",
+          "importState": "",
+          "autoId": "",
+          "createDate": "",
+          "currentState": "6",
+          "playerId": "0",
+          "playerName": "待定",
+          "playerNameZh": "",
+          "playerNameZht": "",
+          "teamPlayerState": "",
+          "teamId": "41255",
+          "id": "2226992",
+          "typeCode": "1"
+        },
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {
+          "goalCardSwitchFt": "on",
+          "goalCardSwitchOt": "off"
+        },
+        "hcap": {
+          "ftHandicap": "-1.5/-2",
+          "ftOverUnder": "3/3.5",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2066628709048057857",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "2700",
         "uqTournamentId": "615",
         "hometeamName": "釜山运输",
         "awayteamName": "机张联",
@@ -5248,7 +5508,7 @@
         "del": "0",
         "importState": "0",
         "birtiSign": "112",
-        "lastUpdateTime": "2026-07-05 12:51",
+        "lastUpdateTime": "2026-07-05 18:02",
         "showTime": "",
         "orderNum": "",
         "autoId": "2232325",
@@ -5265,7 +5525,7 @@
         "hometeamId": "41255",
         "awayteamId": "1895867097020186625",
         "tournamentId": "126697",
-        "currentState": "0",
+        "currentState": "31",
         "startDate": "2026-07-05 18:00",
         "evId": "944871",
         "dataAnalysisShow": "1",
@@ -5363,7 +5623,7 @@
         "awayteamNameZht": "哈馬比"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-05 18:30:33",
         "uqTournament": {
           "colorCode": "AA0000",
           "folderName": "Korean_K_League_Challenge",
@@ -5382,6 +5642,10 @@
           "name": "韩乙",
           "id": "777"
         },
+        "score": {
+          "matchId": null,
+          "current": "0:0"
+        },
         "payout": {
           "fg": "1",
           "ftg": "2",
@@ -5398,12 +5662,27 @@
           "matchId": ""
         },
         "broadcast": [],
-        "beforeState": "0",
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {},
+        "hcap": {
+          "ftHandicap": "0",
+          "ftOverUnder": "2/2.5",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2013715706313629697",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "1869",
         "uqTournamentId": "777",
         "hometeamName": "庆南FC",
         "awayteamName": "天安市",
@@ -5413,7 +5692,7 @@
         "del": "0",
         "importState": "0",
         "birtiSign": "112",
-        "lastUpdateTime": "2026-07-05 12:57",
+        "lastUpdateTime": "2026-07-05 18:31",
         "showTime": "",
         "orderNum": "",
         "autoId": "2186998",
@@ -5430,7 +5709,7 @@
         "hometeamId": "22020",
         "awayteamId": "41263",
         "tournamentId": "34393",
-        "currentState": "0",
+        "currentState": "6",
         "startDate": "2026-07-05 18:30",
         "evId": "944250",
         "dataAnalysisShow": "1",
@@ -5522,6 +5801,6 @@
   },
   "rspCode": "SUCCESS",
   "rspMsg": "成功",
-  "sysTime": "2026-07-05 18:01:53",
+  "sysTime": "2026-07-05 19:01:42",
   "token": null
 }
