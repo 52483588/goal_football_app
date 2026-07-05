@@ -2482,7 +2482,7 @@
         "del": "0",
         "importState": "0",
         "birtiSign": "122",
-        "lastUpdateTime": "2026-07-05 02:43",
+        "lastUpdateTime": "2026-07-05 03:24",
         "showTime": "",
         "orderNum": "",
         "autoId": "2228661",
@@ -2496,7 +2496,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-05 12:31:59",
         "uqTournament": {
           "colorCode": "F88964",
           "folderName": "",
@@ -2515,6 +2515,10 @@
           "name": "澳国联",
           "id": "1626"
         },
+        "score": {
+          "matchId": null,
+          "current": "0:0"
+        },
         "payout": {
           "fg": "1",
           "ftg": "1",
@@ -2528,7 +2532,7 @@
           "ht": "1",
           "ft": "1",
           "ot": "1",
-          "matchId": "2024226325798248449"
+          "matchId": ""
         },
         "broadcast": [
           {
@@ -2540,12 +2544,27 @@
             "id": "20"
           }
         ],
-        "beforeState": "0",
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {},
+        "hcap": {
+          "ftHandicap": "+3.5/+4",
+          "ftOverUnder": "5",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2024226325798248449",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "1785",
         "sport": "1",
         "matchId": "2024226325798248449",
         "uploadState": "1",
@@ -2553,7 +2572,7 @@
         "hometeamNameZh": "东南联",
         "awayteamNameZh": "南荷巴特",
         "awayteamNameZht": "南荷巴特",
-        "currentState": "0",
+        "currentState": "6",
         "startDate": "2026-07-05 12:30",
         "oldMatchId": "",
         "uqTournamentId": "1626",
@@ -2569,7 +2588,7 @@
         "del": "0",
         "importState": "3",
         "birtiSign": "111",
-        "lastUpdateTime": "2026-07-05 04:10:43",
+        "lastUpdateTime": "2026-07-05 12:34",
         "showTime": "",
         "orderNum": "",
         "autoId": "2201312",
@@ -2712,7 +2731,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-05 08:00:24",
+        "currentPeriodStart": "2026-07-05 08:00",
         "uqTournament": {
           "colorCode": "C43411",
           "folderName": "",
@@ -2756,7 +2775,7 @@
         "beforeState": "7",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "other": {
           "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
@@ -2799,8 +2818,8 @@
         "dataAnalysisShow": "1",
         "del": "0",
         "importState": "0",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-07-05 10:28:50",
+        "birtiSign": "122",
+        "lastUpdateTime": "2026-07-05 12:32",
         "showTime": "",
         "orderNum": "",
         "autoId": "2197861",
@@ -3123,7 +3142,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-05 13:01:13",
         "uqTournament": {
           "colorCode": "F88964",
           "folderName": "",
@@ -3142,6 +3161,10 @@
           "name": "澳国联",
           "id": "1268"
         },
+        "score": {
+          "matchId": null,
+          "current": "0:0"
+        },
         "payout": {
           "fg": "1",
           "ftg": "1",
@@ -3155,7 +3178,7 @@
           "ht": "1",
           "ft": "1",
           "ot": "1",
-          "matchId": "2022413790338015233"
+          "matchId": ""
         },
         "broadcast": [
           {
@@ -3167,12 +3190,27 @@
             "id": "20"
           }
         ],
-        "beforeState": "0",
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {},
+        "hcap": {
+          "ftHandicap": "-0.5/-1",
+          "ftOverUnder": "3.5",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2022413790338015233",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "31",
         "sport": "1",
         "matchId": "2022413790338015233",
         "uploadState": "1",
@@ -3180,7 +3218,7 @@
         "hometeamNameZh": "黃金海岸联",
         "awayteamNameZh": "魔术联",
         "awayteamNameZht": "魔術聯",
-        "currentState": "0",
+        "currentState": "6",
         "startDate": "2026-07-05 13:00",
         "oldMatchId": "",
         "uqTournamentId": "1268",
@@ -3195,8 +3233,8 @@
         "dataAnalysisShow": "1",
         "del": "0",
         "importState": "0",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-07-05 04:07:26",
+        "birtiSign": "112",
+        "lastUpdateTime": "2026-07-05 13:01",
         "showTime": "",
         "orderNum": "",
         "autoId": "2196368",
@@ -3210,7 +3248,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-05 08:30:48",
+        "currentPeriodStart": "2026-07-05 08:30",
         "uqTournament": {
           "colorCode": "4B0082",
           "folderName": "",
@@ -3272,7 +3310,7 @@
         "beforeState": "7",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "other": {
           "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
@@ -3315,8 +3353,8 @@
         "dataAnalysisShow": "1",
         "del": "0",
         "importState": "0",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-07-05 10:42:06",
+        "birtiSign": "122",
+        "lastUpdateTime": "2026-07-05 12:32",
         "showTime": "",
         "orderNum": "",
         "autoId": "2231772",
@@ -3418,7 +3456,7 @@
         "del": "0",
         "importState": "0",
         "birtiSign": "122",
-        "lastUpdateTime": "2026-07-05 06:02",
+        "lastUpdateTime": "2026-07-05 07:23",
         "showTime": "",
         "orderNum": "",
         "autoId": "2228658",
@@ -4441,7 +4479,7 @@
         "del": "0",
         "importState": "0",
         "birtiSign": "122",
-        "lastUpdateTime": "2026-07-05 02:52",
+        "lastUpdateTime": "2026-07-05 03:53",
         "showTime": "",
         "orderNum": "",
         "autoId": "2228657",
@@ -6998,7 +7036,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-05 10:04:55",
+        "currentPeriodStart": "2026-07-05 10:04",
         "uqTournament": {
           "colorCode": "9C0350",
           "folderName": "",
@@ -7066,10 +7104,10 @@
           "id": "2226886",
           "typeCode": "1"
         },
-        "beforeState": "7",
+        "beforeState": "0",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "other": {
           "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
@@ -7112,8 +7150,8 @@
         "dataAnalysisShow": "1",
         "del": "0",
         "importState": "3",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-07-05 09:50:52",
+        "birtiSign": "221",
+        "lastUpdateTime": "2026-07-05 10:38",
         "showTime": "",
         "orderNum": "",
         "autoId": "2207650",
@@ -7349,7 +7387,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-05 11:37:21",
+        "currentPeriodStart": "2026-07-05 11:37",
         "uqTournament": {
           "colorCode": "9C0350",
           "folderName": "",
@@ -7376,9 +7414,9 @@
         },
         "payout": {
           "fg": "1",
-          "ftg": "2",
-          "ht": "2",
-          "ft": "2",
+          "ftg": "3",
+          "ht": "3",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2027850969587572738"
@@ -7417,10 +7455,10 @@
           "id": "2226896",
           "typeCode": "1"
         },
-        "beforeState": "7",
+        "beforeState": "0",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "other": {
           "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
@@ -7455,7 +7493,7 @@
         "hometeamName": "新墨西哥联",
         "awayteamName": "奥克兰根源",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "545601",
         "awayteamId": "598758",
         "tournamentId": "91501",
@@ -7463,8 +7501,8 @@
         "dataAnalysisShow": "1",
         "del": "0",
         "importState": "3",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-07-05 11:26:36",
+        "birtiSign": "221",
+        "lastUpdateTime": "2026-07-05 12:17",
         "showTime": "",
         "orderNum": "",
         "autoId": "2207766",
@@ -7680,7 +7718,7 @@
         "del": "0",
         "importState": "0",
         "birtiSign": "122",
-        "lastUpdateTime": "2026-07-05 06:02",
+        "lastUpdateTime": "2026-07-05 06:53",
         "showTime": "",
         "orderNum": "",
         "autoId": "2228659",
@@ -9421,7 +9459,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-05 09:07:48",
+        "currentPeriodStart": "2026-07-05 09:07",
         "uqTournament": {
           "colorCode": "9C0350",
           "folderName": "",
@@ -9474,7 +9512,7 @@
         "beforeState": "7",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "redcard": {
           "current": "2:0"
         },
@@ -9520,8 +9558,8 @@
         "dataAnalysisShow": "1",
         "del": "0",
         "importState": "0",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-07-05 11:34:07",
+        "birtiSign": "122",
+        "lastUpdateTime": "2026-07-05 12:39",
         "showTime": "",
         "orderNum": "",
         "autoId": "2207765",
@@ -10036,7 +10074,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-05 11:01:09",
+        "currentPeriodStart": "2026-07-05 11:01",
         "uqTournament": {
           "colorCode": "9C0350",
           "folderName": "",
@@ -10104,10 +10142,10 @@
           "id": "2226882",
           "typeCode": "1"
         },
-        "beforeState": "7",
+        "beforeState": "0",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "other": {
           "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
@@ -10150,8 +10188,8 @@
         "dataAnalysisShow": "1",
         "del": "0",
         "importState": "3",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-07-05 10:49:27",
+        "birtiSign": "221",
+        "lastUpdateTime": "2026-07-05 11:41",
         "showTime": "",
         "orderNum": "",
         "autoId": "2207764",
@@ -10532,7 +10570,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-05 08:47:45",
+        "currentPeriodStart": "2026-07-05 08:47",
         "uqTournament": {
           "colorCode": "ac0f1f",
           "folderName": "",
@@ -10594,7 +10632,7 @@
         "beforeState": "7",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "other": {
           "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
@@ -10637,8 +10675,8 @@
         "dataAnalysisShow": "1",
         "del": "0",
         "importState": "0",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-07-05 10:58:24",
+        "birtiSign": "122",
+        "lastUpdateTime": "2026-07-05 12:38",
         "showTime": "",
         "orderNum": "",
         "autoId": "2208972",
@@ -11253,7 +11291,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-05 11:45:31",
+        "currentPeriodStart": "2026-07-05 12:38",
         "uqTournament": {
           "colorCode": "9C0350",
           "folderName": "",
@@ -11274,14 +11312,15 @@
         },
         "score": {
           "ht": "1:1",
+          "ft": "1:2",
           "matchId": null,
           "current": "1:2"
         },
         "payout": {
           "fg": "1",
-          "ftg": "2",
-          "ht": "2",
-          "ft": "2",
+          "ftg": "3",
+          "ht": "3",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2027850988508078081"
@@ -11320,10 +11359,10 @@
           "id": "2226913",
           "typeCode": "1"
         },
-        "beforeState": "7",
+        "beforeState": "0",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "other": {
           "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
@@ -11343,7 +11382,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "3685",
+        "clock": "5400",
         "sport": "1",
         "matchId": "2027850988508078081",
         "uploadState": "1",
@@ -11351,14 +11390,14 @@
         "hometeamNameZh": "拉斯维加斯灯火",
         "awayteamNameZh": "艾尔帕索火车头",
         "awayteamNameZht": "艾爾帕索火車頭",
-        "currentState": "7",
+        "currentState": "100",
         "startDate": "2026-07-05 10:30",
         "oldMatchId": "",
         "uqTournamentId": "28163",
         "hometeamName": "拉斯维加斯灯火",
         "awayteamName": "艾尔帕索火车头",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "412157",
         "awayteamId": "545599",
         "tournamentId": "91501",
@@ -11366,8 +11405,8 @@
         "dataAnalysisShow": "1",
         "del": "0",
         "importState": "3",
-        "birtiSign": "111",
-        "lastUpdateTime": "2026-07-05 10:39",
+        "birtiSign": "221",
+        "lastUpdateTime": "2026-07-05 12:55",
         "showTime": "",
         "orderNum": "",
         "autoId": "2207798",
@@ -12204,7 +12243,7 @@
         "del": "0",
         "importState": "0",
         "birtiSign": "122",
-        "lastUpdateTime": "2026-07-04 23:49",
+        "lastUpdateTime": "2026-07-05 01:52",
         "showTime": "",
         "orderNum": "",
         "autoId": "2228656",
@@ -12875,7 +12914,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-05 10:00:54",
+        "currentPeriodStart": "2026-07-05 10:00",
         "uqTournament": {
           "colorCode": "9C0350",
           "folderName": "",
@@ -12943,10 +12982,10 @@
           "id": "2226883",
           "typeCode": "1"
         },
-        "beforeState": "7",
+        "beforeState": "0",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "redcard": {
           "current": "1:1"
         },
@@ -12992,8 +13031,8 @@
         "dataAnalysisShow": "1",
         "del": "0",
         "importState": "3",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-07-05 09:48:38",
+        "birtiSign": "221",
+        "lastUpdateTime": "2026-07-05 10:40",
         "showTime": "",
         "orderNum": "",
         "autoId": "2207649",
@@ -13209,7 +13248,7 @@
         "del": "0",
         "importState": "0",
         "birtiSign": "122",
-        "lastUpdateTime": "2026-07-05 06:02",
+        "lastUpdateTime": "2026-07-05 06:53",
         "showTime": "",
         "orderNum": "",
         "autoId": "2228660",
@@ -13551,5 +13590,5 @@
   "token": null,
   "rspCode": "SUCCESS",
   "rspMsg": "成功",
-  "sysTime": "2026-07-05 12:01:56"
+  "sysTime": "2026-07-05 13:01:44"
 }
