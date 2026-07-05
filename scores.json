@@ -1335,7 +1335,7 @@
         "awayteamNameZht": "仁川聯"
       },
       {
-        "currentPeriodStart": "2026-07-05 23:48:32",
+        "currentPeriodStart": "2026-07-06 00:04:29",
         "uqTournament": {
           "colorCode": "00CC33",
           "folderName": "",
@@ -1384,7 +1384,7 @@
             "id": "405"
           }
         ],
-        "beforeState": "6",
+        "beforeState": "31",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
@@ -1407,7 +1407,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "2700",
+        "clock": "4168",
         "uqTournamentId": "258",
         "hometeamName": "塞尔维亚U19",
         "awayteamName": "克罗地亚U19",
@@ -1434,7 +1434,7 @@
         "hometeamId": "22556",
         "awayteamId": "22499",
         "tournamentId": "126963",
-        "currentState": "31",
+        "currentState": "7",
         "startDate": "2026-07-05 23:00",
         "evId": "944881",
         "dataAnalysisShow": "1",
@@ -2242,9 +2242,9 @@
         },
         "payout": {
           "fg": "1",
-          "ftg": "2",
-          "ht": "2",
-          "ft": "2",
+          "ftg": "3",
+          "ht": "3",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2070251857115021314"
@@ -2306,8 +2306,8 @@
         "matchId": "2070251857115021314",
         "del": "0",
         "importState": "0",
-        "birtiSign": "112",
-        "lastUpdateTime": "2026-07-05 21:33",
+        "birtiSign": "",
+        "lastUpdateTime": "2026-07-06 00:08:41",
         "showTime": "",
         "orderNum": "",
         "autoId": "2237936",
@@ -2320,7 +2320,7 @@
         "lineUpShow": "0",
         "preLineUpShow": "0",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "1161",
         "awayteamId": "661",
         "tournamentId": "33551",
@@ -2776,7 +2776,7 @@
         "awayteamNameZht": "奧達斯"
       },
       {
-        "currentPeriodStart": "2026-07-05 23:30:42",
+        "currentPeriodStart": "2026-07-06 00:15:56",
         "uqTournament": {
           "colorCode": "A04FB0",
           "folderName": "",
@@ -2796,6 +2796,7 @@
           "id": "55"
         },
         "score": {
+          "ht": "1:0",
           "matchId": null,
           "current": "1:0"
         },
@@ -2838,7 +2839,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "1863",
+        "clock": "2700",
         "uqTournamentId": "55",
         "hometeamName": "MP米凯利",
         "awayteamName": "夏卡",
@@ -2865,7 +2866,7 @@
         "hometeamId": "5115",
         "awayteamId": "2240",
         "tournamentId": "127132",
-        "currentState": "6",
+        "currentState": "31",
         "startDate": "2026-07-05 23:30",
         "evId": "944257",
         "dataAnalysisShow": "1",
@@ -3828,7 +3829,7 @@
         "awayteamNameZht": "拉魯斯女足"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-06 00:09:12",
         "uqTournament": {
           "colorCode": "ac0f1f",
           "folderName": "",
@@ -3847,6 +3848,10 @@
           "name": "美国女联",
           "id": "1690"
         },
+        "score": {
+          "matchId": null,
+          "current": "0:2"
+        },
         "payout": {
           "fg": "1",
           "ftg": "2",
@@ -3863,12 +3868,48 @@
           "matchId": ""
         },
         "broadcast": [],
-        "beforeState": "0",
+        "firstTeam": {
+          "clock": "4",
+          "matchId": "",
+          "teamOther": "",
+          "del": "",
+          "importState": "",
+          "autoId": "",
+          "createDate": "",
+          "currentState": "6",
+          "playerId": "0",
+          "playerName": "待定",
+          "playerNameZh": "",
+          "playerNameZht": "",
+          "teamPlayerState": "",
+          "teamId": "-295959",
+          "id": "2227197",
+          "typeCode": "1"
+        },
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {
+          "goalCardSwitchFt": "on",
+          "goalCardSwitchOt": "off"
+        },
+        "hcap": {
+          "ftHandicap": "0/-0.5",
+          "ftOverUnder": "2.5",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2028694145223286786",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "1185",
         "uqTournamentId": "1690",
         "hometeamName": "波士顿传承女足",
         "awayteamName": "海湾FC女足",
@@ -3878,7 +3919,7 @@
         "del": "0",
         "importState": "0",
         "birtiSign": "112",
-        "lastUpdateTime": "2026-07-03 20:00",
+        "lastUpdateTime": "2026-07-06 00:09",
         "showTime": "",
         "orderNum": "",
         "autoId": "2208973",
@@ -3895,7 +3936,7 @@
         "hometeamId": "2028576202514685953",
         "awayteamId": "-295959",
         "tournamentId": "32987",
-        "currentState": "0",
+        "currentState": "6",
         "startDate": "2026-07-05 23:59",
         "evId": "944886",
         "dataAnalysisShow": "1",
@@ -5556,7 +5597,7 @@
         "awayteamNameZht": "聖喬治城"
       },
       {
-        "currentPeriodStart": "2026-07-05 23:48:47",
+        "currentPeriodStart": "2026-07-06 00:04:27",
         "uqTournament": {
           "colorCode": "00CC33",
           "folderName": "",
@@ -5585,7 +5626,7 @@
           "ht": "0:9",
           "otf": "0:0",
           "oth": "0:0",
-          "current": "0:9"
+          "current": "0:12"
         },
         "payout": {
           "fg": "1",
@@ -5612,7 +5653,7 @@
             "id": "405"
           }
         ],
-        "beforeState": "6",
+        "beforeState": "31",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
@@ -5635,7 +5676,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "2700",
+        "clock": "4170",
         "uqTournamentId": "258",
         "hometeamName": "乌克兰U19",
         "awayteamName": "意大利U19",
@@ -5662,7 +5703,7 @@
         "hometeamId": "22568",
         "awayteamId": "22522",
         "tournamentId": "126963",
-        "currentState": "31",
+        "currentState": "7",
         "startDate": "2026-07-05 23:00",
         "evId": "944885",
         "dataAnalysisShow": "1",
@@ -6045,7 +6086,7 @@
         "awayteamNameZht": "機張聯"
       },
       {
-        "currentPeriodStart": "2026-07-05 23:31:56",
+        "currentPeriodStart": "2026-07-06 00:22:12",
         "uqTournament": {
           "colorCode": "004488",
           "folderName": "Swedish_Allsvenskan",
@@ -6066,8 +6107,9 @@
         },
         "score": {
           "ht": "0:0",
+          "ft": "1:2",
           "matchId": null,
-          "current": "0:1"
+          "current": "1:2"
         },
         "payout": {
           "fg": "1",
@@ -6112,7 +6154,7 @@
           "id": "2227176",
           "typeCode": "1"
         },
-        "beforeState": "31",
+        "beforeState": "7",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
@@ -6135,7 +6177,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "4489",
+        "clock": "5400",
         "uqTournamentId": "40",
         "hometeamName": "艾夫斯堡",
         "awayteamName": "哈马比",
@@ -6144,8 +6186,8 @@
         "matchId": "2002488251695423489",
         "del": "0",
         "importState": "3",
-        "birtiSign": "111",
-        "lastUpdateTime": "2026-07-05 22:34",
+        "birtiSign": "",
+        "lastUpdateTime": "2026-07-06 00:11:58",
         "showTime": "",
         "orderNum": "",
         "autoId": "2177686",
@@ -6162,7 +6204,7 @@
         "hometeamId": "1762",
         "awayteamId": "1758",
         "tournamentId": "33453",
-        "currentState": "7",
+        "currentState": "100",
         "startDate": "2026-07-05 22:30",
         "evId": "944111",
         "dataAnalysisShow": "1",
@@ -6401,6 +6443,6 @@
   },
   "rspCode": "SUCCESS",
   "rspMsg": "成功",
-  "sysTime": "2026-07-06 00:01:45",
+  "sysTime": "2026-07-06 00:28:57",
   "token": null
 }
