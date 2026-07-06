@@ -2,7 +2,7 @@
   "data": {
     "list": [
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-07 03:15:44",
         "uqTournament": {
           "colorCode": "5F7E52",
           "folderName": "",
@@ -21,6 +21,10 @@
           "name": "冰島超",
           "id": "188"
         },
+        "score": {
+          "matchId": null,
+          "current": "0:0"
+        },
         "payout": {
           "fg": "1",
           "ftg": "1",
@@ -37,15 +41,33 @@
           "matchId": ""
         },
         "broadcast": [],
-        "beforeState": "0",
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {
+          "goalCardSwitchFt": "off",
+          "goalCardSwitchOt": "off"
+        },
+        "hcap": {
+          "ftHandicap": "+0.5",
+          "ftOverUnder": "3.5/4",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2019877310252113921",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "2758",
         "dataAnalysisShow": "1",
         "evId": "944320",
-        "currentState": "0",
+        "currentState": "6",
         "startDate": "2026-07-07 03:15",
         "sport": "1",
         "matchId": "2019877310252113921",
@@ -65,8 +87,8 @@
         "oldMatchId": "",
         "del": "0",
         "importState": "0",
-        "birtiSign": "111",
-        "lastUpdateTime": "2026-07-06 23:07:38",
+        "birtiSign": "",
+        "lastUpdateTime": "2026-07-07 03:28:49",
         "showTime": "",
         "orderNum": "",
         "autoId": "2193819",
@@ -398,9 +420,9 @@
         },
         "payout": {
           "fg": "1",
-          "ftg": "2",
-          "ht": "2",
-          "ft": "2",
+          "ftg": "3",
+          "ht": "3",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2002488252794331137"
@@ -473,7 +495,7 @@
         "sport": "1",
         "matchId": "2002488252794331137",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "1760",
         "awayteamId": "1759",
         "tournamentId": "33453",
@@ -608,9 +630,9 @@
         },
         "payout": {
           "fg": "1",
-          "ftg": "2",
-          "ht": "2",
-          "ft": "2",
+          "ftg": "3",
+          "ht": "3",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2002488250525212673"
@@ -671,7 +693,7 @@
         "sport": "1",
         "matchId": "2002488250525212673",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "1787",
         "awayteamId": "1786",
         "tournamentId": "33453",
@@ -686,8 +708,8 @@
         "oldMatchId": "",
         "del": "0",
         "importState": "0",
-        "birtiSign": "112",
-        "lastUpdateTime": "2026-07-07 01:00",
+        "birtiSign": "",
+        "lastUpdateTime": "2026-07-07 03:37:45",
         "showTime": "",
         "orderNum": "",
         "autoId": "2177684",
@@ -779,7 +801,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-07 03:00:06",
+        "currentPeriodStart": "2026-07-07 03:51:40",
         "uqTournament": {
           "colorCode": "6666FF",
           "folderName": "",
@@ -799,27 +821,28 @@
           "id": "16"
         },
         "score": {
+          "ht": "0:0",
           "matchId": null,
           "current": "0:0"
         },
         "corner": {
           "ft": "0:0",
-          "ht": "0:0",
+          "ht": "3:2",
           "otf": "0:0",
           "oth": "0:0",
-          "current": "0:0"
+          "current": "3:2"
         },
         "payout": {
           "fg": "2",
           "ftg": "2",
-          "ht": "2",
+          "ht": "3",
           "ft": "2",
           "ot": "2",
           "ap": "2",
           "matchId": "2072855493749964801"
         },
         "cornerPayout": {
-          "ht": "2",
+          "ht": "3",
           "ft": "2",
           "ot": "2",
           "matchId": ""
@@ -886,7 +909,10 @@
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
-        "other": {},
+        "other": {
+          "goalCardSwitchFt": "off",
+          "goalCardSwitchOt": "off"
+        },
         "hcap": {
           "ftHandicap": "+0.5",
           "ftOverUnder": "2.5/3",
@@ -902,15 +928,15 @@
           "del": "0"
         },
         "hasBetInRunOt": "1",
-        "clock": "108",
+        "clock": "2700",
         "dataAnalysisShow": "1",
         "evId": "944497",
-        "currentState": "6",
+        "currentState": "31",
         "startDate": "2026-07-07 03:00",
         "sport": "1",
         "matchId": "2072855493749964801",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "2",
         "hometeamId": "4704",
         "awayteamId": "4698",
         "tournamentId": "34094",
@@ -1210,7 +1236,7 @@
     ]
   },
   "rspMsg": "成功",
-  "sysTime": "2026-07-07 03:01:54",
+  "sysTime": "2026-07-07 04:01:42",
   "rspCode": "SUCCESS",
   "token": null
 }
