@@ -5641,7 +5641,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-06 10:07:28",
+        "currentPeriodStart": "2026-07-06 11:05",
         "uqTournament": {
           "colorCode": "6666FF",
           "folderName": "",
@@ -5662,29 +5662,30 @@
         },
         "score": {
           "ht": "1:2",
+          "ft": "2:3",
           "current": "2:3",
           "matchId": null
         },
         "corner": {
-          "ft": "0:0",
+          "ft": "12:2",
           "ht": "4:2",
           "otf": "0:0",
           "oth": "0:0",
-          "current": "9:2"
+          "current": "12:2"
         },
         "payout": {
-          "fg": "2",
-          "ftg": "2",
+          "fg": "3",
+          "ftg": "3",
           "ht": "3",
-          "ft": "2",
-          "ot": "2",
-          "ap": "2",
+          "ft": "3",
+          "ot": "3",
+          "ap": "3",
           "matchId": "2072387424774717442"
         },
         "cornerPayout": {
           "ht": "3",
-          "ft": "2",
-          "ot": "2",
+          "ft": "3",
+          "ot": "3",
           "matchId": ""
         },
         "broadcast": [
@@ -5763,10 +5764,10 @@
           "id": "2227479",
           "typeCode": "1"
         },
-        "beforeState": "31",
+        "beforeState": "0",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "redcard": {
           "current": "0:1"
         },
@@ -5789,10 +5790,10 @@
           "del": "0"
         },
         "hasBetInRunOt": "1",
-        "clock": "5953",
+        "clock": "5400",
         "evId": "944332",
         "warsituationShow": "1",
-        "payoutState": "2",
+        "payoutState": "4",
         "hometeamId": "4781",
         "awayteamId": "4713",
         "tournamentId": "34094",
@@ -5801,7 +5802,7 @@
         "hometeamNameZh": "墨西哥",
         "sport": "1",
         "matchId": "2072387424774717442",
-        "currentState": "7",
+        "currentState": "100",
         "startDate": "2026-07-06 09:00",
         "uqTournamentId": "16",
         "hometeamName": "墨西哥",
@@ -5813,8 +5814,8 @@
         "del": "0",
         "autoId": "2242400",
         "importState": "3",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-07-06 10:47:32",
+        "birtiSign": "221",
+        "lastUpdateTime": "2026-07-06 11:25",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "14",
@@ -7359,5 +7360,5 @@
   "token": null,
   "rspCode": "SUCCESS",
   "rspMsg": "成功",
-  "sysTime": "2026-07-06 11:01:41"
+  "sysTime": "2026-07-06 12:01:56"
 }
