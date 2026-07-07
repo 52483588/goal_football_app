@@ -224,7 +224,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-07 09:32:40",
+        "currentPeriodStart": "2026-07-07 09:32",
         "uqTournament": {
           "colorCode": "4B0082",
           "folderName": "",
@@ -251,9 +251,9 @@
         },
         "payout": {
           "fg": "1",
-          "ftg": "2",
-          "ht": "2",
-          "ft": "2",
+          "ftg": "3",
+          "ht": "3",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2066258222014988289"
@@ -283,10 +283,10 @@
           "id": "2227591",
           "typeCode": "1"
         },
-        "beforeState": "7",
+        "beforeState": "0",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "other": {
           "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
@@ -309,7 +309,7 @@
         "clock": "5400",
         "evId": "945003",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "3155",
         "awayteamId": "266565",
         "tournamentId": "128239",
@@ -330,8 +330,8 @@
         "del": "0",
         "autoId": "2231782",
         "importState": "3",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-07-07 09:20:22",
+        "birtiSign": "221",
+        "lastUpdateTime": "2026-07-07 11:10",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "1",
@@ -900,7 +900,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-07 08:00:58",
+        "currentPeriodStart": "2026-07-07 08:00",
         "uqTournament": {
           "colorCode": "C43411",
           "folderName": "",
@@ -929,7 +929,7 @@
           "fg": "1",
           "ftg": "1",
           "ht": "1",
-          "ft": "2",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2022776600809103361"
@@ -944,7 +944,7 @@
         "beforeState": "7",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "other": {
           "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
@@ -967,7 +967,7 @@
         "clock": "5400",
         "evId": "945005",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "403235",
         "awayteamId": "21941",
         "tournamentId": "126652",
@@ -988,8 +988,8 @@
         "del": "0",
         "autoId": "2197866",
         "importState": "0",
-        "birtiSign": "112",
-        "lastUpdateTime": "2026-07-07 08:01",
+        "birtiSign": "122",
+        "lastUpdateTime": "2026-07-07 11:12",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "--",
@@ -1288,7 +1288,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-07 08:07:48",
+        "currentPeriodStart": "2026-07-07 08:07",
         "uqTournament": {
           "colorCode": "4B0082",
           "folderName": "",
@@ -1315,9 +1315,9 @@
         },
         "payout": {
           "fg": "1",
-          "ftg": "2",
-          "ht": "2",
-          "ft": "2",
+          "ftg": "3",
+          "ht": "3",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2066258222518304770"
@@ -1350,7 +1350,7 @@
         "beforeState": "7",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "other": {
           "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
@@ -1373,7 +1373,7 @@
         "clock": "5400",
         "evId": "945004",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "3160",
         "awayteamId": "119072",
         "tournamentId": "128239",
@@ -1394,8 +1394,8 @@
         "del": "0",
         "autoId": "2231783",
         "importState": "0",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-07-07 08:09:01",
+        "birtiSign": "122",
+        "lastUpdateTime": "2026-07-07 11:11",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "14",
@@ -1412,5 +1412,5 @@
   "token": null,
   "rspCode": "SUCCESS",
   "rspMsg": "成功",
-  "sysTime": "2026-07-07 11:01:48"
+  "sysTime": "2026-07-07 12:01:57"
 }
