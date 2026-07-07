@@ -167,7 +167,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-07 19:23:49",
+        "currentPeriodStart": "2026-07-07 19:23",
         "uqTournament": {
           "colorCode": "F88964",
           "folderName": "",
@@ -195,8 +195,8 @@
         "payout": {
           "fg": "1",
           "ftg": "1",
-          "ht": "2",
-          "ft": "2",
+          "ht": "3",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2022413773531439106"
@@ -217,10 +217,13 @@
             "id": "20"
           }
         ],
-        "beforeState": "7",
+        "beforeState": "0",
         "opening": "",
         "showState": "1",
         "isBoCheck": "1",
+        "redcard": {
+          "current": "0:0"
+        },
         "other": {
           "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
@@ -243,7 +246,7 @@
         "clock": "5400",
         "evId": "945071",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "391734",
         "awayteamId": "47708",
         "tournamentId": "33367",
@@ -264,8 +267,8 @@
         "del": "0",
         "autoId": "2196338",
         "importState": "3",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-07-07 19:11:06",
+        "birtiSign": "221",
+        "lastUpdateTime": "2026-07-07 20:55",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "--",
@@ -882,7 +885,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-07 19:09:24",
+        "currentPeriodStart": "2026-07-07 20:02",
         "uqTournament": {
           "colorCode": "CB0FD1",
           "folderName": "",
@@ -903,14 +906,15 @@
         },
         "score": {
           "ht": "0:1",
+          "ft": "1:2",
           "current": "1:2",
           "matchId": null
         },
         "payout": {
           "fg": "1",
-          "ftg": "2",
-          "ht": "2",
-          "ft": "2",
+          "ftg": "3",
+          "ht": "3",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2037997912183853058"
@@ -949,10 +953,10 @@
           "id": "2227642",
           "typeCode": "1"
         },
-        "beforeState": "7",
+        "beforeState": "0",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "other": {
           "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
@@ -972,10 +976,10 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "5865",
+        "clock": "5400",
         "evId": "945080",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "195558",
         "awayteamId": "195552",
         "tournamentId": "32689",
@@ -984,7 +988,7 @@
         "hometeamNameZh": "华川KSPO女足",
         "sport": "1",
         "matchId": "2037997912183853058",
-        "currentState": "7",
+        "currentState": "100",
         "startDate": "2026-07-07 17:55",
         "uqTournamentId": "1772",
         "hometeamName": "华川KSPO女足",
@@ -996,8 +1000,8 @@
         "del": "0",
         "autoId": "2217610",
         "importState": "3",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-07-07 19:49:28",
+        "birtiSign": "221",
+        "lastUpdateTime": "2026-07-07 20:41",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "--",
@@ -1670,7 +1674,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-07 18:11:58",
+        "currentPeriodStart": "2026-07-07 19:27:07",
         "uqTournament": {
           "colorCode": "FF6633",
           "folderName": "",
@@ -1699,7 +1703,7 @@
           "fg": "1",
           "ftg": "1",
           "ht": "1",
-          "ft": "2",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "-2243883"
@@ -1723,7 +1727,7 @@
         "beforeState": "7",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "redcard": {
           "current": "0:0"
         },
@@ -1749,7 +1753,7 @@
         "clock": "5400",
         "evId": "945075",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "-296414",
         "awayteamId": "364598",
         "tournamentId": "34181",
@@ -1770,8 +1774,8 @@
         "del": "0",
         "autoId": "2243883",
         "importState": "1",
-        "birtiSign": "112",
-        "lastUpdateTime": "2026-07-02 16:10",
+        "birtiSign": "122",
+        "lastUpdateTime": "2026-07-07 20:37",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "--",
@@ -2178,5 +2182,5 @@
   "token": null,
   "rspCode": "SUCCESS",
   "rspMsg": "成功",
-  "sysTime": "2026-07-07 20:02:09"
+  "sysTime": "2026-07-07 21:01:58"
 }
