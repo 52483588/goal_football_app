@@ -32,11 +32,11 @@ jobs:
       - name: 删除前两天的HisData文件夹
         run: |
           cd HisData
-          two_days_ago=$(date -d "2 days ago" +%Y%m%d)
+          three_days_ago=$(date -d "3 days ago" +%Y%m%d)
           for dir in */; do
             dirname=${dir%/}
             dir_date=${dirname:0:8}
-            if [[ "$dir_date" == "$two_days_ago" ]]; then
+            if [[ "$dir_date" == "$three_days_ago" ]]; then
               echo "删除文件夹: $dirname"
               rm -rf "$dirname"
             fi
