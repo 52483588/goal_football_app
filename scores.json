@@ -1698,7 +1698,7 @@
         "awayteamNameZht": "伊比利亞1999"
       },
       {
-        "currentPeriodStart": "2026-07-07 16:36:35",
+        "currentPeriodStart": "2026-07-08 17:36:28",
         "uqTournament": {
           "colorCode": "F88964",
           "folderName": "",
@@ -1725,7 +1725,7 @@
           "fg": "1",
           "ftg": "1",
           "ht": "1",
-          "ft": "2",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2022413691528601601"
@@ -1783,11 +1783,11 @@
         "lineUpShow": "0",
         "preLineUpShow": "0",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "136220",
         "awayteamId": "136232",
         "tournamentId": "33909",
-        "currentState": "999",
+        "currentState": "73",
         "startDate": "2026-07-07 18:00",
         "evId": "945076",
         "dataAnalysisShow": "1",
@@ -2122,6 +2122,6 @@
   },
   "rspCode": "SUCCESS",
   "rspMsg": "成功",
-  "sysTime": "2026-07-08 17:01:54",
+  "sysTime": "2026-07-08 18:01:50",
   "token": null
 }
