@@ -413,7 +413,7 @@
         "awayteamNameZht": "巴爾干尼"
       },
       {
-        "currentPeriodStart": "2026-07-09 11:39:52",
+        "currentPeriodStart": "2026-07-09 12:28:31",
         "uqTournament": {
           "colorCode": "98CCEE",
           "folderName": "",
@@ -434,14 +434,15 @@
         },
         "score": {
           "ht": "1:1",
+          "ft": "4:1",
           "matchId": null,
-          "current": "3:1"
+          "current": "4:1"
         },
         "payout": {
           "fg": "1",
-          "ftg": "2",
-          "ht": "2",
-          "ft": "2",
+          "ftg": "3",
+          "ht": "3",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2072613891337027586"
@@ -494,7 +495,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "4025",
+        "clock": "5400",
         "uqTournamentId": "13681",
         "hometeamName": "温哥华白帽",
         "awayteamName": "骑兵FC",
@@ -503,8 +504,8 @@
         "matchId": "2072613891337027586",
         "del": "0",
         "importState": "3",
-        "birtiSign": "111",
-        "lastUpdateTime": "2026-07-09 10:36",
+        "birtiSign": "",
+        "lastUpdateTime": "2026-07-09 12:19:56",
         "showTime": "",
         "orderNum": "",
         "autoId": "2243886",
@@ -517,11 +518,11 @@
         "lineUpShow": "0",
         "preLineUpShow": "0",
         "warsituationShow": "0",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "22010",
         "awayteamId": "543877",
         "tournamentId": "33971",
-        "currentState": "7",
+        "currentState": "100",
         "startDate": "2026-07-09 10:30",
         "evId": "945269",
         "dataAnalysisShow": "1",
@@ -729,7 +730,7 @@
         "del": "0",
         "importState": "0",
         "birtiSign": "122",
-        "lastUpdateTime": "2026-07-09 04:15",
+        "lastUpdateTime": "2026-07-09 05:56",
         "showTime": "",
         "orderNum": "",
         "autoId": "2233155",
@@ -852,7 +853,7 @@
         "del": "0",
         "importState": "0",
         "birtiSign": "122",
-        "lastUpdateTime": "2026-07-09 04:08",
+        "lastUpdateTime": "2026-07-09 05:50",
         "showTime": "",
         "orderNum": "",
         "autoId": "2233156",
@@ -1315,7 +1316,7 @@
         "awayteamNameZht": "費羅卡利女足"
       },
       {
-        "currentPeriodStart": "2026-07-09 11:57:41",
+        "currentPeriodStart": "2026-07-09 11:57",
         "uqTournament": {
           "colorCode": "98CCEE",
           "folderName": "",
@@ -1342,9 +1343,9 @@
         },
         "payout": {
           "fg": "1",
-          "ftg": "2",
-          "ht": "2",
-          "ft": "2",
+          "ftg": "3",
+          "ht": "3",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2072613890787573762"
@@ -1374,10 +1375,10 @@
           "id": "2228280",
           "typeCode": "1"
         },
-        "beforeState": "7",
+        "beforeState": "0",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "other": {
           "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
@@ -1406,8 +1407,8 @@
         "matchId": "2072613890787573762",
         "del": "0",
         "importState": "3",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-07-09 11:47:00",
+        "birtiSign": "221",
+        "lastUpdateTime": "2026-07-09 12:16",
         "showTime": "",
         "orderNum": "",
         "autoId": "2243885",
@@ -1420,7 +1421,7 @@
         "lineUpShow": "0",
         "preLineUpShow": "0",
         "warsituationShow": "0",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "986603",
         "awayteamId": "22006",
         "tournamentId": "33971",
@@ -2836,7 +2837,7 @@
         "awayteamNameZht": "帕拉尼恩斯"
       },
       {
-        "currentPeriodStart": "2026-07-09 11:46:47",
+        "currentPeriodStart": "2026-07-09 12:36",
         "uqTournament": {
           "colorCode": "9C0350",
           "folderName": "",
@@ -2857,14 +2858,15 @@
         },
         "score": {
           "ht": "2:1",
+          "ft": "2:1",
           "matchId": null,
           "current": "2:1"
         },
         "payout": {
           "fg": "1",
-          "ftg": "2",
-          "ht": "2",
-          "ft": "2",
+          "ftg": "3",
+          "ht": "3",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2027850826264010753"
@@ -2894,10 +2896,10 @@
           "id": "2228278",
           "typeCode": "1"
         },
-        "beforeState": "7",
+        "beforeState": "0",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "other": {
           "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
@@ -2917,7 +2919,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "3610",
+        "clock": "5400",
         "uqTournamentId": "28163",
         "hometeamName": "萨克拉门托共和",
         "awayteamName": "FC罗德岛",
@@ -2926,8 +2928,8 @@
         "matchId": "2027850826264010753",
         "del": "0",
         "importState": "3",
-        "birtiSign": "111",
-        "lastUpdateTime": "2026-07-09 10:42",
+        "birtiSign": "221",
+        "lastUpdateTime": "2026-07-09 12:52",
         "showTime": "",
         "orderNum": "",
         "autoId": "2207562",
@@ -2940,11 +2942,11 @@
         "lineUpShow": "0",
         "preLineUpShow": "0",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "153498",
         "awayteamId": "-295917",
         "tournamentId": "91501",
-        "currentState": "7",
+        "currentState": "100",
         "startDate": "2026-07-09 10:30",
         "evId": "945268",
         "dataAnalysisShow": "1",
@@ -3078,6 +3080,6 @@
   },
   "rspCode": "SUCCESS",
   "rspMsg": "成功",
-  "sysTime": "2026-07-09 12:01:57",
+  "sysTime": "2026-07-09 13:02:10",
   "token": null
 }
