@@ -2453,9 +2453,9 @@
         },
         "payout": {
           "fg": "1",
-          "ftg": "2",
-          "ht": "2",
-          "ft": "2",
+          "ftg": "3",
+          "ht": "3",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2070251877683888130"
@@ -2526,8 +2526,8 @@
         "matchId": "2070251877683888130",
         "del": "0",
         "importState": "0",
-        "birtiSign": "112",
-        "lastUpdateTime": "2026-07-11 00:04",
+        "birtiSign": "",
+        "lastUpdateTime": "2026-07-11 02:26:56",
         "showTime": "",
         "orderNum": "",
         "autoId": "2237978",
@@ -2540,7 +2540,7 @@
         "lineUpShow": "0",
         "preLineUpShow": "0",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "2953",
         "awayteamId": "3404",
         "tournamentId": "33551",
@@ -3604,8 +3604,8 @@
         "payout": {
           "fg": "1",
           "ftg": "1",
-          "ht": "2",
-          "ft": "2",
+          "ht": "3",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2037635551929356289"
@@ -3649,8 +3649,8 @@
         "matchId": "2037635551929356289",
         "del": "0",
         "importState": "0",
-        "birtiSign": "112",
-        "lastUpdateTime": "2026-07-11 00:03",
+        "birtiSign": "",
+        "lastUpdateTime": "2026-07-11 02:16:33",
         "showTime": "",
         "orderNum": "",
         "autoId": "2216264",
@@ -3663,7 +3663,7 @@
         "lineUpShow": "0",
         "preLineUpShow": "0",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "50525",
         "awayteamId": "2273",
         "tournamentId": "127132",
@@ -3800,16 +3800,16 @@
         "payout": {
           "fg": "1",
           "ftg": "1",
-          "ht": "2",
-          "ft": "2",
-          "ot": "2",
-          "ap": "2",
+          "ht": "3",
+          "ft": "3",
+          "ot": "3",
+          "ap": "3",
           "matchId": "2074758059303829506"
         },
         "cornerPayout": {
-          "ht": "2",
-          "ft": "2",
-          "ot": "2",
+          "ht": "3",
+          "ft": "3",
+          "ot": "3",
           "matchId": ""
         },
         "broadcast": [
@@ -3868,7 +3868,7 @@
         "lineUpShow": "0",
         "preLineUpShow": "0",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "38089",
         "awayteamId": "37362",
         "tournamentId": "126958",
@@ -4940,7 +4940,7 @@
         "awayteamNameZht": "河南隊"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-11 03:00:33",
         "uqTournament": {
           "colorCode": "6666FF",
           "folderName": "",
@@ -4958,6 +4958,17 @@
           "logoPath": "fifa.png",
           "name": "世界盃",
           "id": "16"
+        },
+        "score": {
+          "matchId": null,
+          "current": "0:0"
+        },
+        "corner": {
+          "ft": "0:0",
+          "ht": "0:0",
+          "otf": "0:0",
+          "oth": "0:0",
+          "current": "0:0"
         },
         "payout": {
           "fg": "2",
@@ -5032,12 +5043,27 @@
             "id": "524"
           }
         ],
-        "beforeState": "0",
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {},
+        "hcap": {
+          "ftHandicap": "-1",
+          "ftOverUnder": "2.5/3",
+          "ftHandicapCorner": "-2",
+          "ftOverUnderCorner": "+9.5",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2074365470301945857",
+          "del": "0"
+        },
         "hasBetInRunOt": "1",
-        "clock": "--",
+        "clock": "83",
         "uqTournamentId": "16",
         "hometeamName": "西班牙",
         "awayteamName": "比利时",
@@ -5047,7 +5073,7 @@
         "del": "0",
         "importState": "3",
         "birtiSign": "111",
-        "lastUpdateTime": "2026-07-11 01:36:14",
+        "lastUpdateTime": "2026-07-11 03:00",
         "showTime": "",
         "orderNum": "",
         "autoId": "2246660",
@@ -5064,7 +5090,7 @@
         "hometeamId": "4698",
         "awayteamId": "4717",
         "tournamentId": "34094",
-        "currentState": "0",
+        "currentState": "6",
         "startDate": "2026-07-11 03:00",
         "evId": "945212",
         "dataAnalysisShow": "1",
@@ -5561,9 +5587,9 @@
         },
         "payout": {
           "fg": "1",
-          "ftg": "2",
-          "ht": "2",
-          "ft": "2",
+          "ftg": "3",
+          "ht": "3",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2002604800133488642"
@@ -5639,7 +5665,7 @@
         "lineUpShow": "0",
         "preLineUpShow": "0",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "2246",
         "awayteamId": "22395",
         "tournamentId": "128682",
@@ -6906,6 +6932,6 @@
   },
   "rspCode": "SUCCESS",
   "rspMsg": "成功",
-  "sysTime": "2026-07-11 02:01:57",
+  "sysTime": "2026-07-11 03:01:56",
   "token": null
 }
