@@ -101,7 +101,7 @@ jobs:
 
       # =============== 新增：解析 scores.json 生成 scores_now.csv ===============
       - name: 解析实时比分
-        run: python scores_parser.py --input scores.json --output scores_now.csv
+        run: python scores_parser.py --input scores.json
 
       # =============== 统一提交 ===============
       - name: 统一提交所有生成文件
