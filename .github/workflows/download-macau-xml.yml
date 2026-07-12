@@ -29,18 +29,24 @@ jobs:
         run: |
           mkdir -p HisData docs data
 
-      - name: 删除前两天的HisData文件夹
+      - name: 删除72小时前的HisData文件夹
         run: |
           cd HisData
-          three_days_ago=$(date -d "3 days ago" +%Y%m%d)
-          for dir in */; do
-            dirname=${dir%/}
-            dir_date=${dirname:0:8}
-            if [[ "$dir_date" == "$three_days_ago" ]]; then
-              echo "删除文件夹: $dirname"
-              rm -rf "$dirname"
-            fi
-          done
+          # 子文件夹按时间戳命名，排序后保留最新 72 个（=72小时），删除其余
+          mapfile -t dirs < <(ls -d */ 2>/dev/null | sed 's#/$##' | sort)
+          total=${#dirs[@]}
+          keep=72
+          if [ "$total" -gt "$keep" ]; then
+            delete_count=$((total - keep))
+            for ((i=0; i<delete_count; i++)); do
+              echo "删除文件夹: ${dirs[i]}"
+              rm -rf "${dirs[i]}"
+            done
+            echo "已删除 $delete_count 个旧文件夹，保留最新 $keep 个"
+          else
+            echo "当前共 $total 个文件夹，未超过 $keep 个，无需删除"
+          fi
+
 
       - name: 删除根目录旧XML文件
         run: find . -maxdepth 1 -name "*.xml" -type f -delete
