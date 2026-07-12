@@ -11,7 +11,13 @@ def extract_match_data(item):
 
     # 即时比分优先取 ft（完场），若无则取 current
     score_obj = item.get('score', {})
-    score_str = score_obj.get('ft', '') or score_obj.get('current', '')
+    ft_score = score_obj.get('ft', '')
+    if ft_score:
+        score_str = ft_score
+        score_source = '完场'
+    else:
+        score_str = score_obj.get('current', '')
+        score_source = '当前'
 
     total_goals = None
     goal_diff = None
@@ -32,6 +38,7 @@ def extract_match_data(item):
         'homeTeam': home_team,
         'awayTeam': away_team,
         'score': score_str,
+        'scoreNote': score_source,
         'totalGoals': total_goals,
         'goalDiff': goal_diff
     }
