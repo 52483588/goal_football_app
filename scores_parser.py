@@ -7,7 +7,7 @@ import argparse
 
 def extract_match_data(item):
     start_date = item.get('startDate', '')
-    tournament = item.get('uqTournament', {}).get('nameZh', '')
+    tournament = item.get('uqTournament', {}).get('fullname', '')
     home_team = item.get('hometeamName', '') or item.get('hometeamNameZh', '')
     away_team = item.get('awayteamName', '') or item.get('awayteamNameZh', '')
 
