@@ -1,4 +1,6 @@
 import json
+import os
+from datetime import datetime
 import pandas as pd
 import argparse
 
@@ -57,10 +59,38 @@ def deduplicate_and_sort(df):
     return df
 
 
+def append_to_js(records, js_path):
+    """把解析出的比分记录以独立变量数组的形式，追加到 js 文件末尾（不影响原有 RAW_DATA）。"""
+    if not records:
+        return
+    # 目标目录不存在则创建
+    js_dir = os.path.dirname(js_path)
+    if js_dir and not os.path.exists(js_dir):
+        os.makedirs(js_dir, exist_ok=True)
+
+    # 用当前时间做变量后缀，避免重复运行时变量名冲突，同时保留历史批次
+    stamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+    var_name = f'SCORE_DATA_{stamp}'
+    js_array = json.dumps(records, ensure_ascii=False, indent=2)
+
+    block = (
+        f"\n// ===== 比分数据（由 parse_scores.py 追加于 {stamp}）=====\n"
+        f"var {var_name} = {js_array};\n"
+    )
+
+    # 以追加模式写入，内容加在原文件末尾
+    with open(js_path, 'a', encoding='utf-8') as f:
+        f.write(block)
+    print(f"✅ 已追加 {len(records)} 条比分记录至 {js_path}（变量名 {var_name}）")
+
+
 def main():
-    parser = argparse.ArgumentParser(description='解析即时比分 scores.json，覆盖保存')
+    parser = argparse.ArgumentParser(description='解析即时比分 scores.json，覆盖保存 CSV 并追加到 JS')
     parser.add_argument('--input', required=True, help='scores.json 文件路径')
     parser.add_argument('--output', default='scores_now.csv', help='输出 CSV 路径（默认 scores_now.csv）')
+    # 默认目标：脚本同目录下的 scripts/docs/his_data.js；传空字符串可跳过 JS 输出
+    default_js = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'scripts', 'docs', 'his_data.js')
+    parser.add_argument('--js-output', default=default_js, help='追加输出的 JS 文件路径（默认 <脚本目录>/scripts/docs/his_data.js，传空则跳过）')
     args = parser.parse_args()
 
     with open(args.input, 'r', encoding='utf-8') as f:
@@ -71,8 +101,13 @@ def main():
 
     df_result = deduplicate_and_sort(df)
 
+    # 1) 保留原有 CSV 输出
     df_result.to_csv(args.output, index=False, encoding='utf-8-sig')
     print(f"✅ 已保存 {len(df_result)} 条记录至 {args.output}")
+
+    # 2) 追加到 JS 文件（默认开启；--js-output "" 可关闭）
+    if args.js_output:
+        append_to_js(df_result.to_dict(orient='records'), args.js_output)
 
 
 if __name__ == '__main__':
