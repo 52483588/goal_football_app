@@ -6,7 +6,7 @@ on:
 jobs:
   process-and-upload:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 3
 
     steps:
       - name: 检出仓库
