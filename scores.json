@@ -31,7 +31,7 @@
           "fg": "1",
           "ftg": "1",
           "ht": "1",
-          "ft": "2",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2022776602369384449"
@@ -84,7 +84,7 @@
         "hometeamName": "艾美历克",
         "awayteamName": "SC巴塞隆拿",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "5255",
         "awayteamId": "5250",
         "tournamentId": "126652",
@@ -92,8 +92,8 @@
         "dataAnalysisShow": "1",
         "del": "0",
         "importState": "1",
-        "birtiSign": "112",
-        "lastUpdateTime": "2026-07-13 07:22",
+        "birtiSign": "",
+        "lastUpdateTime": "2026-07-13 11:15:56",
         "showTime": "",
         "orderNum": "",
         "autoId": "2197869",
@@ -6325,5 +6325,5 @@
   "token": null,
   "rspCode": "SUCCESS",
   "rspMsg": "成功",
-  "sysTime": "2026-07-13 11:01:40"
+  "sysTime": "2026-07-13 12:01:59"
 }
