@@ -392,7 +392,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-14 20:41:04",
+        "currentPeriodStart": "2026-07-14 21:36:23",
         "uqTournament": {
           "colorCode": "6699FF",
           "folderName": "Chinese_Football_Super_League",
@@ -413,14 +413,15 @@
         },
         "score": {
           "ht": "1:0",
+          "ft": "3:2",
           "matchId": null,
-          "current": "2:1"
+          "current": "3:2"
         },
         "payout": {
           "fg": "1",
-          "ftg": "2",
-          "ht": "2",
-          "ft": "2",
+          "ftg": "3",
+          "ht": "3",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2024225552418922497"
@@ -473,7 +474,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "3953",
+        "clock": "5400",
         "sport": "1",
         "matchId": "2024225552418922497",
         "uploadState": "1",
@@ -481,14 +482,14 @@
         "hometeamNameZh": "浙江队",
         "awayteamNameZh": "青岛海牛",
         "awayteamNameZht": "青島海牛",
-        "currentState": "7",
+        "currentState": "100",
         "startDate": "2026-07-14 19:35",
         "oldMatchId": "",
         "uqTournamentId": "649",
         "hometeamName": "浙江队",
         "awayteamName": "青岛海牛",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "34697",
         "awayteamId": "34695",
         "tournamentId": "31907",
@@ -496,8 +497,8 @@
         "dataAnalysisShow": "1",
         "del": "0",
         "importState": "3",
-        "birtiSign": "111",
-        "lastUpdateTime": "2026-07-14 19:36",
+        "birtiSign": "",
+        "lastUpdateTime": "2026-07-14 21:21:09",
         "showTime": "",
         "orderNum": "",
         "autoId": "2200247",
@@ -2518,5 +2519,5 @@
   "token": null,
   "rspCode": "SUCCESS",
   "rspMsg": "成功",
-  "sysTime": "2026-07-14 21:01:57"
+  "sysTime": "2026-07-14 22:03:07"
 }
