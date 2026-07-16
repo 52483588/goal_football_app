@@ -1196,7 +1196,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-16 18:28:19",
+        "currentPeriodStart": "2026-07-16 19:18:36",
         "uqTournament": {
           "colorCode": "B71CE0",
           "folderName": "",
@@ -1217,6 +1217,7 @@
         },
         "score": {
           "ht": "1:0",
+          "ft": "1:1",
           "matchId": null,
           "current": "1:1"
         },
@@ -1259,7 +1260,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "4711",
+        "clock": "5400",
         "sport": "1",
         "matchId": "-2254508",
         "uploadState": "1",
@@ -1267,7 +1268,7 @@
         "hometeamNameZh": "印尼女足",
         "awayteamNameZh": "柬埔寨女足",
         "awayteamNameZht": "柬埔寨女足",
-        "currentState": "7",
+        "currentState": "100",
         "startDate": "2026-07-16 16:45",
         "oldMatchId": "",
         "uqTournamentId": "1952331291268669441",
@@ -1282,8 +1283,8 @@
         "dataAnalysisShow": "1",
         "del": "0",
         "importState": "3",
-        "birtiSign": "111",
-        "lastUpdateTime": "2026-07-16 17:52:31",
+        "birtiSign": "",
+        "lastUpdateTime": "2026-07-16 19:08:23",
         "showTime": "",
         "orderNum": "",
         "autoId": "2254508",
@@ -3759,5 +3760,5 @@
   "token": null,
   "rspCode": "SUCCESS",
   "rspMsg": "成功",
-  "sysTime": "2026-07-16 19:01:50"
+  "sysTime": "2026-07-16 20:02:41"
 }
