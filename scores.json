@@ -236,7 +236,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-16 23:00:49",
         "uqTournament": {
           "colorCode": "1EC128",
           "folderName": "",
@@ -255,6 +255,10 @@
           "name": "欧协联",
           "id": "1680770895132807170"
         },
+        "score": {
+          "matchId": null,
+          "current": "0:0"
+        },
         "payout": {
           "fg": "1",
           "ftg": "2",
@@ -271,12 +275,27 @@
           "matchId": ""
         },
         "broadcast": [],
-        "beforeState": "0",
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {},
+        "hcap": {
+          "ftHandicap": "-0.5/-1",
+          "ftOverUnder": "2/2.5",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2067107643418148865",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "54",
         "sport": "1",
         "matchId": "2067107643418148865",
         "uploadState": "1",
@@ -284,7 +303,7 @@
         "hometeamNameZh": "艾利美",
         "awayteamNameZh": "艾拉斯克特",
         "awayteamNameZht": "艾拉斯克特",
-        "currentState": "0",
+        "currentState": "6",
         "startDate": "2026-07-16 23:00",
         "oldMatchId": "",
         "uqTournamentId": "1680770895132807170",
@@ -300,7 +319,7 @@
         "del": "0",
         "importState": "0",
         "birtiSign": "112",
-        "lastUpdateTime": "2026-07-16 12:36",
+        "lastUpdateTime": "2026-07-16 23:01",
         "showTime": "",
         "orderNum": "",
         "autoId": "2233237",
@@ -2193,7 +2212,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-16 23:00:15",
         "uqTournament": {
           "colorCode": "1EC128",
           "folderName": "",
@@ -2212,6 +2231,10 @@
           "name": "欧协联",
           "id": "1680770895132807170"
         },
+        "score": {
+          "matchId": null,
+          "current": "0:0"
+        },
         "payout": {
           "fg": "1",
           "ftg": "2",
@@ -2228,12 +2251,27 @@
           "matchId": ""
         },
         "broadcast": [],
-        "beforeState": "0",
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {},
+        "hcap": {
+          "ftHandicap": "-1/-1.5",
+          "ftOverUnder": "2.5",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2067107633137909762",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "88",
         "sport": "1",
         "matchId": "2067107633137909762",
         "uploadState": "1",
@@ -2241,7 +2279,7 @@
         "hometeamNameZh": "艾斯坦拿",
         "awayteamNameZh": "戴拿模城",
         "awayteamNameZht": "戴拿模城",
-        "currentState": "0",
+        "currentState": "6",
         "startDate": "2026-07-16 23:00",
         "oldMatchId": "",
         "uqTournamentId": "1680770895132807170",
@@ -2257,7 +2295,7 @@
         "del": "0",
         "importState": "3",
         "birtiSign": "111",
-        "lastUpdateTime": "2026-07-14 10:30",
+        "lastUpdateTime": "2026-07-16 23:01",
         "showTime": "",
         "orderNum": "",
         "autoId": "2233216",
@@ -3766,5 +3804,5 @@
   "token": null,
   "rspCode": "SUCCESS",
   "rspMsg": "成功",
-  "sysTime": "2026-07-16 22:01:40"
+  "sysTime": "2026-07-16 23:01:43"
 }
