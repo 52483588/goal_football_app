@@ -91,8 +91,8 @@ jobs:
       - name: 安装依赖（不含 Playwright）
         run: |
           pip install requests==2.32.3 numpy==2.2.4 pandas==2.2.3 
-          playwright install chromium
-          playwright install-deps
+      # playwright install chromium
+      # playwright install-deps
 
       # =============== 原有分析脚本 ===============
       - name: 生成 his_data.js
