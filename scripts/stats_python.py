@@ -6,18 +6,10 @@ stats_python.py — 足球大小球「统计视图」独立 Python 实现
 把 index.html 中「📊 统计」标签页的全部功能用纯 Python 重写，不依赖浏览器。
 数据源：his_data.js（含 FOLDERS / RAW_DATA / SCORE_DATA_*）。
 
-功能对照（与网页统计视图一致）：
-  - 取分析记录（最新文件夹 ±24h 窗口，可用 --all 忽略窗口）
-  - 对每场比赛按【首条 / 末条】完整数据快照做预测与统计（--order）
-  - 计算 λ总/λ（NG 泊松 λ 之和 / OU 泊松 λ）
-  - 由 NG 总进球分布计算归一化大小球概率 → 预测方向（大/小）
-  - 用完场比分判定 大小（大/小/平），平局忽略（不计入对也不计入错）
-  - 筛选：--predict（预测大/小/未预测）、--size（大/小/平/无）、--league
-  - 汇总卡：预测大/小球正确率、整体正确率（平局已忽略）
-  - 导出 CSV（含 BOM，含「快照」列，Excel 中文不乱码）
-  - 可选导出 HTML 报告（--html）
-
-纯标准库实现（argparse / json / csv / re / datetime），无第三方依赖。
+支持两种模式：
+  1. 默认（统计视图）：生成详细的统计报表（CSV / HTML），适合人工查看。
+  2. --update 模式：增量更新模式，从最新文件夹提取记录，合并到历史 stats.csv，
+     供后续自动化分析使用（适合 GitHub Workflow 每日运行）。
 
 用法示例：
   python stats_python.py                         # 默认：首条、±24h、输出 CSV
@@ -25,6 +17,8 @@ stats_python.py — 足球大小球「统计视图」独立 Python 实现
   python stats_python.py --predict big --size big
   python stats_python.py --all --csv out.csv --html report.html
   python stats_python.py --now "20260717 12:00"  # 指定“当前”时间，便于复现
+  python stats_python.py --update                # 增量更新模式（默认输出 stats.csv）
+  python stats_python.py --update --output my_stats.csv
 """
 
 import os
@@ -597,7 +591,7 @@ def beijing_now(now_str=None):
 
 
 # ============================================================
-# 5. 分析记录 + 单场处理
+# 5. 分析记录 + 单场处理（原有统计视图用）
 # ============================================================
 
 NG_COLS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6']
@@ -740,7 +734,7 @@ def process_match(rec, folders, raw_data, score_index, order):
 
 
 # ============================================================
-# 6. 汇总 + 筛选 + 输出
+# 6. 汇总 + 筛选 + 输出（原有统计视图用）
 # ============================================================
 
 def summarize(rows):
@@ -915,7 +909,162 @@ def _esc(s):
 
 
 # ============================================================
-# 7. 主程序
+# 7. 新增：增量更新模式（--update）
+# ============================================================
+
+def update_stats(data_path, output_path):
+    """
+    增量更新模式：
+      1. 从 his_data.js 中取最新文件夹的所有有效记录（含 ng 和 ou）
+      2. 计算预测、比分匹配等
+      3. 与已有的 stats.csv 合并（按 id 去重，保留最新）
+      4. 输出新的 stats.csv
+    """
+    print("📥 加载数据源:", data_path)
+    folders, raw_data, score_arrays = load_data(data_path)
+    if not folders:
+        print("❌ 没有找到任何文件夹")
+        sys.exit(1)
+
+    latest = folders[-1]
+    print("📁 最新文件夹:", latest)
+    folder_data = raw_data.get(latest, {})
+    if not folder_data:
+        print("❌ 最新文件夹无数据")
+        sys.exit(1)
+
+    score_index = build_score_index(score_arrays)
+
+    new_records = []  # 存放新生成的记录（字典）
+
+    for mid, rec in folder_data.items():
+        oc = rec.get('oc', {})
+        if not oc:
+            continue
+        league = oc.get('st', '')
+        home = oc.get('sh', '')
+        away = oc.get('sa', '')
+        gt = oc.get('gt', '')
+        if not gt:
+            continue
+
+        ng = rec.get('ng', {})
+        ou = rec.get('ou', {})
+        # 检查是否有完整的 ng 和 ou
+        ng_cols = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6']
+        has_ng = all(ng.get(k) is not None and _to_float(ng[k]) > 0 for k in ng_cols)
+        has_ou = (ou.get('oo') and ou.get('uo') and ou.get('li'))
+        if not has_ng or not has_ou:
+            # 缺少必要数据，跳过（无法计算预测）
+            continue
+
+        try:
+            oo = float(ou['oo'])
+            uo = float(ou['uo'])
+            li = float(ou['li'])
+            if not (oo > 0 and uo > 0 and li > 0):
+                continue
+        except (ValueError, TypeError):
+            continue
+
+        # 计算分析
+        analysis = analyze_row(rec)
+        hc_num = li / 4.0
+
+        # 计算预测概率
+        p_over_norm = None
+        p_under_norm = None
+        predict = ''
+        if analysis and analysis['ngTgProbs'] and len(analysis['ngTgProbs']) >= 8:
+            ou_raw = calc_ou_probs_from_dist(analysis['ngTgProbs'], hc_num)
+            total_div = ou_raw['pOver'] + ou_raw['pUnder']
+            if total_div > 0:
+                p_over_norm = ou_raw['pOver'] / total_div
+                p_under_norm = ou_raw['pUnder'] / total_div
+                if p_over_norm > p_under_norm:
+                    predict = '大'
+                elif p_under_norm > p_over_norm:
+                    predict = '小'
+
+        # 匹配比分
+        score_info = lookup_score_for_rec(score_index, league, home, away, gt)
+        score_str = '-'
+        total_goals_str = '-'
+        size = ''
+        if score_info:
+            score_str = score_info['score']
+            total_goals_str = score_info['totalGoals']
+            tg_num = _to_float(score_info['totalGoals'])
+            if not isnan(tg_num):
+                if tg_num > hc_num:
+                    size = '大'
+                elif tg_num < hc_num:
+                    size = '小'
+                else:
+                    size = '平'
+
+        # 正确性
+        correct = ''
+        if predict and size:
+            correct = '忽略' if size == '平' else ('对' if predict == size else '错')
+
+        lam_total = '%.3f' % analysis['ngLamTotal'] if analysis.get('ngLamTotal') is not None else ''
+        lam = '%.3f' % analysis['ouLam'] if analysis.get('ouLam') is not None else ''
+
+        new_records.append({
+            'id': mid,
+            'gt': gt,
+            'league': league,
+            'home': home,
+            'away': away,
+            'hc': '%.2f' % hc_num,
+            'folder': latest,
+            'score': score_str,
+            'totalGoals': total_goals_str,
+            'size': size,
+            'predict': predict,
+            'correct': correct,
+            'lamTotal': lam_total,
+            'lam': lam,
+        })
+
+    print(f"✅ 从最新文件夹提取了 {len(new_records)} 条有效记录")
+
+    # 读取历史 stats.csv（如果存在）
+    hist_dict = {}
+    if os.path.exists(output_path):
+        with open(output_path, 'r', encoding='utf-8-sig') as f:
+            reader = csv.DictReader(f)
+            # 确保列存在
+            if 'id' in reader.fieldnames:
+                for row in reader:
+                    hist_dict[row['id']] = row
+        print(f"📂 读取历史记录 {len(hist_dict)} 条")
+    else:
+        print("📂 历史文件不存在，将新建")
+
+    # 合并：新记录覆盖旧记录（按 id）
+    for rec in new_records:
+        hist_dict[rec['id']] = rec
+
+    # 转为列表并排序（按 gt 时间）
+    merged = list(hist_dict.values())
+    merged.sort(key=lambda x: x.get('gt', ''))
+
+    # 写入输出
+    fieldnames = ['id', 'gt', 'league', 'home', 'away', 'hc', 'folder',
+                  'score', 'totalGoals', 'size', 'predict', 'correct', 'lamTotal', 'lam']
+    with open(output_path, 'w', encoding='utf-8-sig', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        for row in merged:
+            writer.writerow(row)
+
+    print(f"💾 已保存 {len(merged)} 条记录到 {output_path}")
+
+
+# ============================================================
+# 8. 主程序
 # ============================================================
 
 def main():
@@ -936,8 +1085,18 @@ def main():
     parser.add_argument('--all', action='store_true', help='忽略 ±24h 窗口，使用最新文件夹全部含 NG 记录')
     parser.add_argument('--now', default='', help='指定“当前”时间，格式 "YYYYMMDD HH:MM"，用于复现窗口')
     parser.add_argument('--limit', type=int, default=None, help='控制台仅显示前 N 行（CSV/HTML 仍含全部）')
+    # 新增参数
+    parser.add_argument('--update', action='store_true', help='增量更新模式：从最新文件夹提取记录，合并到历史 stats.csv')
+    parser.add_argument('--output', default='stats.csv', help='update 模式下输出 CSV 路径')
+
     args = parser.parse_args()
 
+    if args.update:
+        # 执行增量更新
+        update_stats(args.data, args.output)
+        return
+
+    # === 原有统计视图模式 ===
     if not os.path.exists(args.data):
         print('错误：找不到数据源 %s' % args.data, file=sys.stderr)
         sys.exit(1)
