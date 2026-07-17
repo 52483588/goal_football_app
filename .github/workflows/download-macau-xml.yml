@@ -119,7 +119,7 @@ jobs:
         run: python scores_parser.py --input scores.json
 
       - name: 增量更新统计CSV
-        run: python stats_python.py --update --data scripts/docs/his_data.js --output scripts/docs/stats.csv
+        run: python stats_python.py --update --order first --data scripts/docs/his_data.js --output scripts/docs/stats.csv
       
       # =============== 统一提交 ===============
       - name: 统一提交所有生成文件
