@@ -644,8 +644,8 @@
         "oldMatchId": "",
         "del": "0",
         "importState": "0",
-        "birtiSign": "222",
-        "lastUpdateTime": "2026-07-16 16:01",
+        "birtiSign": "",
+        "lastUpdateTime": "2026-07-17 15:43:11",
         "showTime": "",
         "orderNum": "",
         "autoId": "2238088",
@@ -1528,8 +1528,8 @@
         "oldMatchId": "",
         "del": "0",
         "importState": "0",
-        "birtiSign": "222",
-        "lastUpdateTime": "2026-07-17 12:40",
+        "birtiSign": "",
+        "lastUpdateTime": "2026-07-17 15:16:37",
         "showTime": "",
         "orderNum": "",
         "autoId": "2260473",
@@ -2947,7 +2947,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-17 15:15:17",
         "uqTournament": {
           "colorCode": "2828FF",
           "folderName": "",
@@ -2966,6 +2966,10 @@
           "name": "纽国联",
           "id": "-54981"
         },
+        "score": {
+          "matchId": null,
+          "current": "3:0"
+        },
         "payout": {
           "fg": "1",
           "ftg": "1",
@@ -2979,7 +2983,7 @@
           "ht": "1",
           "ft": "1",
           "ot": "1",
-          "matchId": "-2242289"
+          "matchId": ""
         },
         "broadcast": [
           {
@@ -2991,15 +2995,33 @@
             "id": "604"
           }
         ],
-        "beforeState": "0",
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {
+          "goalCardSwitchFt": "off",
+          "goalCardSwitchOt": "off"
+        },
+        "hcap": {
+          "ftHandicap": "0/-0.5",
+          "ftOverUnder": "3/3.5",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "-2242289",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "2786",
         "sport": "1",
         "matchId": "-2242289",
-        "currentState": "0",
+        "currentState": "6",
         "startDate": "2026-07-17 15:15",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -3020,7 +3042,7 @@
         "del": "0",
         "importState": "3",
         "birtiSign": "111",
-        "lastUpdateTime": "2026-07-16 20:37:45",
+        "lastUpdateTime": "2026-07-17 15:28",
         "showTime": "",
         "orderNum": "",
         "autoId": "2242289",
@@ -4945,6 +4967,6 @@
   },
   "token": null,
   "rspMsg": "成功",
-  "sysTime": "2026-07-17 15:03:06",
+  "sysTime": "2026-07-17 16:01:43",
   "rspCode": "SUCCESS"
 }
