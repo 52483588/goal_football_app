@@ -6,7 +6,7 @@ on:
 jobs:
   process-and-upload:
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 10        # 放宽：缓存失效时留出余量，平时用不到
 
     steps:
       - name: 检出仓库
@@ -84,15 +84,24 @@ jobs:
       # =============== Python 环境 ===============
       - name: 安装 Python 3.12 并缓存依赖
         uses: actions/setup-python@v5
+        id: setup-python
         with:
           python-version: '3.12'
           cache: 'pip'
 
+      - name: 缓存 Playwright 浏览器二进制
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            playwright-${{ runner.os }}-
+
       - name: 安装依赖（含 Playwright）
         run: |
-          pip install requests==2.32.3 numpy==2.2.4 pandas==2.2.3 Playwright
-          playwright install chromium
-          playwright install-deps
+          pip install -r requirements.txt
+          # 命中缓存时浏览器已存在，此步会秒跳过下载；--with-deps 顺带装系统库
+          playwright install --with-deps chromium
 
       # =============== 原有分析脚本 ===============
       - name: 生成 his_data.js
