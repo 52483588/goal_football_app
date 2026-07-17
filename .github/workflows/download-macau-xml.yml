@@ -88,9 +88,9 @@ jobs:
           python-version: '3.12'
           cache: 'pip'
 
-      - name: 安装依赖（含 Playwright）
+      - name: 安装依赖（不含 Playwright）
         run: |
-          pip install requests==2.32.3 numpy==2.2.4 pandas==2.2.3 playwright
+          pip install requests==2.32.3 numpy==2.2.4 pandas==2.2.3 
           playwright install chromium
           playwright install-deps
 
