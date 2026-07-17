@@ -912,7 +912,32 @@ def _esc(s):
 # 7. 新增：增量更新模式（--update）
 # ============================================================
 
-def update_stats(data_path, output_path):
+def pick_snapshot_for_id(mid, folders, raw_data, order='first'):
+    """按 order 在全部文件夹中为某场比赛挑选第一条/末条完整快照。
+    first=最老（开盘），last=最新（临场）。返回 (rec, folder) 或 (None, None)。"""
+    ordered = folders if order == 'first' else list(reversed(folders))
+    for folder in ordered:
+        fd = raw_data.get(folder, {}) or {}
+        r = fd.get(mid)
+        if not r or not r.get('ou'):
+            continue
+        ou = r.get('ou', {})
+        try:
+            oo = float(ou.get('oo'))
+            uo = float(ou.get('uo'))
+            li = float(ou.get('li'))
+        except (ValueError, TypeError):
+            continue
+        if not (oo > 0) or not (uo > 0) or isnan(li):
+            continue
+        ng = r.get('ng', {}) or {}
+        if not all(ng.get(k) is not None and _to_float(ng[k]) > 0 for k in NG_COLS):
+            continue
+        return r, folder
+    return None, None
+
+
+def update_stats(data_path, output_path, order='first'):
     """
     增量更新模式：
       1. 从 his_data.js 中取最新文件夹的所有有效记录（含 ng 和 ou）
@@ -937,7 +962,12 @@ def update_stats(data_path, output_path):
 
     new_records = []  # 存放新生成的记录（字典）
 
-    for mid, rec in folder_data.items():
+    for mid, _ in folder_data.items():
+        # 按 order 选取每场比赛的快照：first=最老（开盘），last=最新（临场）
+        chosen, snap_folder = pick_snapshot_for_id(mid, folders, raw_data, order)
+        if chosen is None:
+            continue
+        rec = chosen
         oc = rec.get('oc', {})
         if not oc:
             continue
@@ -1018,7 +1048,7 @@ def update_stats(data_path, output_path):
             'home': home,
             'away': away,
             'hc': '%.2f' % hc_num,
-            'folder': latest,
+            'folder': snap_folder,
             'score': score_str,
             'totalGoals': total_goals_str,
             'size': size,
@@ -1092,8 +1122,8 @@ def main():
     args = parser.parse_args()
 
     if args.update:
-        # 执行增量更新
-        update_stats(args.data, args.output)
+        # 执行增量更新（按 --order 选择每场最老/最新快照）
+        update_stats(args.data, args.output, args.order)
         return
 
     # === 原有统计视图模式 ===
