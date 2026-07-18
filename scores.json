@@ -122,7 +122,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-18 12:48:57",
         "uqTournament": {
           "colorCode": "F88964",
           "folderName": "",
@@ -140,6 +140,11 @@
           "logoPath": "aus.png",
           "name": "澳国联",
           "id": "1275"
+        },
+        "score": {
+          "ht": "0:1",
+          "current": "0:1",
+          "matchId": null
         },
         "payout": {
           "fg": "1",
@@ -166,12 +171,30 @@
             "id": "20"
           }
         ],
-        "beforeState": "0",
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {
+          "goalCardSwitchFt": "on",
+          "goalCardSwitchOt": "off"
+        },
+        "hcap": {
+          "ftHandicap": "0/+0.5",
+          "ftOverUnder": "2.5/3",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2020239288090943490",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "2700",
         "evId": "947056",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -183,7 +206,7 @@
         "hometeamNameZh": "侯姆城",
         "sport": "1",
         "matchId": "2020239288090943490",
-        "currentState": "0",
+        "currentState": "31",
         "startDate": "2026-07-18 12:00",
         "uqTournamentId": "1275",
         "hometeamName": "侯姆城",
@@ -194,9 +217,9 @@
         "dataAnalysisShow": "1",
         "del": "0",
         "autoId": "2194353",
-        "importState": "3",
-        "birtiSign": "111",
-        "lastUpdateTime": "2026-07-17 16:00",
+        "importState": "0",
+        "birtiSign": "",
+        "lastUpdateTime": "2026-07-18 12:17:17",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "--",
@@ -899,7 +922,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-18 12:09:58",
         "uqTournament": {
           "colorCode": "2828FF",
           "folderName": "",
@@ -917,6 +940,11 @@
           "logoPath": "nzl.png",
           "name": "纽国联",
           "id": "-54981"
+        },
+        "score": {
+          "ht": "0:0",
+          "current": "0:0",
+          "matchId": null
         },
         "payout": {
           "fg": "1",
@@ -938,17 +966,38 @@
             "nameZh": "DAZN",
             "nameZht": "DAZN",
             "code": "148",
-            "matchId": "-2242277",
+            "matchId": "",
             "name": "DAZN",
             "id": "604"
           }
         ],
-        "beforeState": "0",
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "redcard": {
+          "current": "0:0"
+        },
+        "other": {
+          "goalCardSwitchFt": "off",
+          "goalCardSwitchOt": "off"
+        },
+        "hcap": {
+          "ftHandicap": "-0.5/-1",
+          "ftOverUnder": "3/3.5",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "-2242277",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "2700",
         "evId": "947059",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -960,7 +1009,7 @@
         "hometeamNameZh": "奥克兰联",
         "sport": "1",
         "matchId": "-2242277",
-        "currentState": "0",
+        "currentState": "31",
         "startDate": "2026-07-18 12:00",
         "uqTournamentId": "-54981",
         "hometeamName": "奥克兰联",
@@ -971,9 +1020,9 @@
         "dataAnalysisShow": "1",
         "del": "0",
         "autoId": "2242277",
-        "importState": "0",
+        "importState": "1",
         "birtiSign": "112",
-        "lastUpdateTime": "2026-07-18 09:13:18",
+        "lastUpdateTime": "2026-07-01 14:48",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "--",
@@ -1106,7 +1155,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-18 11:12:15",
+        "currentPeriodStart": "2026-07-18 11:22:37",
         "uqTournament": {
           "colorCode": "2828FF",
           "folderName": "",
@@ -1127,7 +1176,8 @@
         },
         "score": {
           "ht": "4:0",
-          "current": "4:0",
+          "ft": "7:0",
+          "current": "7:0",
           "matchId": null
         },
         "payout": {
@@ -1155,7 +1205,7 @@
             "id": "604"
           }
         ],
-        "beforeState": "6",
+        "beforeState": "7",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
@@ -1181,7 +1231,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "2700",
+        "clock": "5400",
         "evId": "946879",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -1193,7 +1243,7 @@
         "hometeamNameZh": "东郊AFC",
         "sport": "1",
         "matchId": "-2242276",
-        "currentState": "31",
+        "currentState": "100",
         "startDate": "2026-07-18 11:00",
         "uqTournamentId": "-54981",
         "hometeamName": "东郊AFC",
@@ -1339,7 +1389,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-18 11:12:22",
+        "currentPeriodStart": "2026-07-18 11:29:50",
         "uqTournament": {
           "colorCode": "2828FF",
           "folderName": "",
@@ -1360,7 +1410,8 @@
         },
         "score": {
           "ht": "2:1",
-          "current": "2:1",
+          "ft": "3:2",
+          "current": "3:2",
           "matchId": null
         },
         "payout": {
@@ -1388,7 +1439,7 @@
             "id": "604"
           }
         ],
-        "beforeState": "6",
+        "beforeState": "7",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
@@ -1414,7 +1465,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "2700",
+        "clock": "5400",
         "evId": "946881",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -1426,7 +1477,7 @@
         "hometeamNameZh": "奥克兰城",
         "sport": "1",
         "matchId": "-2242275",
-        "currentState": "31",
+        "currentState": "100",
         "startDate": "2026-07-18 11:00",
         "uqTournamentId": "-54981",
         "hometeamName": "奥克兰城",
@@ -1452,7 +1503,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-18 11:12:28",
+        "currentPeriodStart": "2026-07-18 11:29:58",
         "uqTournament": {
           "colorCode": "2828FF",
           "folderName": "",
@@ -1473,7 +1524,8 @@
         },
         "score": {
           "ht": "1:2",
-          "current": "1:2",
+          "ft": "2:2",
+          "current": "2:2",
           "matchId": null
         },
         "payout": {
@@ -1501,7 +1553,7 @@
             "id": "604"
           }
         ],
-        "beforeState": "6",
+        "beforeState": "7",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
@@ -1527,7 +1579,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "2700",
+        "clock": "5400",
         "evId": "946882",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -1539,7 +1591,7 @@
         "hometeamNameZh": "东海岸湾",
         "sport": "1",
         "matchId": "-2242274",
-        "currentState": "31",
+        "currentState": "100",
         "startDate": "2026-07-18 11:00",
         "uqTournamentId": "-54981",
         "hometeamName": "东海岸湾",
@@ -3751,85 +3803,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "",
-        "uqTournament": {
-          "colorCode": "2828FF",
-          "folderName": "",
-          "quarterNumber": "",
-          "quarterTime": "",
-          "leagueCupType": "1",
-          "evTypeId": "1069",
-          "nameZh": "纽国联",
-          "nameZht": "紐國聯",
-          "fullnameZht": "紐西蘭國家聯賽",
-          "fullnameZh": "纽西兰国家联赛",
-          "fullname": "纽西兰国家联赛",
-          "del": "0",
-          "orderNum": "321",
-          "logoPath": "nzl.png",
-          "name": "纽国联",
-          "id": "-54981"
-        },
-        "payout": {
-          "fg": "1",
-          "ftg": "1",
-          "ht": "1",
-          "ft": "2",
-          "ot": "1",
-          "ap": "1",
-          "matchId": "-2242283"
-        },
-        "cornerPayout": {
-          "ht": "1",
-          "ft": "1",
-          "ot": "1",
-          "matchId": ""
-        },
-        "broadcast": [],
-        "beforeState": "0",
-        "opening": "",
-        "showState": "1",
-        "isBoCheck": "0",
-        "hasBetInRunOt": "0",
-        "clock": "--",
-        "evId": "946885",
-        "warsituationShow": "1",
-        "payoutState": "1",
-        "hometeamId": "-297198",
-        "awayteamId": "329249",
-        "tournamentId": "128618",
-        "uploadState": "1",
-        "hometeamNameZht": "島灣聯",
-        "hometeamNameZh": "岛湾联",
-        "sport": "1",
-        "matchId": "-2242283",
-        "currentState": "0",
-        "startDate": "2026-07-18 11:45",
-        "uqTournamentId": "-54981",
-        "hometeamName": "岛湾联",
-        "awayteamName": "威灵顿奥林匹克",
-        "awayteamNameZh": "威灵顿奥林匹克",
-        "awayteamNameZht": "威靈頓奧林匹克",
-        "oldMatchId": "",
-        "dataAnalysisShow": "1",
-        "del": "0",
-        "autoId": "2242283",
-        "importState": "3",
-        "birtiSign": "111",
-        "lastUpdateTime": "2026-07-18 11:55:12",
-        "showTime": "",
-        "orderNum": "",
-        "homeRankingValue": "--",
-        "oldStartDate": "",
-        "awayRankingValue": "--",
-        "isHalfPayout": "off",
-        "hometeamLogo": "",
-        "awayteamLogo": "",
-        "lineUpShow": "0",
-        "preLineUpShow": "0"
-      },
-      {
-        "currentPeriodStart": "2026-07-18 11:15:32",
+        "currentPeriodStart": "2026-07-18 12:46:17",
         "uqTournament": {
           "colorCode": "2828FF",
           "folderName": "",
@@ -3849,7 +3823,112 @@
           "id": "-54981"
         },
         "score": {
-          "current": "1:0",
+          "ht": "0:1",
+          "current": "0:1",
+          "matchId": null
+        },
+        "payout": {
+          "fg": "1",
+          "ftg": "1",
+          "ht": "1",
+          "ft": "2",
+          "ot": "1",
+          "ap": "1",
+          "matchId": "-2242283"
+        },
+        "cornerPayout": {
+          "ht": "1",
+          "ft": "1",
+          "ot": "1",
+          "matchId": ""
+        },
+        "broadcast": [],
+        "beforeState": "31",
+        "opening": "",
+        "showState": "1",
+        "isBoCheck": "0",
+        "redcard": {
+          "current": "0:0"
+        },
+        "other": {
+          "goalCardSwitchFt": "on",
+          "goalCardSwitchOt": "off"
+        },
+        "hcap": {
+          "ftHandicap": "+2.5",
+          "ftOverUnder": "3.5/4",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "-2242283",
+          "del": "0"
+        },
+        "hasBetInRunOt": "0",
+        "clock": "3616",
+        "evId": "946885",
+        "warsituationShow": "1",
+        "payoutState": "1",
+        "hometeamId": "-297198",
+        "awayteamId": "329249",
+        "tournamentId": "128618",
+        "uploadState": "1",
+        "hometeamNameZht": "島灣聯",
+        "hometeamNameZh": "岛湾联",
+        "sport": "1",
+        "matchId": "-2242283",
+        "currentState": "7",
+        "startDate": "2026-07-18 11:45",
+        "uqTournamentId": "-54981",
+        "hometeamName": "岛湾联",
+        "awayteamName": "威灵顿奥林匹克",
+        "awayteamNameZh": "威灵顿奥林匹克",
+        "awayteamNameZht": "威靈頓奧林匹克",
+        "oldMatchId": "",
+        "dataAnalysisShow": "1",
+        "del": "0",
+        "autoId": "2242283",
+        "importState": "1",
+        "birtiSign": "212",
+        "lastUpdateTime": "2026-07-01 14:50",
+        "showTime": "",
+        "orderNum": "",
+        "homeRankingValue": "--",
+        "oldStartDate": "",
+        "awayRankingValue": "--",
+        "isHalfPayout": "off",
+        "hometeamLogo": "",
+        "awayteamLogo": "",
+        "lineUpShow": "0",
+        "preLineUpShow": "0"
+      },
+      {
+        "currentPeriodStart": "2026-07-18 12:16:45",
+        "uqTournament": {
+          "colorCode": "2828FF",
+          "folderName": "",
+          "quarterNumber": "",
+          "quarterTime": "",
+          "leagueCupType": "1",
+          "evTypeId": "1069",
+          "nameZh": "纽国联",
+          "nameZht": "紐國聯",
+          "fullnameZht": "紐西蘭國家聯賽",
+          "fullnameZh": "纽西兰国家联赛",
+          "fullname": "纽西兰国家联赛",
+          "del": "0",
+          "orderNum": "321",
+          "logoPath": "nzl.png",
+          "name": "纽国联",
+          "id": "-54981"
+        },
+        "score": {
+          "ht": "1:0",
+          "current": "1:1",
           "matchId": null
         },
         "payout": {
@@ -3877,11 +3956,14 @@
             "id": "604"
           }
         ],
-        "beforeState": "6",
+        "beforeState": "7",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
-        "other": {},
+        "other": {
+          "goalCardSwitchFt": "off",
+          "goalCardSwitchOt": "off"
+        },
         "hcap": {
           "ftHandicap": "+1/+1.5",
           "ftOverUnder": "3/3.5",
@@ -3897,7 +3979,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "2756",
+        "clock": "5388",
         "evId": "946883",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -3909,7 +3991,7 @@
         "hometeamNameZh": "比图尼",
         "sport": "1",
         "matchId": "-2242282",
-        "currentState": "6",
+        "currentState": "7",
         "startDate": "2026-07-18 11:15",
         "uqTournamentId": "-54981",
         "hometeamName": "比图尼",
@@ -3921,8 +4003,8 @@
         "del": "0",
         "autoId": "2242282",
         "importState": "3",
-        "birtiSign": "111",
-        "lastUpdateTime": "2026-07-18 11:22",
+        "birtiSign": "",
+        "lastUpdateTime": "2026-07-18 12:56:53",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "--",
@@ -3935,7 +4017,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-18 11:52:35",
+        "currentPeriodStart": "2026-07-18 13:00:37",
         "uqTournament": {
           "colorCode": "348017",
           "folderName": "",
@@ -3956,6 +4038,7 @@
         },
         "score": {
           "ht": "0:1",
+          "ft": "0:1",
           "current": "0:1",
           "matchId": null
         },
@@ -3993,10 +4076,13 @@
           "id": "2232545",
           "typeCode": "1"
         },
-        "beforeState": "6",
+        "beforeState": "7",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "redcard": {
+          "current": "0:1"
+        },
         "other": {
           "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
@@ -4016,7 +4102,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "2700",
+        "clock": "5400",
         "evId": "946373",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -4028,7 +4114,7 @@
         "hometeamNameZh": "祖亚雷斯",
         "sport": "1",
         "matchId": "2066021137064591362",
-        "currentState": "31",
+        "currentState": "100",
         "startDate": "2026-07-18 11:00",
         "uqTournamentId": "27464",
         "hometeamName": "祖亚雷斯",
@@ -4040,8 +4126,8 @@
         "del": "0",
         "autoId": "2231452",
         "importState": "3",
-        "birtiSign": "111",
-        "lastUpdateTime": "2026-07-18 11:04",
+        "birtiSign": "",
+        "lastUpdateTime": "2026-07-18 12:48:50",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "--",
@@ -4054,7 +4140,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-18 11:11:50",
+        "currentPeriodStart": "2026-07-18 11:29:41",
         "uqTournament": {
           "colorCode": "2828FF",
           "folderName": "",
@@ -4075,7 +4161,8 @@
         },
         "score": {
           "ht": "0:1",
-          "current": "0:1",
+          "ft": "1:2",
+          "current": "1:2",
           "matchId": null
         },
         "payout": {
@@ -4103,7 +4190,7 @@
             "id": "604"
           }
         ],
-        "beforeState": "6",
+        "beforeState": "7",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
@@ -4129,7 +4216,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "2700",
+        "clock": "5400",
         "evId": "946878",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -4141,7 +4228,7 @@
         "hometeamNameZh": "上哈特城",
         "sport": "1",
         "matchId": "-2242281",
-        "currentState": "31",
+        "currentState": "100",
         "startDate": "2026-07-18 11:00",
         "uqTournamentId": "-54981",
         "hometeamName": "上哈特城",
@@ -4167,7 +4254,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-18 11:32:12",
+        "currentPeriodStart": "2026-07-18 10:51:03",
         "uqTournament": {
           "colorCode": "2828FF",
           "folderName": "",
@@ -4188,7 +4275,8 @@
         },
         "score": {
           "ht": "0:1",
-          "current": "0:1",
+          "ft": "0:4",
+          "current": "0:4",
           "matchId": null
         },
         "payout": {
@@ -4207,7 +4295,7 @@
           "matchId": ""
         },
         "broadcast": [],
-        "beforeState": "31",
+        "beforeState": "7",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
@@ -4215,7 +4303,7 @@
           "current": "0:0"
         },
         "other": {
-          "goalCardSwitchFt": "off",
+          "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
         },
         "hcap": {
@@ -4233,7 +4321,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "4456",
+        "clock": "5400",
         "evId": "946877",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -4245,7 +4333,7 @@
         "hometeamNameZh": "华拿卡",
         "sport": "1",
         "matchId": "-2242288",
-        "currentState": "7",
+        "currentState": "100",
         "startDate": "2026-07-18 10:00",
         "uqTournamentId": "-54981",
         "hometeamName": "华拿卡",
@@ -4358,7 +4446,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-18 11:48:39",
+        "currentPeriodStart": "2026-07-18 12:38:17",
         "uqTournament": {
           "colorCode": "660033",
           "folderName": "",
@@ -4379,28 +4467,29 @@
         },
         "score": {
           "ht": "0:2",
+          "ft": "0:3",
           "current": "0:3",
           "matchId": null
         },
         "corner": {
-          "ft": "0:0",
+          "ft": "9:3",
           "ht": "1:1",
           "otf": "0:0",
           "oth": "0:0",
-          "current": "2:1"
+          "current": "9:3"
         },
         "payout": {
           "fg": "1",
-          "ftg": "2",
-          "ht": "2",
-          "ft": "2",
+          "ftg": "3",
+          "ht": "3",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "1998501675416084481"
         },
         "cornerPayout": {
-          "ht": "2",
-          "ft": "2",
+          "ht": "3",
+          "ft": "3",
           "ot": "1",
           "matchId": ""
         },
@@ -4446,10 +4535,10 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "3469",
+        "clock": "5400",
         "evId": "946372",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "2513",
         "awayteamId": "402227",
         "tournamentId": "31922",
@@ -4458,7 +4547,7 @@
         "hometeamNameZh": "洛杉矶银河",
         "sport": "1",
         "matchId": "1998501675416084481",
-        "currentState": "7",
+        "currentState": "100",
         "startDate": "2026-07-18 10:25",
         "uqTournamentId": "242",
         "hometeamName": "洛杉矶银河",
@@ -4470,8 +4559,8 @@
         "del": "0",
         "autoId": "2173561",
         "importState": "3",
-        "birtiSign": "111",
-        "lastUpdateTime": "2026-07-18 10:40:50",
+        "birtiSign": "",
+        "lastUpdateTime": "2026-07-18 12:28:43",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "W9",
@@ -5889,7 +5978,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-18 12:32:05",
         "uqTournament": {
           "colorCode": "F88964",
           "folderName": "",
@@ -5907,6 +5996,10 @@
           "logoPath": "aus.png",
           "name": "澳国联",
           "id": "1626"
+        },
+        "score": {
+          "current": "1:1",
+          "matchId": null
         },
         "payout": {
           "fg": "1",
@@ -5928,17 +6021,35 @@
             "nameZh": "YouTube (Football Tasmania TV)",
             "nameZht": "YouTube (Football Tasmania TV)",
             "code": "153",
-            "matchId": "2024226329141108737",
+            "matchId": "",
             "name": "YouTube (Football Tasmania TV)",
             "id": "628"
           }
         ],
-        "beforeState": "0",
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {
+          "goalCardSwitchFt": "on",
+          "goalCardSwitchOt": "off"
+        },
+        "hcap": {
+          "ftHandicap": "0",
+          "ftOverUnder": "3.5",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2024226329141108737",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "1768",
         "evId": "947066",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -5950,7 +6061,7 @@
         "hometeamNameZh": "河畔奥林匹克",
         "sport": "1",
         "matchId": "2024226329141108737",
-        "currentState": "0",
+        "currentState": "6",
         "startDate": "2026-07-18 12:30",
         "uqTournamentId": "1626",
         "hometeamName": "河畔奥林匹克",
@@ -5963,7 +6074,7 @@
         "autoId": "2201319",
         "importState": "3",
         "birtiSign": "111",
-        "lastUpdateTime": "2026-07-18 10:34:35",
+        "lastUpdateTime": "2026-07-18 12:34",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "--",
@@ -6252,7 +6363,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-18 12:33:23",
         "uqTournament": {
           "colorCode": "F88964",
           "folderName": "",
@@ -6270,6 +6381,10 @@
           "logoPath": "aus.png",
           "name": "澳国联",
           "id": "1626"
+        },
+        "score": {
+          "current": "0:2",
+          "matchId": null
         },
         "payout": {
           "fg": "1",
@@ -6291,17 +6406,35 @@
             "nameZh": "YouTube (Football Tasmania TV)",
             "nameZht": "YouTube (Football Tasmania TV)",
             "code": "153",
-            "matchId": "2024226328683929602",
+            "matchId": "",
             "name": "YouTube (Football Tasmania TV)",
             "id": "628"
           }
         ],
-        "beforeState": "0",
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {
+          "goalCardSwitchFt": "on",
+          "goalCardSwitchOt": "off"
+        },
+        "hcap": {
+          "ftHandicap": "+0.5",
+          "ftOverUnder": "3/3.5",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2024226328683929602",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "1690",
         "evId": "947063",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -6313,7 +6446,7 @@
         "hometeamNameZh": "迪云港城前锋",
         "sport": "1",
         "matchId": "2024226328683929602",
-        "currentState": "0",
+        "currentState": "6",
         "startDate": "2026-07-18 12:30",
         "uqTournamentId": "1626",
         "hometeamName": "迪云港城前锋",
@@ -6326,7 +6459,7 @@
         "autoId": "2201318",
         "importState": "0",
         "birtiSign": "112",
-        "lastUpdateTime": "2026-07-18 10:34:54",
+        "lastUpdateTime": "2026-07-18 12:34",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "--",
@@ -7101,7 +7234,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "",
+        "currentPeriodStart": "2026-07-18 13:00:56",
         "uqTournament": {
           "colorCode": "F88964",
           "folderName": "",
@@ -7119,6 +7252,10 @@
           "logoPath": "aus.png",
           "name": "澳国联",
           "id": "1268"
+        },
+        "score": {
+          "current": "0:0",
+          "matchId": null
         },
         "payout": {
           "fg": "1",
@@ -7145,12 +7282,27 @@
             "id": "20"
           }
         ],
-        "beforeState": "0",
+        "beforeState": "6",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
+        "other": {},
+        "hcap": {
+          "ftHandicap": "+1.5",
+          "ftOverUnder": "3.5/4",
+          "ftHandicapCorner": "",
+          "ftOverUnderCorner": "",
+          "otHandicap": "",
+          "otOverUnder": "",
+          "otHandicapCorner": "",
+          "otOverUnderCorner": "",
+          "apHandicap": "",
+          "apOverUnder": "",
+          "matchId": "2022413795161464833",
+          "del": "0"
+        },
         "hasBetInRunOt": "0",
-        "clock": "--",
+        "clock": "37",
         "evId": "947080",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -7162,7 +7314,7 @@
         "hometeamNameZh": "黃金海岸联",
         "sport": "1",
         "matchId": "2022413795161464833",
-        "currentState": "0",
+        "currentState": "6",
         "startDate": "2026-07-18 13:00",
         "uqTournamentId": "1268",
         "hometeamName": "黃金海岸联",
@@ -7175,7 +7327,7 @@
         "autoId": "2196377",
         "importState": "0",
         "birtiSign": "112",
-        "lastUpdateTime": "2026-07-17 16:00",
+        "lastUpdateTime": "2026-07-18 13:01",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "--",
@@ -9494,5 +9646,5 @@
   "token": null,
   "rspCode": "SUCCESS",
   "rspMsg": "成功",
-  "sysTime": "2026-07-18 12:01:28"
+  "sysTime": "2026-07-18 13:01:33"
 }
