@@ -7,7 +7,7 @@ from pathlib import Path
 def extract_match_data(item):
     """提取单场比赛所需字段，返回字典"""
     start_date = item.get('startDate', '')
-    tournament = item.get('uqTournament', {}).get('nameZh', '')
+    tournament = item.get('uqTournament', {}).get('fullname', '')
     home_team = item.get('hometeamName', '') or item.get('hometeamNameZh', '')
     away_team = item.get('awayteamName', '') or item.get('awayteamNameZh', '')
 
