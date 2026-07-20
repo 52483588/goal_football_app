@@ -6,20 +6,19 @@ import os
 import json
 import time
 import shutil
-import xml.etree.ElementTree as ET
+from xml.etree.ElementTree import parse, ParseError
 
 REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
 DATA_SRC = os.path.join(REPO_ROOT, "HisData")
 OUTPUT_DIR = os.path.join(REPO_ROOT, "scripts", "docs")
 OUTPUT_FILE = os.path.join(OUTPUT_DIR, "his_data.js")
-# POPEYE_DIR = os.path.join(REPO_ROOT, "popeye")
-# POPEYE_FILE = os.path.join(POPEYE_DIR, "his_data.js")
 
 # 原属性列表
 OC_ATTRS = ['id', 'gt', 'st', 'sh', 'sa']
 NG_ATTRS = ['id', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6']
 OU_ATTRS = ['id', 'oo', 'uo', 'li', 'hi_var']
 WIN_ATTRS = ['id', 'g', 'gg', 'ho', 'ao', 'var']   # 新增
+WDW_ATTRS = ['id', 'ho', 'do', 'ao']                 # 新增 windrawwin.xml
 
 
 def parse_fixtures(filepath, attrs):
@@ -28,9 +27,9 @@ def parse_fixtures(filepath, attrs):
     if not os.path.exists(filepath):
         return result
     try:
-        tree = ET.parse(filepath)
+        tree = parse(filepath)
         root = tree.getroot()
-    except ET.ParseError:
+    except ParseError:
         print(f"[WARN] Failed to parse {filepath}, skipping")
         return result
     for fixture in root.findall('Fixture'):
@@ -70,8 +69,9 @@ def main():
         ng = parse_fixtures(os.path.join(fp, 'numberofgoals.xml'), NG_ATTRS)
         ou = parse_fixtures(os.path.join(fp, 'overunder.xml'), OU_ATTRS)
         win = parse_fixtures(os.path.join(fp, 'winodds.xml'), WIN_ATTRS)   # 新增
+        wdw = parse_fixtures(os.path.join(fp, 'windrawwin.xml'), WDW_ATTRS)  # 新增 windrawwin.xml
 
-        all_ids = set(oc.keys()) | set(ng.keys()) | set(ou.keys()) | set(win.keys())
+        all_ids = set(oc.keys()) | set(ng.keys()) | set(ou.keys()) | set(win.keys()) | set(wdw.keys())
         id_set.update(all_ids)
 
         for fid in all_ids:
@@ -79,7 +79,8 @@ def main():
                 'oc': oc.get(fid, {}),
                 'ng': ng.get(fid, {}),
                 'ou': ou.get(fid, {}),
-                'win': win.get(fid, {})      # 新增
+                'win': win.get(fid, {}),     # 新增
+                'wdw': wdw.get(fid, {})      # 新增 windrawwin.xml
             }
 
     # 构建 ID_INDEX (latest non-empty per field)
@@ -87,8 +88,8 @@ def main():
     for folder in reversed(folders):
         for fid, rec in raw_data[folder].items():
             if fid not in idx:
-                idx[fid] = {'oc': {}, 'ng': {}, 'ou': {}, 'win': {}}
-            for key in ('oc', 'ng', 'ou', 'win'):
+                idx[fid] = {'oc': {}, 'ng': {}, 'ou': {}, 'win': {}, 'wdw': {}}
+            for key in ('oc', 'ng', 'ou', 'win', 'wdw'):
                 if rec[key] and not idx[fid][key]:
                     idx[fid][key] = dict(rec[key])
 
@@ -110,10 +111,7 @@ def main():
     print(f"[OK] {OUTPUT_FILE} ({len(folders)} folders, {len(id_set)} unique IDs)")
     print(f"[OK] his_data.js: {size_kb:.0f} KB ({elapsed:.1f}s)")
 
-    # 复制到 popeye 目录
-    # os.makedirs(POPEYE_DIR, exist_ok=True)
-    # shutil.copy(OUTPUT_FILE, POPEYE_FILE)
-    # print(f"[OK] Copied to {POPEYE_FILE}")
+
 
 
 if __name__ == '__main__':
