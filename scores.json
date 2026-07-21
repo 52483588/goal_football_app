@@ -1048,7 +1048,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-21 22:01:02",
+        "currentPeriodStart": "2026-07-21 20:00:20",
         "uqTournament": {
           "colorCode": "6699bb",
           "folderName": "",
@@ -1089,7 +1089,7 @@
           "matchId": ""
         },
         "broadcast": [],
-        "beforeState": "7",
+        "beforeState": "50",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
@@ -1115,7 +1115,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "45",
+        "clock": "--",
         "evId": "947590",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -1127,7 +1127,7 @@
         "hometeamNameZh": "云南玉昆",
         "sport": "1",
         "matchId": "2070972839274414081",
-        "currentState": "41",
+        "currentState": "120",
         "startDate": "2026-07-21 20:00",
         "uqTournamentId": "882",
         "hometeamName": "云南玉昆",
@@ -2228,8 +2228,8 @@
         "del": "0",
         "autoId": "2216273",
         "importState": "0",
-        "birtiSign": "112",
-        "lastUpdateTime": "2026-07-20 06:30",
+        "birtiSign": "111",
+        "lastUpdateTime": "2026-07-21 22:08:18",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "--",
@@ -3022,7 +3022,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-21 21:26:47",
+        "currentPeriodStart": "2026-07-21 21:26",
         "uqTournament": {
           "colorCode": "6699bb",
           "folderName": "",
@@ -3051,7 +3051,7 @@
           "fg": "1",
           "ftg": "1",
           "ht": "1",
-          "ft": "2",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2070972838783680513"
@@ -3080,10 +3080,10 @@
             "id": "984"
           }
         ],
-        "beforeState": "7",
+        "beforeState": "0",
         "opening": "",
         "showState": "1",
-        "isBoCheck": "0",
+        "isBoCheck": "1",
         "other": {
           "goalCardSwitchFt": "on",
           "goalCardSwitchOt": "off"
@@ -3106,7 +3106,7 @@
         "clock": "5400",
         "evId": "947578",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "3373",
         "awayteamId": "34695",
         "tournamentId": "34191",
@@ -3127,8 +3127,8 @@
         "del": "0",
         "autoId": "2240689",
         "importState": "3",
-        "birtiSign": "",
-        "lastUpdateTime": "2026-07-21 21:17:35",
+        "birtiSign": "221",
+        "lastUpdateTime": "2026-07-21 22:45",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "11",
@@ -3141,7 +3141,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-21 21:08:02",
+        "currentPeriodStart": "2026-07-21 22:06:39",
         "uqTournament": {
           "colorCode": "6699bb",
           "folderName": "",
@@ -3162,6 +3162,7 @@
         },
         "score": {
           "ht": "1:1",
+          "ft": "1:1",
           "current": "1:1",
           "matchId": null
         },
@@ -3204,7 +3205,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "5925",
+        "clock": "5400",
         "evId": "947586",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -3216,7 +3217,7 @@
         "hometeamNameZh": "河南队",
         "sport": "1",
         "matchId": "2070972838292946946",
-        "currentState": "7",
+        "currentState": "100",
         "startDate": "2026-07-21 20:00",
         "uqTournamentId": "882",
         "hometeamName": "河南队",
@@ -3406,8 +3407,8 @@
         "del": "0",
         "autoId": "2261382",
         "importState": "0",
-        "birtiSign": "112",
-        "lastUpdateTime": "2026-07-21 05:30",
+        "birtiSign": "111",
+        "lastUpdateTime": "2026-07-21 22:07:49",
         "showTime": "",
         "orderNum": "",
         "homeRankingValue": "--",
@@ -3716,7 +3717,7 @@
           "fg": "1",
           "ftg": "1",
           "ht": "1",
-          "ft": "2",
+          "ft": "3",
           "ot": "1",
           "ap": "1",
           "matchId": "2070972840679505921"
@@ -3757,7 +3758,7 @@
         "clock": "5400",
         "evId": "947567",
         "warsituationShow": "1",
-        "payoutState": "1",
+        "payoutState": "4",
         "hometeamId": "41537",
         "awayteamId": "422227",
         "tournamentId": "34191",
@@ -4467,7 +4468,7 @@
         "preLineUpShow": "0"
       },
       {
-        "currentPeriodStart": "2026-07-21 21:54:35",
+        "currentPeriodStart": "2026-07-21 19:35:37",
         "uqTournament": {
           "colorCode": "6699bb",
           "folderName": "",
@@ -4508,7 +4509,7 @@
           "matchId": ""
         },
         "broadcast": [],
-        "beforeState": "33",
+        "beforeState": "110",
         "opening": "",
         "showState": "1",
         "isBoCheck": "0",
@@ -4531,7 +4532,7 @@
           "del": "0"
         },
         "hasBetInRunOt": "0",
-        "clock": "1332",
+        "clock": "--",
         "evId": "947581",
         "warsituationShow": "1",
         "payoutState": "1",
@@ -4543,7 +4544,7 @@
         "hometeamNameZh": "武汉三镇",
         "sport": "1",
         "matchId": "2070972841157656578",
-        "currentState": "42",
+        "currentState": "120",
         "startDate": "2026-07-21 19:35",
         "uqTournamentId": "882",
         "hometeamName": "武汉三镇",
@@ -4856,5 +4857,5 @@
   "token": null,
   "rspCode": "SUCCESS",
   "rspMsg": "成功",
-  "sysTime": "2026-07-21 22:01:47"
+  "sysTime": "2026-07-21 23:01:38"
 }
