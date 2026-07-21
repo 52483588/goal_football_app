@@ -120,7 +120,13 @@ jobs:
 
       - name: 增量更新统计CSV
         run: python stats_python.py --update --order first --data scripts/docs/his_data.js --output scripts/docs/stats.csv
-      
+
+      - name: 运行价值扫描（正EV场次 -> scripts/docs/value_matches.csv）
+        env:
+          HIS_DATA: scripts/docs/his_data.js
+          OUT_CSV: scripts/docs/value_matches.csv
+        run: python value_scan.py
+        
       # =============== 统一提交 ===============
       - name: 统一提交所有生成文件
         uses: EndBug/add-and-commit@v9
@@ -128,7 +134,7 @@ jobs:
           author_name: Auto Bot
           author_email: bot@example.com
           message: "综合备份 ${{ env.TIMESTAMP }}：XML归档、分析、livescore [skip ci]"
-          add: "HisData/ *.xml data/ scripts/docs/his_data.js scripts/docs/stats.csv scores.json scores_now.csv"
+          add: "HisData/ *.xml data/ scripts/docs/his_data.js scripts/docs/stats.csv scores.json scores_now.csv scripts/docs/value_matches.csv"
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       # =============== 百度网盘上传（已注释） ===============
