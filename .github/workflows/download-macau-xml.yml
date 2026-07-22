@@ -7,6 +7,8 @@ jobs:
   process-and-upload:
     runs-on: ubuntu-latest
     timeout-minutes: 10        # 放宽：缓存失效时留出余量，平时用不到
+    permissions:
+      contents: write          # 需写权限：统一提交 + 发布 latest-data Release
 
     steps:
       - name: 检出仓库
@@ -134,8 +136,19 @@ jobs:
           author_name: Auto Bot
           author_email: bot@example.com
           message: "综合备份 ${{ env.TIMESTAMP }}：XML归档、分析、livescore [skip ci]"
-          add: "HisData/ *.xml data/ scripts/docs/his_data.js scripts/docs/stats.csv scores.json scores_now.csv scripts/docs/value_matches.csv"
+          add: "HisData/ *.xml data/ scripts/docs/stats.csv scores.json scores_now.csv scripts/docs/value_matches.csv"
           github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      # =============== 发布 his_data.js 到 latest-data Release（不进 git 历史，避免仓库膨胀） ===============
+      - name: 发布 his_data.js 到 latest-data Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest-data
+          name: latest-data
+          files: scripts/docs/his_data.js
+          body: "自动发布 his_data.js（${{ env.TIMESTAMP }}），供本地脚本从 Release 拉取"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # =============== 百度网盘上传（已注释） ===============
       # - name: 打包文件夹（含scores.json）
