@@ -1,0 +1,221 @@
+name: 综合备份 & 实时比分抓取
+
+on:
+  workflow_dispatch:           # 手动触发
+
+# 防止手动触发与定时任务重叠时 force-push 互相踩
+concurrency:
+  group: single-commit-snapshot
+  cancel-in-progress: false
+
+# 允许 force-push 单提交快照
+permissions:
+  contents: write
+
+jobs:
+  process-and-upload:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # ---------- 时间 & 目录 ----------
+      - name: 设置北京时间
+        id: set-time
+        run: |
+          sudo timedatectl set-timezone Asia/Shanghai
+          TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+          DATE=$(date +%Y%m%d)
+          HOUR=$(date +%H)
+          echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
+          echo "date=$DATE" >> $GITHUB_OUTPUT
+          echo "hour=$HOUR" >> $GITHUB_OUTPUT
+          echo "TIMESTAMP=$TIMESTAMP" >> $GITHUB_ENV
+          echo "DATE=$DATE" >> $GITHUB_ENV
+          echo "HOUR=$HOUR" >> $GITHUB_ENV
+
+      - name: 创建文件夹结构
+        run: |
+          mkdir -p HisData docs data
+
+      # ---------- 下载 XML （原样保留） ----------
+      - name: 下载最新XML
+        run: |
+          UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          curl -L -A "$UA" -o windrawwinfirsthalf.xml "https://www.macauslot.com/content/data/soccer/xml/odds/windrawwinfirsthalf.xml"
+          curl -L -A "$UA" -o odds_config.xml "https://www.macauslot.com/content/data/soccer/xml/odds/odds_config.xml"
+          curl -L -A "$UA" -o windrawwin.xml "https://www.macauslot.com/content/data/soccer/xml/odds/windrawwin.xml"
+          curl -L -A "$UA" -o halffull.xml "https://www.macauslot.com/content/data/soccer/xml/odds/halffull.xml"
+          curl -L -A "$UA" -o winodds.xml "https://www.macauslot.com/content/data/soccer/xml/odds/winodds.xml"
+          curl -L -A "$UA" -o overunder.xml "https://www.macauslot.com/content/data/soccer/xml/odds/overunder.xml"
+          curl -L -A "$UA" -o numberofgoals.xml "https://www.macauslot.com/content/data/soccer/xml/odds/numberofgoals.xml"
+          curl -L -A "$UA" -o correctscore.xml "https://www.macauslot.com/content/data/soccer/xml/odds/correctscore.xml"
+
+      - name: 验证下载完整性
+        run: |
+          ALL_FILES=("windrawwinfirsthalf.xml" "odds_config.xml" "windrawwin.xml" "halffull.xml" "winodds.xml" "overunder.xml" "numberofgoals.xml" "correctscore.xml")
+          for f in "${ALL_FILES[@]}"; do
+            if [ ! -s "$f" ]; then
+              echo "❌ 文件 $f 不存在或为空，下载失败"
+              exit 1
+            fi
+          done
+          echo "✅ 所有8个XML文件下载成功"
+
+      - name: 复制XML到HisData时间戳文件夹（仅归档，不提交）
+        run: |
+          ARCHIVE_DIR="HisData/${{ env.TIMESTAMP }}"
+          mkdir -p "$ARCHIVE_DIR"
+          cp *.xml "$ARCHIVE_DIR/"
+          echo "✅ 已归档到 $ARCHIVE_DIR"
+
+      # ---------- Python 环境（极致加速版） ----------
+      - name: 安装 Python 3.12
+        uses: actions/setup-python@v5
+        id: setup-python
+        with:
+          python-version: '3.12'
+
+      - name: 缓存 Python 虚拟环境
+        id: venv-cache
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-py312-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            venv-${{ runner.os }}-py312-
+
+      - name: 安装 Python 依赖（仅当缓存未命中）
+        if: steps.venv-cache.outputs.cache-hit != 'true'
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 将虚拟环境加入 PATH
+        run: echo "${{ github.workspace }}/.venv/bin" >> $GITHUB_PATH
+
+      # ---------- Playwright 浏览器缓存（按需） ----------
+      - name: 缓存 Playwright 浏览器
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-py312-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            playwright-${{ runner.os }}-py312-
+
+      - name: 安装 Playwright（命中缓存则完全跳过）
+        run: |
+          if [[ "${{ steps.playwright-cache.outputs.cache-hit }}" == "true" ]]; then
+            echo "✅ 浏览器缓存命中，跳过下载和系统依赖安装（Ubuntu 已预装所需库）"
+          else
+            echo "❌ 缓存未命中，安装 Chromium 及系统依赖"
+            playwright install --with-deps chromium
+          fi
+
+      # ---------- 运行分析脚本（原样） ----------
+      - name: 生成 his_data.js
+        run: python parse_xml.py
+
+      - name: 运行分析脚本
+        run: python bc.py
+
+      - name: 抓取 livescore 数据
+        run: python fetch_livescore.py
+
+      - name: 解析实时比分
+        run: python scores_parser.py --input scores.json
+        
+      # ---------- 完场赛果（仅北京时间 1 点那次运行） ----------
+      - name: 抓取 results 数据
+        if: ${{ steps.set-time.outputs.hour == '01' }}
+        continue-on-error: true
+        run: python fetch_results.py
+
+      - name: 解析 results.json 生成 history.csv
+        if: ${{ steps.set-time.outputs.hour == '01' }}
+        continue-on-error: true
+        run: python results_parser.py --input results.json --history history.csv --output history.csv        
+
+      - name: 增量更新统计CSV
+        run: python stats_python.py --update --order first --data scripts/docs/his_data.js --output scripts/docs/stats.csv
+
+      - name: 运行价值扫描
+        env:
+          HIS_DATA: scripts/docs/his_data.js
+          OUT_CSV: scripts/docs/value_matches.csv
+        run: python value_scan.py
+
+      # ==================== 新增：组合方案（归档+Releases+单提交快照） ====================
+      - name: 打包超过 3 天的旧数据（用于归档）
+        run: |
+          mkdir -p archive_temp
+          CUTOFF=$(date -d "-3 days" +%s)
+          for d in HisData/*/; do
+            [ -d "$d" ] || continue
+            ts=$(basename "$d")
+            if [[ "$ts" =~ ^[0-9]{8}_[0-9]{6}$ ]]; then
+              epoch=$(date -d "${ts:0:4}-${ts:4:2}-${ts:6:2} ${ts:9:2}:${ts:11:2}:${ts:13:2}" +%s 2>/dev/null)
+              if [ -n "$epoch" ] && [ "$epoch" -lt "$CUTOFF" ]; then
+                echo "📦 移动 $d → archive_temp/"
+                mv "$d" archive_temp/
+              fi
+            fi
+          done
+
+          # 若存在归档内容，打包成带时间戳的 ZIP
+          if ls archive_temp/*/ >/dev/null 2>&1; then
+            cd archive_temp
+            zip -r "../HisData_archive_${{ env.TIMESTAMP }}.zip" ./
+            cd ..
+          fi
+
+      - name: 上传归档 ZIP 到固定 Release（累积）
+        uses: softprops/action-gh-release@v2
+        if: hashFiles('HisData_archive_*.zip') != ''
+        with:
+          tag_name: hisdata-archive          # 固定标签，避免风暴
+          name: "HisData 历史归档（持续累积）"
+          files: HisData_archive_*.zip       # 每次上传不同时间戳的 ZIP
+          make_latest: false                 # 不设为最新，避免覆盖
+          body: |
+            HisData 历史数据归档（72 小时前的文件夹）。
+            每次运行新增一个 ZIP 文件，所有归档累积在此发布中。
+
+      - name: 清理临时目录和本地 ZIP
+        run: |
+          rm -rf archive_temp HisData_archive_*.zip
+
+      - name: 提交并强制推送单提交快照（采用方案B的 Git 操作）
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          git config user.name "Auto Bot"
+          git config user.email "bot@example.com"
+
+          # 现在 HisData 中已无旧目录（已被移走），只添加剩余内容
+          git add -f --ignore-errors HisData "*.xml" "scripts/docs/his_data.js" \
+            "scripts/docs/stats.csv" "scripts/docs/value_matches.csv" \
+            "scores_now.csv" "scores.json" "results.json" "history.csv"
+
+          if git diff --cached --quiet; then
+            echo "ℹ️ 无新变更，跳过提交"
+            exit 0
+          fi
+
+          # 折叠历史为单个根提交
+          if git rev-parse --verify HEAD >/dev/null 2>&1; then
+            ROOT=$(git rev-list --max-parents=0 HEAD | head -n1)
+            git reset --soft "$ROOT"
+            git commit --amend -m "auto update ${{ env.TIMESTAMP }} [skip ci]"
+          else
+            git commit -m "auto update ${{ env.TIMESTAMP }} [skip ci]"
+          fi
+
+          git push --force-with-lease origin "$BRANCH"
