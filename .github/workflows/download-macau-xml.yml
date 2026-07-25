@@ -128,10 +128,10 @@ jobs:
 
       # ---------- 运行分析脚本（原样） ----------
       - name: 生成 his_data.js
-        run: python parse_xml.py
+        run: python parse_xml.py 
 
-      - name: 运行分析脚本
-        run: python bc.py
+      # - name: 运行分析脚本
+      #   run: python bc.py
 
       - name: 抓取 livescore 数据
         run: python fetch_livescore.py
@@ -166,7 +166,7 @@ jobs:
           author_name: Auto Bot
           author_email: bot@example.com
           message: "综合备份 ${{ env.TIMESTAMP }}：XML归档、分析、livescore [skip ci]"
-          add: "HisData/ data/ scripts/docs/stats.csv scores_now.csv history.csv scripts/docs/value_matches.csv"
+          add: "HisData/ scripts/docs/stats.csv scores_now.csv history.csv scripts/docs/value_matches.csv"
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       # add: "HisData/ *.xml data/ scripts/docs/his_data.js scripts/docs/stats.csv scores_now.csv history.csv scripts/docs/value_matches.csv"
