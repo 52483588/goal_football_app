@@ -1,6 +1,7 @@
 scripts/docs/his_data.js
 data/
 pull.sh
+*.xml
 
 # Python 虚拟环境
 .venv/
