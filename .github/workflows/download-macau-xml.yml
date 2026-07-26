@@ -36,10 +36,10 @@ jobs:
       - name: 删除72小时前的HisData文件夹
         run: |
           cd HisData
-          # 子文件夹按时间戳命名，排序后保留最新 24 个（=24小时），删除其余
+          # 子文件夹按时间戳命名，排序后保留最新 72 个（=72小时），删除其余
           mapfile -t dirs < <(ls -d */ 2>/dev/null | sed 's#/$##' | sort)
           total=${#dirs[@]}
-          keep=24
+          keep=72
           if [ "$total" -gt "$keep" ]; then
             delete_count=$((total - keep))
             for ((i=0; i<delete_count; i++)); do
