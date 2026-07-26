@@ -20,8 +20,12 @@ jobs:
           sudo timedatectl set-timezone Asia/Shanghai
           TIMESTAMP=$(date +%Y%m%d_%H%M%S)
           DATE=$(date +%Y%m%d)
+          HOUR=$(date +%H)                       # 新增：获取小时
+          
           echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
           echo "date=$DATE" >> $GITHUB_OUTPUT
+          echo "hour=$HOUR" >> $GITHUB_OUTPUT    # 新增：把小时输出出去
+          
           echo "TIMESTAMP=$TIMESTAMP" >> $GITHUB_ENV
           echo "DATE=$DATE" >> $GITHUB_ENV
 
@@ -139,14 +143,14 @@ jobs:
       - name: 解析实时比分
         run: python scores_parser.py --input scores.json
 
-      # ---------- 完场赛果（仅北京时间 14 点那次运行） ----------
+      # ---------- 完场赛果（仅北京时间 16 点那次运行） ----------
       - name: 抓取 results 数据
-        if: ${{ steps.set-time.outputs.hour == '14' }}
+        if: ${{ steps.set-time.outputs.hour == '16' }}
         continue-on-error: true
         run: python fetch_results.py
 
       - name: 解析 results.json 生成 history.csv
-        if: ${{ steps.set-time.outputs.hour == '14' }}
+        if: ${{ steps.set-time.outputs.hour == '16' }}
         continue-on-error: true
         run: python results_parser.py --input results.json --history history.csv --output history.csv
 
