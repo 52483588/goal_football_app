@@ -1,5 +1,6 @@
 scripts/docs/his_data.js
 data/
+pull.sh
 
 # Python 虚拟环境
 .venv/
