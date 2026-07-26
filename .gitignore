@@ -1,4 +1,5 @@
 scripts/docs/his_data.js
+data/
 
 # Python 虚拟环境
 .venv/
