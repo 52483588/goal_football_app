@@ -170,7 +170,7 @@ jobs:
           author_name: Auto Bot
           author_email: bot@example.com
           message: "综合备份 ${{ env.TIMESTAMP }}：XML归档、分析、livescore [skip ci]"
-          add: "HisData/ scores_now.csv history.csv "
+          add: "HisData/ *.xml scores_now.csv history.csv "
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       # add: "HisData/ *.xml data/ scripts/docs/his_data.js scripts/docs/stats.csv scores_now.csv history.csv scripts/docs/value_matches.csv"
