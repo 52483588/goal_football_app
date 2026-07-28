@@ -145,12 +145,12 @@ jobs:
 
       # ---------- 完场赛果（仅北京时间 16 点那次运行） ----------
       - name: 抓取 results 数据
-        if: ${{ steps.set-time.outputs.hour == '16' }}
+        if: ${{ steps.set-time.outputs.hour == '00' }}
         continue-on-error: true
         run: python fetch_results.py
 
       - name: 解析 results.json 生成 history.csv
-        if: ${{ steps.set-time.outputs.hour == '16' }}
+        if: ${{ steps.set-time.outputs.hour == '00' }}
         continue-on-error: true
         run: python results_parser.py --input results.json --history history.csv --output history.csv
 
